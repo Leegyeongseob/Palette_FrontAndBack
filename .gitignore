@@ -68,4 +68,4 @@ src/main/resources/static/static
 src/main/react/public/index.html
 
 #jwt키 보관
-src/main/resources/application-aws.properties
+src/main/resources/application.properties

@@ -48,7 +48,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .antMatchers("/","/auth/**", "/ws/**","/chat/**","/static/**","/font/HancomSans-Light_0.ttf").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/HancomSans-Light_0.ttf","/kakaoLogin").permitAll()
+                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/HancomSans-Light_0.ttf","/kakaoLogin","HancomSans-Light_0.ttf").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

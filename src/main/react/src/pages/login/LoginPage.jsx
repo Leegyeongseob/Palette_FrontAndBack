@@ -13,6 +13,7 @@ import Common from "../../common/Common";
 import Modal from "../datediary/Modal";
 import GoogleAndNaverNotLogin from "../../img/loginImg/구글,네이버 간편 로그인.gif";
 import LoginModal from "../../common/utils/Modal";
+import SimpleLoginAxios from "../../axiosapi/SimpleLoginAxios";
 
 const Contain = styled.div`
   width: 100%;
@@ -338,15 +339,73 @@ const LoginPage = () => {
   //카카오 간편 로그인 이벤트 함수
   const kakaoLoginOnClick = () => {
     // 직접 구현
-    const kakaoAuthorizeAxios = async () => {
-      const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
-      const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-      const KAKAO_PATH = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+    // const kakaoAuthorizeAxios = async () => {
+    //   const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
+    //   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+    //   const KAKAO_PATH = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
 
-      window.location.href = KAKAO_PATH;
-      console.log("KAKAO_PATH:" + KAKAO_PATH);
+    //   window.location.href = KAKAO_PATH;
+    //   console.log("KAKAO_PATH:" + KAKAO_PATH);
+    // };
+    // kakaoAuthorizeAxios();
+    window.Kakao.Auth.login({
+      success: function (obj) {
+        console.log(obj);
+        getInfo(obj.access_token);
+      },
+      fail: function (err) {
+        console.error(err);
+      },
+    });
+    const getInfo = async (token) => {
+      try {
+        //토큰으로 정보 받아오는 부분
+        const tokendata = await SimpleLoginAxios.tokenInfo(token);
+        console.log("token정보 :" + tokendata.data);
+        const propsToPass = {
+          kakaoProp: true,
+          kakaoEmail: tokendata.data.kakao_account.email,
+          kakaopwd: tokendata.data.id,
+          kakaoName: tokendata.data.properties.nickname,
+          kakaoImgUrl: tokendata.data.properties.profile_image,
+        };
+        //이메일 존재하는지 확인하는 부분
+        const emailExist = await LoginAxios.emailIsExist(
+          tokendata.data.kakao_account.email
+        );
+        //이메일 존재하면 화면이동
+        if (emailExist.data) {
+          //엑세스 토큰 작업
+          const email = tokendata.data.kakao_account.email;
+          const pwd = tokendata.data.id;
+          const ImgUrl = tokendata.data.properties.profile_image;
+          const response = await LoginAxios.login(email, pwd);
+          console.log("accessToken : ", response.data.accessToken);
+          console.log("refreshToken : ", response.data.refreshToken);
+          Common.setAccessToken(response.data.accessToken);
+          Common.setRefreshToken(response.data.refreshToken);
+          sessionStorage.setItem("email", email);
+          sessionStorage.setItem("kakaoImgUrl", ImgUrl);
+          //이메일로 커플이름 찾는 비동기 함수
+          const coupleNameSearchAxios = async (email) => {
+            const resCoupleName = await LoginAxios.emailToCoupleNameSearch(
+              email
+            );
+            console.log(resCoupleName.data);
+            // `coupleName`을 `sessionStorage`에 저장합니다.
+            sessionStorage.setItem("coupleName", resCoupleName.data);
+            navigate(`/${resCoupleName.data}/main-page`);
+          };
+          coupleNameSearchAxios(email);
+        }
+        //아니면 여기로 이동
+        else {
+          navigate("/signup-page", { state: propsToPass });
+        }
+      } catch (error) {
+        console.error("Error during Kakao login:", error);
+      }
     };
-    kakaoAuthorizeAxios();
   };
   const codeModalOkBtnHandler = () => {
     closeModal();

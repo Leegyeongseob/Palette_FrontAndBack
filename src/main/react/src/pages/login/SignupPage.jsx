@@ -498,8 +498,9 @@ const SignupPage = () => {
         inputCoupleName &&
         isTermAccepted
       ) {
-        //로그인 하는 부분
-        navigate(`/${inputCoupleName}/main-page`);
+        kakaoLogin(kakaoEmail, kakaopwd);
+        sessionStorage.setItem("kakaoImgUrl", kakaoImgUrl);
+        coupleNameSearch(kakaoEmail);
       }
     } catch (error) {
       console.log(error);
@@ -516,10 +517,6 @@ const SignupPage = () => {
       inputNickName,
       inputCoupleName
     );
-    kakaoLogin(kakaoEmail, kakaopwd);
-    sessionStorage.setItem("kakaoImgUrl", kakaoImgUrl);
-
-    coupleNameSearch(kakaoEmail);
   };
   //이메일로 커플이름 찾는 비동기 함수
   const coupleNameSearch = async (emailData) => {
@@ -543,10 +540,6 @@ const SignupPage = () => {
         Common.setAccessToken(response.data.accessToken);
         Common.setRefreshToken(response.data.refreshToken);
         sessionStorage.setItem("email", kakoEmailvalue);
-
-        // 다시 로그인한 커플의 정보를 확인합니다.
-        const coupleName = sessionStorage.getItem("coupleName");
-        navigate(`/${coupleName}/main-page`);
       } else {
         setModalOpen(true);
         SetHeaderContents("로그인 에러");

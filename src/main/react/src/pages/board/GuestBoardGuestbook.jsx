@@ -320,7 +320,7 @@ const GuestBoardGuestbook = () => {
     try {
       const data = await BoardAxios.getCoupleName(coupleName);
       console.log("axios 데이터", data.data);
-      setBoardData(data.data);
+      setBoardData(data.data.reverse());
     } catch (error) {
       console.error("Failed to fetch board data", error);
     }
@@ -391,62 +391,6 @@ const GuestBoardGuestbook = () => {
       </BoardSide>
       <CenterArea />
       <GuestbookSide>
-        {/* <GuestbookTitle>방명록</GuestbookTitle>
-        <GuestbookGrayBar />
-        <GuestbookWriteArea>
-          <GuestbookBody>
-            <GuestbookImage></GuestbookImage>
-            <GuestbookWriteMain>
-              <GuestbookInput placeholder="내용을 입력하세요." />
-            </GuestbookWriteMain>
-          </GuestbookBody>
-        </GuestbookWriteArea>
-        <GuestbookWriteButton>방명록 등록</GuestbookWriteButton>
-        <GuestbookArea>
-          <GuestbookHead>
-            <GuestbookNo>No.1</GuestbookNo>
-            <GuestbookNickname>캔디</GuestbookNickname>
-            <GuestbookDate>(2024.02.15)</GuestbookDate>
-            <GuestbookDelete>삭제</GuestbookDelete>
-          </GuestbookHead>
-          <GuestbookBody>
-            <GuestbookImage></GuestbookImage>
-            <GuestbookMain>
-              데이트 게시물 잘 보고 있어요! 저희 커플도 참고해서 데이트 계획
-              세우고 있어요.
-            </GuestbookMain>
-          </GuestbookBody>
-        </GuestbookArea>
-        <GuestbookArea>
-          <GuestbookHead>
-            <GuestbookNo>No.1</GuestbookNo>
-            <GuestbookNickname>캔디</GuestbookNickname>
-            <GuestbookDate>(2024.02.15)</GuestbookDate>
-            <GuestbookDelete>삭제</GuestbookDelete>
-          </GuestbookHead>
-          <GuestbookBody>
-            <GuestbookImage></GuestbookImage>
-            <GuestbookMain>
-              데이트 게시물 잘 보고 있어요! 저희 커플도 참고해서 데이트 계획
-              세우고 있어요.
-            </GuestbookMain>
-          </GuestbookBody>
-        </GuestbookArea>
-        <GuestbookArea>
-          <GuestbookHead>
-            <GuestbookNo>No.1</GuestbookNo>
-            <GuestbookNickname>캔디</GuestbookNickname>
-            <GuestbookDate>(2024.02.15)</GuestbookDate>
-            <GuestbookDelete>삭제</GuestbookDelete>
-          </GuestbookHead>
-          <GuestbookBody>
-            <GuestbookImage></GuestbookImage>
-            <GuestbookMain>
-              데이트 게시물 잘 보고 있어요! 저희 커플도 참고해서 데이트 계획
-              세우고 있어요.
-            </GuestbookMain>
-          </GuestbookBody>
-        </GuestbookArea> */}
         <Guestbook />
       </GuestbookSide>
     </BookTheme>

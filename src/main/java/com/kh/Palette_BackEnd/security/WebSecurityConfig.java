@@ -45,10 +45,10 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/auth/**", "/ws/**","/chat/**","/static/**").permitAll()
+                .antMatchers("/","/auth/**", "/ws/**","/chat/**","/static/**","/font/HancomSans-Light_0.ttf").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/HancomSans-Light_0.ttf").permitAll()
+                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/HancomSans-Light_0.ttf","/kakaoLogin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

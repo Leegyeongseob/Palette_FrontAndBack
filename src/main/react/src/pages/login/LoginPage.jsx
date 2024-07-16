@@ -344,6 +344,7 @@ const LoginPage = () => {
       const KAKAO_PATH = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
 
       window.location.href = KAKAO_PATH;
+      console.log("KAKAO_PATH:" + KAKAO_PATH);
     };
     kakaoAuthorizeAxios();
   };

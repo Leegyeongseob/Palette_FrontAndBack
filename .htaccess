@@ -1,0 +1,11 @@
+# CSS 파일에 대한 MIME 타입 설정
+AddType text/css .css
+
+# JavaScript 파일에 대한 MIME 타입 설정
+AddType application/javascript .js
+
+# JSON 파일에 대한 MIME 타입 설정
+AddType application/json .json
+
+# 아이콘 파일에 대한 MIME 타입 설정
+AddType image/x-icon .ico

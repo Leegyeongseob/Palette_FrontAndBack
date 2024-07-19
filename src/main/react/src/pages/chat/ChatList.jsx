@@ -264,11 +264,6 @@ function ChatList() {
   );
 
   useEffect(() => {
-    const coupleName = sessionStorage.getItem("coupleName");
-    coupleNickNameAxois(coupleName);
-  }, [coupleNickNameAxois]);
-
-  useEffect(() => {
     const fetchChatRooms = async () => {
       try {
         const response = await ChatAxiosApi.chatList(email);
@@ -289,7 +284,9 @@ function ChatList() {
 
   const filterChatRooms = (rooms, email) => {
     return rooms.filter(
-      (room) => room.firstEmail === email || room.secondEmail === email
+      (room) =>
+        (room.firstEmail === email || room.secondEmail === email) &&
+        !room.deleted
     );
   };
 

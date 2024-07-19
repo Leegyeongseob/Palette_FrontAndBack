@@ -9,8 +9,7 @@ const KakaoRedirect = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const code = params.get("code");
-    console.log("code :" + code);
-    console.log("params :" + params);
+
     const fetchKakaoAuthCode = async () => {
       try {
         // 인가 토큰으로 accessToken과 유저 정보 받아오는 부분

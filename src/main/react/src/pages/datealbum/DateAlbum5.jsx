@@ -11,6 +11,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import AlbumAxiosApi from "../../axiosapi/AlbumAxiosApi";
 import { storage } from "../../firebase/firebaseAlbum";
 import deleteImageFromFirebase from "../../firebase/firebaseAlbumDel";
+import MainAxios from "../../axiosapi/MainAxios";
 
 const turnPageRight = keyframes`
   0% {
@@ -28,19 +29,29 @@ const turnPageRight = keyframes`
 `;
 
 const BookTheme = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
   background-image: url(${theme8});
   background-size: cover;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  position: relative;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
 `;
 
 const BookTheme2 = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
@@ -48,11 +59,20 @@ const BookTheme2 = styled.div`
   background-size: cover;
   display: flex;
   justify-content: space-between;
-  position: relative;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
 `;
 
 const BookSign = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   background-image: url(${theme8});
   background-size: cover;
@@ -65,10 +85,18 @@ const BookSign = styled.div`
     css`
       animation: ${turnPageRight} 1.8s forwards;
     `}
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+  }
 `;
 
 const BookSign2 = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   background-image: url(${theme8_1});
   background-size: cover;
@@ -77,6 +105,14 @@ const BookSign2 = styled.div`
   position: absolute;
   border-left: 0.5px solid black;
   display: flex;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+  }
 `;
 const ContentWrapper = styled.div`
   width: 100%;
@@ -100,7 +136,7 @@ const ContentWrapper2 = styled.div`
 `;
 const ImgWrapper2 = styled.div`
   width: 90%;
-  height: 81%;
+  height: 82%;
   background-color: ${(props) => props.bgColor};
   padding-left: 0.4%;
   margin-top: 6%;
@@ -109,8 +145,8 @@ const ImgWrapper2 = styled.div`
 `;
 
 const ImgBox2 = styled.div`
-  width: 7.4vw;
-  height: 15vh;
+  width: 141px;
+  height: 15.4vh;
   background-color: gray;
   display: flex;
   align-items: center;
@@ -140,23 +176,47 @@ const ImgBox2 = styled.div`
       }
     `}
   }
+  @media screen and (max-width: 1200px) {
+    width: 120px;
+    height: 13vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 8vh;
+  }
 `;
 
 const Dday = styled.div`
   width: 90%;
   height: 11%;
-  font-size: 30px;
+  font-size: 22px;
   margin-left: 5%;
   display: flex;
   justify-content: left;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 13px;
+  }
+`;
+const DdayCoupleName = styled.div`
+  width: 90%;
+  height: 11%;
+  font-size: 22px;
+  margin-left: 5%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.5rem;
 `;
 
 const BackButton = styled.div`
   width: 20px;
   height: 20px;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 22px;
   margin-right: 30px;
   color: white;
   cursor: pointer;
@@ -197,31 +257,43 @@ const TitleLine = styled.div`
   display: flex;
   justify-content: flex-end;
   padding-right: 1%;
-  font-size: 0.78vw;
+  font-size: 13px;
   color: black;
   font-weight: bolder;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    font-size: 14px;
   }
 `;
 const AddTema = styled.div`
-  font-size: 0.78vw;
+  font-size: 13px;
   color: black;
   font-weight: bolder;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
 const AddAlbum = styled.div`
-  font-size: 0.78vw;
+  font-size: 13px;
   color: black;
   font-weight: bolder;
   margin-left: 3%;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
 const Img = styled.img`
@@ -231,15 +303,25 @@ const Img = styled.img`
 `;
 
 const PlusButton = styled.button`
-  width: 2.5vw;
+  width: 50px;
   height: 5vh;
-  font-size: 1.4vw;
+  font-size: 30px;
   border-radius: 50px;
   background-color: #ccc;
   border: none;
   cursor: pointer;
   &:hover {
     background-color: #aaa;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 40px;
+    height: 4vh;
+    font-size: 25px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 25px;
+    height: 2.5vh;
+    font-size: 15px;
   }
 `;
 
@@ -255,9 +337,15 @@ const DateAlbum5 = () => {
       .map((_, index) => (index === 0 ? "+" : null))
   );
   const userEmail = sessionStorage.getItem("email");
+  const coupleName = sessionStorage.getItem("coupleName");
   const [temaChange, setTemaChange] = useState(false);
   const [pageOpen, setPageOpen] = useState(false);
   const [temaOpen, setTemaOpen] = useState(false);
+
+  //디데이 상태저장
+  const [isDday, setIsDday] = useState();
+  //디데이 값 저장
+  const [saveDday, setSaveDday] = useState("");
 
   const closeModal = () => {
     setPageOpen(false);
@@ -280,6 +368,19 @@ const DateAlbum5 = () => {
     setTimeout(() => {
       navigate("/date-album4");
     }, 1800);
+  };
+
+  // DDay 바꾸는 함수
+  const dDayAxios = async () => {
+    const resDday = await MainAxios.searchDday(coupleName);
+    if (resDday.data !== "") {
+      setIsDday(true);
+      setSaveDday(resDday.data);
+      console.log("if실행");
+    } else {
+      setIsDday(false);
+      console.log("else 실행");
+    }
   };
 
   // 이미지 불러오기
@@ -312,6 +413,7 @@ const DateAlbum5 = () => {
     };
 
     fetchAlbum();
+    dDayAxios();
   }, [userEmail]);
 
   // 이미지 저장
@@ -479,7 +581,11 @@ const DateAlbum5 = () => {
               <TitleLine onClick={handleTemaChange}>테마 변경</TitleLine>
             </AddButton>
             <ImgWrapper2 bgColor={bgColor}>
-              <Dday>♥ D + 150 ♥</Dday>
+              {isDday ? (
+                <Dday>♥ D + {saveDday} ♥</Dday>
+              ) : (
+                <Dday>♥ 사귄날을 입력해주세요! ♥</Dday>
+              )}
               {renderImageBoxes(0, 9)}
             </ImgWrapper2>
           </ContentWrapper>
@@ -493,7 +599,7 @@ const DateAlbum5 = () => {
               <AddAlbum onClick={handlePagePopup}>앨범 추가</AddAlbum>
             </AddButton>
             <ImgWrapper2 bgColor={bgColor}>
-              <Dday></Dday>
+              <DdayCoupleName>♥ {coupleName} ♥</DdayCoupleName>
               {renderImageBoxes(9, 18)}
             </ImgWrapper2>
           </ContentWrapper2>

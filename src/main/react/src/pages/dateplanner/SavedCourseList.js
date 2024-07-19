@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const SavedCoursesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 24vh;
-  h3{
+    display: flex;
+    flex-direction: column;
+    /* max-width: 100%; */
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 43%;
+
+  h3 {
     margin: 10px;
     text-align: center;
   }
@@ -34,8 +35,9 @@ const CourseItem = styled.li`
 `;
 
 const CourseTitle = styled.div`
-width: auto;
+  width: auto;
   cursor: pointer;
+  font-size: 16px;
 `;
 
 const ActionButtons = styled.div`
@@ -51,26 +53,32 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+
   &:hover {
     background-color: #444;
   }
 `;
 
-const SavedCoursesList = ({openModal, savedCourses, setSelectedCourse, handleEditCourse, handleDeleteCourse }) => {
-
-  
-  
+const SavedCoursesList = ({
+  openModal,
+  savedCourses,
+  setSelectedCourse,
+  handleEditCourse,
+  handleDeleteCourse,
+}) => {
   return (
     <SavedCoursesContainer>
       <h3>저장된 코스</h3>
       <CourseList>
         {savedCourses.map((course, index) => (
           <CourseItem key={index}>
-            <CourseTitle onClick={() =>openModal(index)}>{course.title}</CourseTitle>
+            <CourseTitle onClick={() => openModal(index)}>
+              {course.title}
+            </CourseTitle>
             <ActionButtons>
               <Button onClick={() => handleEditCourse(index)}>수정</Button>
               <Button onClick={() => handleDeleteCourse(index)}>삭제</Button>
-              <button onClick={() => openModal(index)}>지도 보기</button>
+              <Button onClick={() => openModal(index)}>지도 보기</Button>
             </ActionButtons>
           </CourseItem>
         ))}

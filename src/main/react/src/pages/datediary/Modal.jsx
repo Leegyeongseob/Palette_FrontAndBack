@@ -84,10 +84,9 @@ const ModalButton = styled.button`
   }
 `;
 
-
 const Img = styled.img`
-  width: 10vw;
-  height: 20vh;
+  width: 200px;
+  height: 200px;
 `;
 const Modal = (props) => {
   const { open, confirm, close, type, header, children, img } = props;
@@ -104,8 +103,11 @@ const Modal = (props) => {
             {children}
           </ModalMain>
           <ModalFooter>
-           {type ? (<ModalButton onClick={confirm}>확인</ModalButton>) :
-            (<ModalButton onClick={close}>확인</ModalButton>)} 
+            {type ? (
+              <ModalButton onClick={confirm}>확인</ModalButton>
+            ) : (
+              <ModalButton onClick={close}>확인</ModalButton>
+            )}
           </ModalFooter>
         </ModalSection>
       )}

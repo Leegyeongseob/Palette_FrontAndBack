@@ -7,11 +7,21 @@ import MainAxios from "../../axiosapi/MainAxios";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 
 const Contain = styled.div`
-  width: 7.8125vw; // 150px / 1920 * 100
+  width: 300px; // 150px / 1920 * 100
   height: 15.74vh; // 150px / 953 * 100
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  @media screen and (max-width: 1200px) {
+    width: 260px;
+    height: 13vh;
+  } 
+  @media screen and (max-width: 768px) {
+    width: 200px;
+    height: 10vh;
+    border-radius: 5px 5px 0 0;
+  }
 `;
 
 const ProfileDiv = styled.div`
@@ -20,15 +30,24 @@ const ProfileDiv = styled.div`
 `;
 
 const ProfileImgDiv = styled.div`
-  width: 6vw;
+  width: 115px;
   height: 11vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: 110px;
+    height: 8vh;
+  } 
+  @media screen and (max-width: 768px) {
+    width: 25px;
+    height: 5vh;
+    border-radius: 5px 5px 0 0;
+  }
 `;
 
 const HeartDiv = styled.div`
-  width: 4vw;
+  width: 70px;
   height: 15vh;
   display: flex;
   justify-content: center;
@@ -36,18 +55,37 @@ const HeartDiv = styled.div`
 `;
 
 const Heart = styled.div`
-  width: 1.3021vw; // 25px / 1920 * 100
+  width: 25px; // 25px / 1920 * 100
   height: 2.6233vh; // 25px / 953 * 100
   background-image: url(${heart});
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 1200px) {
+    width: 23px;
+    height: 2.4vh;
+  } 
+  @media screen and (max-width: 768px) {
+    width: 16px;
+    height: 8vh;
+  }
 `;
 
 const Profile = styled.div`
-  width: 3.6458vw; // 70px / 1920 * 100
+  width: 70px; // 70px / 1920 * 100
   height: 7.3453vh; // 70px / 953 * 100
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-size: cover;
+  background-position: center;
   border-radius: 50%;
+  @media screen and (max-width: 1200px) {
+    width: 60px;
+    height: 6vh;
+  } 
+  @media screen and (max-width: 768px) {
+    width: 30px;
+    height: 3vh;
+  }
 `;
 
 const Text = styled.div`
@@ -56,9 +94,15 @@ const Text = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.6771vw; // 13px / 1920 * 100
+  font-size: 13px; // 13px / 1920 * 100
   font-weight: 600;
   color: black;
+  @media screen and (max-width: 1200px) {
+    font-size: 12px; // 13px / 1920 * 100
+  } 
+  @media screen and (max-width: 768px) {
+    font-size: 9px; // 13px / 1920 * 100
+  }
 `;
 
 const CoupleImg = () => {

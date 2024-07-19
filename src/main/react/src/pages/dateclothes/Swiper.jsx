@@ -6,8 +6,8 @@ import axios from "axios";
 // 스타일드 컴포넌트 정의
 const MenuContainer = styled.div.attrs(({ shoes, clothNum, OnePiece }) => ({
   style: {
-    width: clothNum === 7 ? "13vw" : shoes ? "5vw" : "9vw",
-    height: clothNum === 7 ? "33vh" : shoes ? "7vh" : "17vh",
+    width: clothNum === 7 ? "100%" : shoes ? "100%" : "100%",
+    height: clothNum === 7 ? "42vh" : shoes ? "7vh" : "21vh",
     display:
       (!OnePiece && clothNum === 7) ||
       ((clothNum === 4 || clothNum === 5) && OnePiece)

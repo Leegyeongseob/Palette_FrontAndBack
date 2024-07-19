@@ -3,7 +3,7 @@ import PaletteStyle from "./PaletteStyle";
 import OpenBook from "./common/background/OpenBook";
 import CloseBook from "./common/background/CloseBook";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import MainPage from "./pages/main/MainPage";
+import AfterMain from "./pages/main/MainPage";
 import NotLogin from "./pages/main/NotLogin";
 import LoginPage from "./pages/login/LoginPage";
 import SignupPage from "./pages/login/SignupPage";
@@ -19,7 +19,6 @@ import DateAlbum2 from "./pages/datealbum/DateAlbum2";
 import DateAlbum3 from "./pages/datealbum/DateAlbum3";
 import DateAlbum4 from "./pages/datealbum/DateAlbum4";
 import DateAlbum5 from "./pages/datealbum/DateAlbum5";
-import BoardGuestbook from "./pages/board/BoardGuestbook";
 import BoardDetails from "./pages/board/BoardDetails";
 import BoardWrite from "./pages/board/BoardWrite";
 import Modify from "./pages/setting/Modify";
@@ -38,6 +37,7 @@ import KakaoRedirect from "./pages/login/redirect/KakaoRedirect";
 import ChatList from "./pages/chat/ChatList";
 import ChatRoomCreate from "./pages/chat/ChatRoomCreate";
 import BoardUpdate from "./pages/board/BoardUpdate";
+import MainPage from "./pages/main/BeforeMainPage";
 
 function App() {
   return (
@@ -60,7 +60,8 @@ function App() {
             element={<PaletteNoticeDetails />}
           />
           <Route element={<OpenBook />}>
-            <Route path="/:coupleName/main-page" element={<MainPage />} />
+            <Route path="/main-page" element={<MainPage />} />
+            <Route path="/:coupleName/main-page" element={<AfterMain />} />
             <Route path="/date-clothes" element={<DateClothes />} />
             <Route path="/date-album" element={<DateAlbum />} />
             <Route path="/date-album2" element={<DateAlbum2 />} />

@@ -12,31 +12,31 @@ import useAddress from "../../hooks/useLocation";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 import { useParams } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
-
-const LBookContainer = styled.div`
-  width: 25.8vw;
-  height: 69vh;
-`;
-const RBookContainer = styled.div`
-  width: 25.8vw;
-  height: 69vh;
-`;
-
 const BookWrapper = styled.div`
-  width: 53vw;
-  height: 69vh;
-  margin-top: 4vh;
-  margin-left: 0.8vw;
-  background-image: url(${theme6});
+border: 1px solid green;
+  width: 85%;
+  height: 83%;
+  margin-top: 3%;
+  margin-left: 14px;
+ 
   background-size: cover;
   opacity: 0.8;
   display: flex;
   justify-content: space-between;
 `;
 
-// const EmptyDiv = () => {
-//   return <div></div>;
-// };
+const LBookContainer = styled.div`
+border: 1px solid red;
+background-image: url(${theme6});
+  width: 50%;
+  height: 100%;
+`;
+const RBookContainer = styled.div`
+border: 1px solid blue;
+ background-image: url(${theme6});
+  width: 50%;
+  height: 100%;
+`;
 
 const DatePlanner = () => {
   const { location } = useAddress();

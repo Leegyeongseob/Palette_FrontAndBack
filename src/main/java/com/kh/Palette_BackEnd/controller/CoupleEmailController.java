@@ -14,12 +14,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/chat2")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CoupleEmailController {
     private final ChatService chatService;
     //커플이름 뽑아오기
 
     @PostMapping("/coupleEmail")
-
     public ResponseEntity<List<String>> coupleEmail(@RequestBody Map<String,String> email) {
         return ResponseEntity.ok(chatService.coupleEmail(email.get("email")));
     }

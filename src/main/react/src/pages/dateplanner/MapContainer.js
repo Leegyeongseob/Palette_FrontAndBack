@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-const Search = styled.form`
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const MapSection = styled.div`
-  width: 25.8vw;
-  min-width: 228px;
+  width: 100%;
+  height: 55%;
   display: flex;
   flex-direction: column;
 `;
@@ -17,32 +11,62 @@ const MapSection = styled.div`
 const MapWrap = styled.div`
   position: relative;
   width: 100%;
-  height: 36vh;
+  height: 87%;
 `;
 
 const CategoryList = styled.ul`
+    position: absolute;
+    width: 339px;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 5px;
+    border: 1px solid #909090;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    background: #fff;
+    z-index: 2;
+    display: flex;
+    @media screen and (max-width: 768px) {
+    width: 80%;
+    left: 18%;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+  max-height: ${({ expanded }) => (expanded ? '300px' : '0')}; /* 기본적으로 접힌 상태로 설정 */
+    
+    .category-text {
+      display: none; 
+    }
+    
+  }
+`;
+
+const ToggleButton = styled.button`
   position: absolute;
   bottom: 10px;
   left: 10px;
+  z-index: 3;
+  padding: 10px;
+  background: #007bff;
+  color: #fff;
+  border: none;
   border-radius: 5px;
-  border: 1px solid #909090;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-  background: #fff;
-  overflow: hidden;
-  z-index: 2;
-  padding: 0;
-  display: flex;
+  cursor: pointer;
+  font-size: 2vw;
+  display:none;
+  @media screen and (max-width: 768px) {
+    display:block;
+  }
+
 `;
 
+
 const CategoryItem = styled.li`
-  float: left;
-  list-style: none;
-  width: 3.8vw;
-  padding: 6px 0;
-  text-align: center;
-  cursor: pointer;
-  border-right: 1px solid #acacac;
-  font-size: 12px;
+    float: left;
+    width: 20%;
+    padding: 6px 0;
+    text-align: center;
+    cursor: pointer;
+    border-right: 1px solid #acacac;
+    font-size: 13px;
   &.on {
     background: #eee;
   }
@@ -69,6 +93,15 @@ const CategoryIcon = styled.span`
   background-size: 30px 30px;
 `;
 
+const Search = styled.form`
+  margin: 10px 10px 10px 0;
+  
+  display: flex;
+  justify-content: flex-end;
+`;
+
+
+
 const MapContainer = ({
   clearOverlay,
   mapContainer,
@@ -83,6 +116,7 @@ const MapContainer = ({
 }) => {
   const [markers, setMarkers] = useState([]);
   const ps = new window.kakao.maps.services.Places(map);
+  const [expanded, setExpanded] = useState(false); // 토글 상태
   
 
   useEffect(() => {
@@ -250,14 +284,14 @@ const MapContainer = ({
   
 
   return (
-    <div>
+    <>
       <MapSection
         placeOverlay={placeOverlay}
         map={map}
         placesSearchCB={placesSearchCB}
       >
         <MapWrap ref={mapContainer}>
-          <CategoryList id="category">
+        <CategoryList expanded={expanded} id="category">
             {["CE7", "FD6", "AD5", "AT4", "CT1", "CS2"].map((id) => (
               <CategoryItem
                 key={id}
@@ -265,22 +299,27 @@ const MapContainer = ({
                 onClick={() => onClickCategory(id)}
               >
                 <CategoryIcon category={id} selected={currCategory === id} />
-                {id === "CE7" && "카페"}
-                {id === "FD6" && "음식점"}
-                {id === "AD5" && "숙박"}
-                {id === "AT4" && "관광명소"}
-                {id === "CT1" && "문화시설"}
-                {id === "CS2" && "편의점"}
+                <span className="category-text">
+                  {id === "CE7" && "카페"}
+                  {id === "FD6" && "음식점"}
+                  {id === "AD5" && "숙박"}
+                  {id === "AT4" && "관광명소"}
+                  {id === "CT1" && "문화시설"}
+                  {id === "CS2" && "편의점"}
+                </span>
               </CategoryItem>
             ))}
           </CategoryList>
+          <ToggleButton onClick={() => setExpanded(!expanded)}>
+            {expanded ? "접기" : "카테고리"}
+          </ToggleButton>
         </MapWrap>
         <Search onSubmit={handleSubmit}>
           <input type="text" name="keyword" />
           <button type="submit">검색하기</button>
         </Search>
       </MapSection>
-    </div>
+    </>
   );
 };
 

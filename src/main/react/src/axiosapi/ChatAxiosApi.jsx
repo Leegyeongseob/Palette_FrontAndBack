@@ -20,14 +20,37 @@ const ChatAxiosApi = {
     );
   },
 
-  // 채팅방 목록 보기
-  chatList: async () => {
-    return await AxiosInstance.get(Common.PALLETE_DOMAIN + "/chat/list");
+  // // 채팅방 목록 보기
+  // chatList: async (email, firstEmail, secondEmail) => {
+  //   console.log("첫이메일:  " + firstEmail + "이메일:" + email);
+  //   console.log("두번째 이메일" + secondEmail);
+  //   const emailcheck = {
+  //     email: email,
+  //     firstEmail: firstEmail,
+  //     receiver: secondEmail,
+  //   };
+  //   return await AxiosInstance.get(
+  //     Common.PALLETE_DOMAIN + "/chat/list",
+  //     emailcheck
+  //   );
+  // },
+
+  chatList: async (email, firstEmail, secondEmail, roomId) => {
+    return await AxiosInstance.get(Common.PALLETE_DOMAIN + "/chat/list", {
+      params: {
+        email: email,
+        firstEmail: firstEmail,
+        receiver: secondEmail,
+        roomId: roomId,
+      },
+    });
   },
 
-  chatCreate: async (name) => {
+  chatCreate: async (name, sender, receiver) => {
     const chat = {
       name: name,
+      sender: sender,
+      receiver: receiver,
     };
     return await AxiosInstance.post(Common.PALLETE_DOMAIN + "/chat/new", chat);
   },
@@ -42,6 +65,18 @@ const ChatAxiosApi = {
       email: email,
     };
     return await AxiosInstance.post("/chat2/coupleEmail", member);
+  },
+
+  deleteChatRoom: async (roomId) => {
+    try {
+      console.log("Deleting chat room:", roomId);
+      const response = await AxiosInstance.delete(`/chatroom/${roomId}`);
+      console.log("Delete response:", response);
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting chat room:", error);
+      throw error;
+    }
   },
 };
 

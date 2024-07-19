@@ -1,11 +1,13 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChatAxiosApi from "../../axiosapi/ChatAxiosApi";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 `;
 
@@ -24,7 +26,7 @@ const Input = styled.input`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10px; // 버튼 사이의 간격
+  gap: 10px; /* 버튼 사이의 간격 */
 `;
 
 const Button = styled.button`
@@ -41,22 +43,49 @@ const Button = styled.button`
   }
 `;
 
-const ChatRoomCreate = () => {
+const ChatRoomCreate = ({ onClose }) => {
   const [chatRoomTitle, setChatRoomTitle] = useState("");
   const navigate = useNavigate();
+  const [sender, setSender] = useState("");
+  const [receiver, setReceiver] = useState("");
+  const email = sessionStorage.getItem("email");
 
   const handleCreateChatRoom = async () => {
     try {
-      const response = await ChatAxiosApi.chatCreate(chatRoomTitle);
+      const response = await ChatAxiosApi.chatCreate(
+        chatRoomTitle,
+        sender,
+        receiver
+      );
       console.log(response.data);
       navigate(`/chat/${response.data}`);
+      onClose(); // 모달 닫기
     } catch (e) {
       console.log(e);
     }
   };
 
+  // 확인 이벤트 함수
+  const okOnClickHandler = () => {
+    handleCreateChatRoom();
+  };
+
+  useEffect(() => {
+    const coupleEmailAxios = async () => {
+      try {
+        const rsp = await ChatAxiosApi.coupleEmail(email);
+        console.log(rsp.data);
+        setSender(rsp.data[0]);
+        setReceiver(rsp.data[1]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    coupleEmailAxios();
+  }, [email]);
+
   const handleCancel = () => {
-    navigate(-1);
+    onClose(); // 모달 닫기
   };
 
   return (
@@ -68,7 +97,7 @@ const ChatRoomCreate = () => {
         onChange={(e) => setChatRoomTitle(e.target.value)}
       />
       <ButtonContainer>
-        <Button onClick={handleCreateChatRoom}>확인</Button>
+        <Button onClick={okOnClickHandler}>확인</Button>
         <Button onClick={handleCancel}>취소</Button>
       </ButtonContainer>
     </Container>

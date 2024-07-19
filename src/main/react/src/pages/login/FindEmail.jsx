@@ -6,118 +6,154 @@ import LoginAxios from "../../axiosapi/LoginAxios";
 import Modal from "../datediary/Modal";
 import findIdImg from "../../img/loginImg/아이디찾기.gif";
 const Contain = styled.div`
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
 `;
 const IconDiv = styled.div`
-  width: 24.6vw;
-  height: 18.888vh;
+  width: 100%;
+  height: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const InputDiv = styled.div`
-  width: 24.6vw;
-  height: 20.986vh;
+  width: 100%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 `;
 const ButtonDiv = styled.div`
-  width: 23.438vw;
-  height: 11.962vh;
+  width: 100%;
+  height: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const FindButton = styled.div`
-  width: 9.375vw;
-  height: 5.247vh;
+  width: 27%;
+  height: 44%;
   background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  font-size: 1.198vw;
+  border-radius: 1.042vw;
+  font-size: 20px;
   color: #b44a4a;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 600;
   cursor: pointer;
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);
   }
+
+  @media screen and (max-width: 654px) {
+    font-size: 3vw;
+  }
+
 `;
 const InputDetailDiv = styled.div`
-  width: 17.708vw;
-  height: 3.358vh;
-
+  width: 100%;
+  height: 20%;
   display: flex;
+  gap: 2px;
+
   & > label {
-    width: 5.729vw;
-    height: auto;
-    font-size: 0.833vw;
-    color: #b44a4a;
     display: flex;
-    font-weight: bolder;
     justify-content: center;
     align-items: center;
+    width: 29%;
+    height: auto;
+    font-size: 14px;
+    color: #b44a4a;
+    text-align: center;
+    font-weight: bolder;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
   }
+
   & > .InputClass {
-    width: 11.458vw;
+    width: 53%;
+    height: auto;
     border-radius: 0.521vw;
     border: none;
     background-color: rgba(0, 0, 0, 0.3);
     outline: none;
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
     padding-left: 0.521vw;
-    font-size: 0.833vw;
+    font-size: 14px;
     font-weight: 600;
+    @media screen and (max-width: 654px) {
+      font-size: 3vw;
+    }
   }
 `;
+
 const RegisterationInput1 = styled.input`
-  width: 6.25vw;
+  width: 22%;
+  height: auto;
   border-radius: 0.521vw;
   border: none;
   background-color: rgba(0, 0, 0, 0.3);
   outline: none;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
   padding-left: 0.521vw;
-  font-size: 0.833vw;
+  font-size: 14px;
   font-weight: 600;
+  @media screen and (max-width: 654px) {
+    font-size: 3vw;
+  }
 `;
 const Text = styled.div`
-  width: 0.521vw;
-  height: 3.358vh;
+  width: 3%;
+  height: auto;
   font-weight: bolder;
-  font-size: 0.833vw;
+  font-size: 15px;
   color: #b44a4a;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const RegisterationInput2 = styled.input`
-  width: 1.042vw;
+  width: 7%;
+  height: auto;
   border-radius: 0.521vw;
   border: none;
   background-color: rgba(0, 0, 0, 0.3);
   outline: none;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
   padding-left: 0.208vw;
-  font-size: 0.833vw;
+  font-size: 14px;
   font-weight: 600;
+  @media screen and (max-width: 654px) {
+    font-size: 3vw;
+  }
 `;
 const FaMagnifyingGlassStyle = styled(FaMagnifyingGlass)`
-  width: 5.208vw;
-  height: 10.493vh;
+  width: calc(110px - 1vw);
+  height: calc(110px - 1vh);
   color: rgba(0, 0, 0, 0.7);
+  @media screen and (max-width: 654px) {
+    width: 24%;
+    height: 60%;
+  }
+
 `;
 const Message = styled.div`
   width: 100%;
-  font-size: 0.6vw;
+  font-size: 12px;
   display: flex;
   justify-content: center;
   color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const FindEmail = () => {
   //주민등록번호 표현 상태 변수
@@ -280,7 +316,7 @@ const FindEmail = () => {
           <label>이름</label>
           <input className="InputClass" onChange={nameInputOnChange} />
         </InputDetailDiv>
-        <div>
+        <>
           <InputDetailDiv>
             <label>주민등록번호</label>
             <RegisterationInput1
@@ -300,7 +336,7 @@ const FindEmail = () => {
             <Text>*</Text>
           </InputDetailDiv>
           <Message isCorrect={isRrnValid}>{isRrnValidMessage}</Message>
-        </div>
+        </>
       </InputDiv>
       <ButtonDiv>
         <FindButton onClick={findIdOnclickHandler}>찾기</FindButton>

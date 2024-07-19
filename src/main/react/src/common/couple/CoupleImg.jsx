@@ -14,25 +14,42 @@ import {
 } from "firebase/storage";
 
 const Contain = styled.div`
-  width: auto;
-  height: auto;
+  width: ${({ clothes }) => (clothes ? "70vw" : "495px")};
+  height: 100%;
+  margin-right: 1.5%;
   display: flex;
-  justify-content: ${({ clothes }) => (clothes ? "space-evenly" : "center")};
+  justify-content: ${({ clothes }) => (clothes ? "space-between" : "center")};
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: ${({ clothes }) => (clothes ? "70vw" : "420px")};
+  }
+  @media screen and (max-width: 768px) {
+    width: ${({ clothes }) => (clothes ? "70vw" : "280px")};
+  }
 `;
 const ProfileDiv = styled.div`
-  width: ${({ clothes }) => (clothes ? "23vw" : "8vw")};
+  width: ${({ clothes }) => (clothes ? "100%" : "211px")};
   height: ${({ clothes }) => (clothes ? "12vh" : "23vh")};
   display: ${({ clothes }) => (clothes ? "flex" : "block")};
   flex-direction: ${({ direction }) => (direction ? "row-reverse" : "row")};
-  justify-content: flex-end;
+  justify-content: space-evenly;
+  background-color: ${({ clothes }) => (clothes ? "aliceblue" : "none")};
+  @media screen and (max-width: 1200px) {
+    width: ${({ clothes }) => (clothes ? "70vw" : "190px")};
+    height: ${({ clothes }) => (clothes ? "12vh" : "19vh")};
+  }
+  @media screen and (max-width: 768px) {
+    width: ${({ clothes }) => (clothes ? "70vw" : "100px")};
+    height: ${({ clothes }) => (clothes ? "12vh" : "10vh")};
+  }
 `;
 const ProfileImgDiv = styled.div`
-  width: 8vw;
-  height: 15vh;
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  background-color: ${({ clothes }) => (clothes ? "lightblue" : "none")};
 `;
 const HeartDiv = styled.div`
   width: 4vw;
@@ -42,27 +59,38 @@ const HeartDiv = styled.div`
   align-items: center;
 `;
 const Heart = styled.div`
-  width: ${({ clothes }) => (clothes ? "2.604vw" : "3.646vw")};
-  height: ${({ clothes }) => (clothes ? "5.247vh" : "7.345vh")};
+  width: ${({ clothes }) => (clothes ? "40px" : "3.646vw")};
+  height: ${({ clothes }) => (clothes ? "40px" : "7.345vh")};
   background-image: url(${heart});
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 const Profile = styled.div`
-  width: ${({ clothes }) => (clothes ? "5vw" : "6.771vw;")};
-  height: ${({ clothes }) => (clothes ? "10vh" : "13.641vh;")};
+  width: ${({ clothes }) => (clothes ? "100px" : "130px")};
+  height: ${({ clothes }) => (clothes ? "100px" : "130px")};
   background-image: ${({ imageurl }) =>
     `url(${imageurl ? imageurl : manprofile})`};
   background-size: cover;
+  background-position: center;
   border-radius: 50%;
   position: absolute;
+  @media screen and (max-width: 1200px) {
+    width: ${({ clothes }) => (clothes ? "70px" : "100px")};
+    height: ${({ clothes }) => (clothes ? "70px" : "100px")};
+  }
+  @media screen and (max-width: 768px) {
+    width: ${({ clothes }) => (clothes ? "50px" : "60px")};
+    height: ${({ clothes }) => (clothes ? "50px" : "60px")};
+  }
 `;
 const Text = styled.div`
-  width: ${({ clothes }) => (clothes ? "7vw" : "8vw")};
+  width: ${({ clothes }) => (clothes ? "30%" : "8vw")};
   height: 7.345vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.042vw;
+  font-size: 16px;
   font-weight: 600;
   color: ${({ clothes }) => (clothes ? "#000" : "#fff")};
 `;
@@ -226,7 +254,7 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
   return (
     <Contain clothes={clothes}>
       <ProfileDiv clothes={clothes}>
-        <ProfileImgDiv>
+        <ProfileImgDiv clothes={clothes}>
           <Profile
             imageurl={IsExistImg[0] ? imgUrl : manprofile}
             clothes={clothes}
@@ -250,7 +278,7 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
         <Heart clothes={clothes} />
       </HeartDiv>
       <ProfileDiv clothes={clothes} direction={true}>
-        <ProfileImgDiv>
+        <ProfileImgDiv clothes={clothes}>
           <Profile
             imageurl={IsExistImg[1] ? myDarling : womanprofile}
             clothes={clothes}

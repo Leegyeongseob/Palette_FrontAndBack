@@ -3,76 +3,95 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 const Contain = styled.div`
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const TitleDiv = styled.div`
-  width: 24.6vw;
-  height: 6.296vh;
+  width: 100%;
+  height: 13%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.198vw;
+  font-size: 18px;
   font-weight: 900;
   color: #b44a4a;
+  @media screen and (max-width: 654px) {
+    font-size: 3vw;
+  }
 `;
 const InputDiv = styled.div`
-  width: 24.6vw;
-  height: 39.874vh;
+  width: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  
+`;
+
+const EmailDiv = styled.div`
+  width: 100%;
 `;
 const InputDetailDiv = styled.div`
-  width: 17.708vw;
-  height: 3.358vh;
-
+  width: 100%;
+  height: 32px;
   display: flex;
-  justify-content: end;
+  gap: 2px;
+  @media screen and (max-width: 654px) {
+    height: 5vw;
+  }
+
   & > label {
-    width: 5.729vw;
-    height: auto;
-    font-size: 0.8vw;
-    color: #b44a4a;
     display: flex;
-    font-weight: bolder;
     justify-content: center;
     align-items: center;
+    width: 29%;
+    height: auto;
+    font-size: 14px;
+    color: #b44a4a;
+    text-align: center;
+    font-weight: bolder;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
   }
+  & > .InputEmail,
   & > .InputClass {
-    width: 11.458vw;
+    width: 53%;
+    height: 100%;
     border-radius: 0.521vw;
     border: none;
     background-color: rgba(0, 0, 0, 0.3);
     outline: none;
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
     padding-left: 0.521vw;
-    font-size: 0.8vw;
+    font-size: 14px;
     font-weight: 600;
-  }
-  & > .InputEmail {
-    width: 11.458vw;
-    border-radius: 0.521vw;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.3);
-    outline: none;
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
-    padding-left: 0.521vw;
-    font-size: 0.8vw;
-    font-weight: 600;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
   }
 `;
 const ButtonDiv = styled.div`
-  width: 23.438vw;
-  height: 11.962vh;
+  width: 100%;
+  height: 14%;
   display: flex;
   justify-content: center;
   align-items: center;
+  & > a {
+    width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
 `;
 const SignupButton = styled.div`
-  width: 9.375vw;
-  height: 5.247vh;
+  width: 30%;
+  height: 80%;
   background-color: ${({ isActive }) =>
     isActive ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
   border-radius: 1.042vw;
@@ -88,13 +107,19 @@ const SignupButton = styled.div`
     background-color: ${({ isActive }) =>
       isActive ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
   }
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const Message = styled.div`
   width: 100%;
-  font-size: 0.6vw;
+  font-size: 12px;
   display: flex;
   justify-content: center;
   color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 
 const Modify = () => {
@@ -193,7 +218,7 @@ const Modify = () => {
     <Contain>
       <TitleDiv>회원수정</TitleDiv>
       <InputDiv>
-        <div>
+        <EmailDiv>
           <InputDetailDiv>
             <label>이메일</label>
             <input
@@ -203,19 +228,18 @@ const Modify = () => {
             />
           </InputDetailDiv>
           {inputEmail && <Message isCorrect={isId}>{idMessage}</Message>}
-        </div>
-        <div>
-          <InputDetailDiv>
-            <label>비밀번호</label>
-            <input
-              type="password"
-              className="InputClass"
-              value={inputPwd}
-              onChange={onChangePw}
-            />
-          </InputDetailDiv>
-          {inputPwd && <Message isCorrect={isPwd}>{pwdMessage}</Message>}
-        </div>
+        </EmailDiv>
+        <InputDetailDiv>
+          <label>비밀번호</label>
+          <input
+            type="password"
+            className="InputClass"
+            value={inputPwd}
+            onChange={onChangePw}
+          />
+        </InputDetailDiv>
+        {inputPwd && <Message isCorrect={isPwd}>{pwdMessage}</Message>}
+
         <InputDetailDiv>
           <label>이름</label>
           <input

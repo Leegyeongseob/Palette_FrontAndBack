@@ -1,44 +1,64 @@
 import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import manprofile from "../../img/commonImg/남자프사.jpg";
 import GuestbookAxios from "../../axiosapi/GuestbookAxios";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 
 const GuestbookSide = styled.div`
-  width: 25.8vw;
-  height: 68.5vh;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 `;
 
 const GuestbookTitle = styled.div`
   margin-top: 2.5vh;
-  width: 25.5vw;
+  width: 100%;
   height: 5vh;
   font-size: 20px;
   font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    height: 3vh;
+    font-size: 16px;
+  }
+  @media screen and (max-width: 768px) {
+    height: 1vh;
+    font-size: 12px;
+  }
 `;
 const GuestbookGrayBar = styled.div`
-  margin-left: 1.5vw;
-  width: 22.5vw;
-  height: 0.4vh;
+  margin-top: 1.5vh;
+  width: 90%;
+  height: 0.5%;
   background-color: #b0b0b0;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const GuestbookWriteArea = styled.div`
-  margin-left: 1vw;
   margin-top: 2vh;
-  width: 23.5vw;
-  height: 9.6vh;
+  width: 400px;
+  height: 10vh;
   border: 1px solid black;
+  background-color: #eccdb0;
+  @media screen and (max-width: 1200px) {
+    width: 350px;
+    height: 9vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 230px;
+    height: 6vh;
+  }
 `;
 const GuestbookWriteMain = styled.div`
   margin-left: 1vw;
-  width: 17.8vw;
-  height: 10vh - 1px;
+  width: 75%;
+  height: 100%;
   font-size: 12px;
   font-weight: 600;
   display: flex;
@@ -47,18 +67,24 @@ const GuestbookWriteMain = styled.div`
 `;
 const GuestbookInput = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 95%;
   border: none;
   outline: none;
   background-color: transparent;
   font-size: 13px;
   resize: none;
   overflow-y: aute;
+  @media screen and (max-width: 1200px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 const GuestbookWriteButton = styled.div`
-  margin-top: 0.5vh;
-  margin-left: 20vw;
-  width: 4vw;
+  margin-top: 0.1vh;
+  margin-left: 60%;
+  width: 80px;
   height: 2vh;
   font-size: 12px;
   font-weight: 600;
@@ -69,36 +95,66 @@ const GuestbookWriteButton = styled.div`
   &:hover {
     color: blue;
   }
+  @media screen and (max-width: 1200px) {
+    font-size: 11px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 8px;
+  }
 `;
 const GuestbookList = styled.div`
-  height: 46vh;
+  width: 420px;
+  margin-right: 13px;
+  height: 60%;
   overflow-y: auto; /* 세로 스크롤 추가 */
+  overflow-x: hidden;
+  @media screen and (max-width: 1200px) {
+    width: 380px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 250px;
+    height: 55%;
+  }
 `;
 const GuestbookArea = styled.div`
-  margin-left: 1vw;
   margin-top: 2vh;
-  width: 23.5vw;
+  margin-left: 16px;
+  background-color: #eccdb0;
+  width: 400px;
   height: 12vh;
   border: 1px solid black;
+
+  @media screen and (max-width: 1200px) {
+    width: 355px;
+    height: 10vh;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 1vh;
+    width: 230px;
+    height: 6vh;
+  }
 `;
 const GuestbookHead = styled.div`
-  height: 2.375vh;
+  height: 25%;
   background-color: #cdcfc4;
   border-bottom: 1px solid black;
   display: flex;
 `;
 const GuestbookNo = styled.div`
-  width: 3vw;
-  height: 2.375vh;
+  width: 10%;
+  height: 100%;
   font-size: 14px;
   font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+  }
 `;
 const GuestbookNickname = styled.div`
-  width: 6vw;
-  height: 2.375vh;
+  width: 25%;
+  height: 100%;
   font-size: 16px;
   font-weight: 600;
   display: flex;
@@ -107,61 +163,77 @@ const GuestbookNickname = styled.div`
   cursor: pointer;
   &:hover {
     color: blue;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
   }
 `;
 const GuestbookDate = styled.div`
-  width: 7vw;
-  height: 2.375vh;
+  width: 50%;
+  height: 100%;
   font-size: 16px;
   font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+  }
 `;
 const GuestbookDelete = styled.div`
-  margin-left: 4vw;
-  width: 3vw;
-  height: 2.375vh;
+  width: 15%;
+  height: 100%;
   font-size: 12px;
   font-weight: 500;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
   &:hover {
     color: blue;
   }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
+`;
+const GuestbookWriteBody = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
 `;
 const GuestbookBody = styled.div`
-  height: 9.6vh;
-  background-color: #eccdb0;
-  border-bottom: 1px solid black;
+  width: 100%;
+  height: 75%;
   display: flex;
 `;
 const GuestbookImage = styled.div`
-  width: 4.8vw;
-  height: 9.6vh;
+  width: 23%;
+  height: 100%;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `;
 const GuestWriteImg = styled.div`
-  width: 4.8vw;
-  height: 9.6vh;
-  background-size: contain;
+  width: 23%;
+  height: 99%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `;
 
 const GuestbookMain = styled.div`
-  width: 17vw;
-  height: calc(10vh - 1px);
+  width: 80%;
+  height: 100%;
   font-size: 12px;
   font-weight: 600;
+  padding-left: 3%;
   display: flex;
   justify-content: first baseline;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const Guestbook = ({}) => {
@@ -249,7 +321,7 @@ const Guestbook = ({}) => {
       {!isMyHome && (
         <>
           <GuestbookWriteArea>
-            <GuestbookBody>
+            <GuestbookWriteBody>
               <GuestbookImage
                 imageurl={imgUrl ? imgUrl : manprofile}
               ></GuestbookImage>
@@ -260,7 +332,7 @@ const Guestbook = ({}) => {
                   placeholder="내용을 입력하세요."
                 />
               </GuestbookWriteMain>
-            </GuestbookBody>
+            </GuestbookWriteBody>
           </GuestbookWriteArea>
 
           <GuestbookWriteButton onClick={handleAddEntry}>
@@ -285,7 +357,6 @@ const Guestbook = ({}) => {
               <GuestWriteImg
                 style={{ backgroundImage: `url(${entry.imgUrl})` }}
               />
-              <GuestWriteImg />
               <GuestbookMain>{entry.contents}</GuestbookMain>
             </GuestbookBody>
           </GuestbookArea>

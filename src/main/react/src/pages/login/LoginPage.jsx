@@ -17,24 +17,31 @@ import SimpleLoginAxios from "../../axiosapi/SimpleLoginAxios";
 
 const Contain = styled.div`
   width: 100%;
-  height: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const IconDiv = styled.div`
-  width: 100%;
-  height: 20%;
+  width: 90%;
+  height: 22%;
   display: flex;
   justify-content: center;
 `;
 
 const Icon = styled.div`
-  width: 100px;
-  height: 100px;
+  width: calc(110px - 1vw);
+  height: calc(110px - 1vh);
   background-image: url(${personicon});
-  background-size: cover;
-  @media screen and (max-width: 1333px) {
-    width: 8vw;
-    height: 8vw;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 654px) {
+    width: 30%;
+    height: 100%;
   }
 `;
 
@@ -49,13 +56,18 @@ const LoginDiv = styled.div`
 
 const InputContainer = styled.div`
   position: relative;
-  width: 10.417vw;
-  height: 5.247vh;
+  width: 60%;
+  height: 5vh;
+  font-size: 16px;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 
 const IconWrapper = styled.div`
+  width: 15%;
   position: absolute;
   margin-left: 0.521vw;
   display: flex;
@@ -63,41 +75,112 @@ const IconWrapper = styled.div`
   justify-content: center;
 `;
 
-const FindDiv = styled.div`
+const InputDiv = styled.input`
   width: 100%;
-  height: 3.197vh;
+  height: 100%;
+  padding-left: 20%;
+  border: none;
+  border-bottom: 0.21vh solid gray;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bolder;
+  outline: none;
+  &::placeholder {
+    text-align: center;
+    font-size: 15px;
+    color: #b44a4a;
+    font-weight: bolder;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
+  }
+  @media screen and (max-width: 654px) {
+    width: 90%;
+    height: 80%;
+    font-size: 2vw;
+  }
+`;
+const Message = styled.div`
+  width: 100%;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
+`;
+
+const FindDiv = styled.div`
+  width: 80%;
+  height: 8%;
   display: flex;
   justify-content: space-evenly;
   & > div {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+  }
+  & > a {
+    width: 29%;
+    width: 29%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (max-height: 654px) {
+    width: 270px;
   }
 `;
 
+const SigninDiv = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`;
+
 const Signin = styled.div`
-  width: 3.646vw;
-  height: 3.148vh;
-  font-size: 0.833vw;
+  width: 70px;
+  height: 100%;
+  font-size: 16px;
   color: #b44a4a;
   font-weight: bolder;
-  margin-top: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+
+  @media screen and (max-width: 654px) {
+    font-size: 2.5vw;
+  }
 `;
 
 const ForgotId = styled.div`
-  width: 3.646vw;
-  height: 2.099vh;
-  font-size: 0.833vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
   color: #b44a4a;
   cursor: pointer;
+  @media screen and (max-width: 654px) {
+    font-size: 2.5vw;
+  }
 `;
 
 const ForgotPassword = styled.div`
-  width: 3.646vw;
-  height: 2.099vh;
-  font-size: 0.833vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
   color: #b44a4a;
   cursor: pointer;
+  @media screen and (max-width: 654px) {
+    font-size: 2.5vw;
+  }
 `;
 
 const ButtonDiv = styled.div`
@@ -125,35 +208,31 @@ const LoginButton = styled.div`
     background-color: ${({ isActive }) =>
       isActive ? "rgba(0, 0, 0, 0.6)" : "rgba(0, 0, 0, 0.1)"};
   }
-  @media screen and (max-width: 1333px) {
-    width: 12vw;
-    height: 4vw;
-    font-size: 1.5vw;
+  @media screen and (max-width: 654px) {
+    width: 40%;
+    height: 50%;
+    font-size: 3vw;
   }
 `;
 
 const SimpleLogin = styled.div`
   width: 100%;
-  height: 5.247vh;
+  height: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
   & > div {
-    width: 13.021vw;
-    height: 5.247vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
   }
 `;
 
-const SigninDiv = styled.div`
-  display: flex;
-`;
-
 const CircleSide = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 12%;
+  aspect-ratio: 1 / 1;
   border: none;
   border-radius: 50%;
   background-color: transparent;
@@ -166,85 +245,46 @@ const CircleSide = styled.div`
     transform: scale(0.9);
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.4);
   }
-  @media screen and (max-width: 1333px) {
-    width: 3vw;
-    height: 3vw;
-  }
 `;
 const GoogleIcon = styled(FcGoogle)`
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
-  @media screen and (max-width: 1333px) {
-    width: 3vw;
-    height: 3vw;
-  }
 `;
 
 const NaverIcon = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  height: 100%;
   background-image: url(${naver});
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  @media screen and (max-width: 1333px) {
-    width: 3vw;
-    height: 3vw;
-  }
 `;
 
 const KakaoIcon = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  height: 100%;
   background-image: url(${kakao});
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  @media screen and (max-width: 1333px) {
-    width: 3vw;
-    height: 3vw;
-  }
 `;
 const MdOutlineMailOutlineStyle = styled(MdOutlineMailOutline)`
-  width: 1.25vw;
+  width: 24px;
   height: 2.518vh;
   color: gray;
 `;
 const MdLockOutlineStyled = styled(MdLockOutline)`
-  width: 1.25vw;
+  width: 24px;
   height: 2.518vh;
   color: gray;
 `;
 const SiGnuprivacyguardStyle = styled(SiGnuprivacyguard)`
-  width: 1.25vw;
-  height: 2.518vh;
+  width: 24px;
+  height: 100%;
   color: gray;
 `;
-const InputDiv = styled.input`
-  width: 100%;
-  height: 100%;
-  padding-left: 2.083vw;
-  border: none;
-  border-bottom: 0.21vh solid gray;
-  background-color: transparent;
-  font-size: 0.833vw;
-  font-weight: bolder;
-  outline: none;
-  &::placeholder {
-    text-align: center;
-    font-size: 0.833vw;
-    color: #b44a4a;
-    font-weight: bolder;
-  }
-`;
-const Message = styled.div`
-  width: 100%;
-  font-size: 0.6vw;
-  display: flex;
-  justify-content: center;
-  color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
-`;
+
 const LoginPage = () => {
   // 키보드 입력
   const [inputEmail, setInputEmail] = useState("");
@@ -314,9 +354,7 @@ const LoginPage = () => {
         Common.setRefreshToken(response.data.refreshToken);
         sessionStorage.setItem("email", email);
 
-        // 다시 로그인한 커플의 정보를 확인합니다.
-        const coupleName = sessionStorage.getItem("coupleName");
-        navigate(`/${coupleName}/main-page`);
+        navigate(`/main-page`);
       } else {
         setModalOpen(true);
         setIsModalImg(false);
@@ -394,7 +432,7 @@ const LoginPage = () => {
             console.log(resCoupleName.data);
             // `coupleName`을 `sessionStorage`에 저장합니다.
             sessionStorage.setItem("coupleName", resCoupleName.data);
-            navigate(`/${resCoupleName.data}/main-page`);
+            navigate(`/main-page`);
           };
           coupleNameSearchAxios(email);
         }
@@ -443,7 +481,7 @@ const LoginPage = () => {
         <Icon />
       </IconDiv>
       <LoginDiv>
-        <div>
+        <>
           <InputContainer>
             <IconWrapper>
               <MdOutlineMailOutlineStyle />
@@ -456,7 +494,7 @@ const LoginPage = () => {
             />
           </InputContainer>
           {inputEmail && <Message isCorrect={isId}>{idMessage}</Message>}
-        </div>
+        </>
         <InputContainer>
           <IconWrapper>
             <MdLockOutlineStyled />
@@ -471,22 +509,22 @@ const LoginPage = () => {
         </InputContainer>
       </LoginDiv>
       <FindDiv>
-        <div>
+        <>
           <Link to="/signup-page" style={{ textDecoration: "none" }}>
             <SigninDiv>
               <SiGnuprivacyguardStyle />
               <Signin>&nbsp;Sign in</Signin>
             </SigninDiv>
           </Link>
-        </div>
-        <div>
+        </>
+        <>
           <Link to="/find-email" style={{ textDecoration: "none" }}>
             <ForgotId>Forgot ID</ForgotId>
           </Link>
           <Link to="/find-password" style={{ textDecoration: "none" }}>
-            <ForgotPassword>/Password?</ForgotPassword>
+            <ForgotPassword>Password?</ForgotPassword>
           </Link>
-        </div>
+        </>
       </FindDiv>
       <SimpleLogin>
         <div>

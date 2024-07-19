@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import theme11 from "../../img/background/theme/11.jpg";
-import iu from "../../img/mainImg/아이유.jpg";
+import styled, { keyframes, css } from "styled-components";
+import iu from "../../img/background/paletteLogo.png";
 import CoupleDday from "../../common/couple/CoupleDday";
 import CoupleImg from "../../common/couple/CoupleImg";
 import couple1 from "../../img/mainImg/커플1.jpg";
@@ -8,141 +7,321 @@ import couple2 from "../../img/mainImg/커플2.jpg";
 import couple3 from "../../img/mainImg/커플3.jpg";
 import couple4 from "../../img/mainImg/커플4.jpg";
 import { useEffect, useState } from "react";
-import { FcPlus } from "react-icons/fc";
 import { IoSettingsSharp } from "react-icons/io5";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 import AlbumAxiosApi from "../../axiosapi/AlbumAxiosApi";
 import MainAxios from "../../axiosapi/MainAxios";
 import { GiArchiveResearch } from "react-icons/gi";
 import BoardAxios from "../../axiosapi/BoardAxios";
-const BookSign = styled.div`
-  width: 25.8vw;
-  height: 69vh;
-`;
+import theme3 from "../../img/background/theme/new.jpg";
+import theme3_1 from "../../img/background/theme/new-1.jpg";
+import postIt from "../../img/mainImg/postIt.png";
 const BookTheme = styled.div`
-  width: 53vw;
-  height: 69vh;
-  margin-top: 4vh;
-  margin-left: 0.8vw;
-  background-image: url(${theme11});
+  width: 497px;
+  height: 67vh;
+  margin-top: 5vh;
+  margin-left: 0.7vw;
+  background-image: url(${theme3});
   background-size: cover;
-  opacity: 0.8;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
 `;
+
+const BookTheme2 = styled.div`
+  width: 497px;
+  height: 67vh;
+  margin-top: 5vh;
+  margin-left: 0.1vw;
+  background-image: url(${theme3_1});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
+`;
+
+const BookSign = styled.div`
+  width: 497px;
+  height: 66vh;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 1vh;
+  }
+`;
+const BookSign2 = styled.div`
+  width: 497px;
+  height: 66vh;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 1vh;
+  }
+`;
+
 const CoupleDiv = styled.div`
-  width: 25.8vw;
+  width: 497px;
   height: 22vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 16vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 10vh;
+  }
 `;
 const PaletteBanner = styled.div`
-  width: 20vw;
+  width: 470px;
   height: 15vh;
   display: flex;
   background-image: url(${iu});
-  background-size: cover;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 1200px) {
+    width: 400px;
+    height: 12vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 360px;
+    height: 7vh;
+  }
 `;
 const DdayDiv = styled.div`
-  width: auto;
-  height: auto;
+  width: 490px;
+  height: 23vh;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 18vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 11vh;
+  }
 `;
 const GalleryDiv = styled.div`
-  width: 25.8vw;
-  height: 40vh;
+  width: 497px;
+  height: 38vh;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 32vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 20vh;
+  }
 `;
 const RecentPostDiv = styled.div`
-  width: 17vw;
+  width: 330px;
   height: 24vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #000;
+  @media screen and (max-width: 1200px) {
+    width: 290px;
+    height: 17vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 180px;
+    height: 11vh;
+  }
 `;
 const RecentPosts = styled.div`
-  width: 16vw;
+  width: 308px;
   height: 20vh;
   border: 1px solid #000;
+  @media screen and (max-width: 1200px) {
+    width: 270px;
+    height: 15vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 170px;
+    height: 10vh;
+  }
 `;
 const DdayFormDiv = styled.div`
-  width: 8.8vw;
+  width: 150px;
   height: 24vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #000;
+  @media screen and (max-width: 1200px) {
+    width: 130px;
+    height: 17vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 11vh;
+  }
 `;
 const Dday = styled.div`
-  width: 8vw;
+  width: 150px;
   height: 20vh;
-
   border: 1px solid #000;
+  @media screen and (max-width: 1200px) {
+    width: 130px;
+    height: 15vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 10vh;
+  }
 `;
 const RecentTitle = styled.div`
-  width: 15.9vw;
+  width: 308px;
   height: 4vh;
   border-bottom: 1px solid #000;
   display: flex;
   align-items: center;
   color: #000;
   font-weight: 800;
-  font-size: 0.9vw;
+  font-size: 17px;
+  @media screen and (max-width: 1200px) {
+    width: 268px;
+    height: 3.5vh;
+    font-size: 15px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 168px;
+    height: 2vh;
+    font-size: 10px;
+  }
 `;
 const Recents = styled.div`
-  width: 16vw;
+  width: 308px;
   height: 4vh;
+  padding-left: 3%;
   display: flex;
   align-items: center;
   color: #000;
   font-weight: 800;
-  font-size: 0.833vw;
+  font-size: 16px;
   border-radius: 0.521vw;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   &:hover {
-    transform: scale(0.95);
-    color: blue;
-    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.4);
+    transform: scale(0.97);
+    color: royalblue;
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.2);
+  }
+  @media screen and (max-width: 1200px) {
+    width: 268px;
+    height: 2.8vh;
+    font-size: 15px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 168px;
+    height: 2vh;
+    font-size: 10px;
   }
 `;
 const Ddays = styled.div`
-  width: 8vw;
+  width: 150px;
   height: 4vh;
-  font-size: 0.833vw;
+  font-size: 16px;
   display: flex;
   align-items: center;
   color: #000;
   font-weight: 600;
+  @media screen and (max-width: 1200px) {
+    width: 120px;
+    height: 3vh;
+    font-size: 13px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 1.9vh;
+    font-size: 9px;
+  }
 `;
 const Picture = styled.div`
-  width: 7.813vw;
+  width: 150px;
   height: 15.74vh;
   background-image: ${({ imageurl }) => `url(${imageurl})`};
   background-size: cover;
+  border: 1px solid black;
+  &:hover {
+    transform: scale(1.02);
+  }
+  @media screen and (max-width: 1200px) {
+    width: 130px;
+    height: 13vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 75px;
+    height: 8vh;
+  }
 `;
 const PictureDiv = styled.div`
-  width: 25.8vw;
+  width: 497px;
   height: 20vh;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 16vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 300px;
+    height: 11vh;
+  }
 `;
 const VisitDiv = styled.div`
-  width: 15vw;
-  height: auto;
+  width: 64%;
+  height: 3.5vh;
   border-radius: 10px;
   border: 1px solid #fff;
   & > .visitDiv {
     display: flex;
   }
   & > div > input {
-    width: 14vw;
+    width: 89%;
     height: 3vh;
     padding-left: 1.083vw;
     background-color: rgba(0, 0, 0, 0.4);
@@ -152,14 +331,28 @@ const VisitDiv = styled.div`
     font-size: 0.8vw;
     font-weight: 500;
   }
+  @media screen and (max-width: 1200px) {
+    height: 3vh;
+    & > div > input {
+      height: 2.5vh;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    height: 2.5vh;
+    & > div > input {
+      height: 2vh;
+    }
+  }
 `;
 const VisitList = styled.div`
-  width: 12vw;
+  width: 100%;
   height: 3vh;
   border-radius: 10px;
+  margin-top: 1%;
   border: 1px solid #fff;
   color: #fff;
-  font-size: 0.8vw;
+  background-color: #d2e2eb;
+  font-size: 16px;
   font-weight: 500;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   display: flex;
@@ -167,19 +360,33 @@ const VisitList = styled.div`
   align-items: center;
   cursor: pointer;
   &:hover {
-    transform: scale(0.9);
+    transform: scale(0.95);
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.4);
     color: #5549f7;
   }
+  @media screen and (max-width: 1200px) {
+    height: 2.5vh;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    height: 2.4vh;
+    font-size: 12px;
+  }
 `;
 const VisitSearchBtn = styled(GiArchiveResearch)`
-  width: 1.563vw;
+  width: 11%;
   height: 3.148vh;
   color: green;
   cursor: pointer;
+  @media screen and (max-width: 1200px) {
+    height: 3vh;
+  }
+  @media screen and (max-width: 768px) {
+    height: 2.5vh;
+  }
 `;
 const SettingDiv = styled.div`
-  width: 25.8vw;
+  width: 497px;
   height: 4vh;
   display: flex;
   justify-content: end;
@@ -187,32 +394,89 @@ const SettingDiv = styled.div`
   & > .space {
     width: 1vw;
   }
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 3.5vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 1.7vh;
+  }
+`;
+// flipInX 애니메이션 정의
+const flipInX = keyframes`
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -10deg);
+    animation-timing-function: ease-in;
+  }
+
+  70% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    animation-timing-function: ease-in;
+  }
+
+  to {
+    transform: perspective(400px) rotate3d(1, 0, 0, 0deg);
+    animation-timing-function: ease-in;
+    opacity: 1;
+  }
 `;
 const Setting = styled(IoSettingsSharp)`
   width: 1.563vw;
   height: 3.148vh;
   color: rgba(0, 0, 0, 0.8);
+  margin-right: 2%;
   cursor: pointer;
   &:hover {
-    color: blue;
+    color: rgba(131, 55, 55, 0.8);
+  }
+`;
+const SettingFormat = styled.div`
+  width: 380px;
+  padding-left: 150px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 22vh;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  animation: ${flipInX} 0.5s ease-in-out; /* 애니메이션 적용 */
+  @media screen and (max-width: 1200px) {
+    margin-top: 20vh;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 18vh;
   }
 `;
 const SettingForm = styled.div`
-  width: 15vw;
-  height: 13vh;
-  background-color: lightpink;
-  border-radius: 10px;
-  margin-top: 10vh;
+  width: 500px;
+  height: 360px;
+  background-image: url(${postIt});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: first baseline;
   z-index: 10;
+  @media screen and (max-width: 768px) {
+    width: 400px;
+    height: 300px;
+  }
 `;
 const Btn = styled.div`
   width: 70px;
   height: 35px;
-  border: 1px solid #000;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
-  font-size: 0.8vw;
+  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,40 +488,59 @@ const Btn = styled.div`
   }
 `;
 const BtnDiv = styled.div`
-  width: 15vw;
-  height: 9vh;
+  width: 260px;
+  height: 20vh;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    width: 230px;
+    height: 17vh;
+  }
 `;
-const XbtnDiv = styled.div`
-  width: 15vw;
-  height: 4vh;
 
+const XbtnDiv = styled.div`
+  width: 250px;
+  height: 10vh;
+  padding-right: 20px;
   display: flex;
   justify-content: end;
-  align-items: center;
+  align-items: end;
+  @media screen and (max-width: 768px) {
+    width: 230px;
+    height: 8vh;
+  }
 `;
 const CloseBtn = styled(IoMdCloseCircleOutline)`
-  width: 1.563vw;
-  height: 3.148vh;
+  width: 25px;
+  height: 25px;
   color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
-
   &:hover {
-    color: blue;
+    color: rgba(131, 55, 55, 0.8);
+  }
+  @media screen and (max-width: 768px) {
+    width: 20px;
+    height: 20px;
   }
 `;
 const VisitContainer = styled.div`
-  width: 25vw;
+  width: 90%;
   height: 13vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    height: 10vh;
+  }
+  @media screen and (max-width: 768px) {
+    height: 7vh;
+  }
 `;
 const BackMyHome = styled.div`
-  width: 5vw;
+  width: 96px;
   height: 3vh;
   font-size: 0.6vw;
   font-weight: 700;
@@ -270,6 +553,14 @@ const BackMyHome = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 70px;
+    height: 2.5vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 40px;
+    height: 1.5vh;
   }
 `;
 const MainPage = () => {
@@ -414,129 +705,146 @@ const MainPage = () => {
   const boardOnClickHandler = (id) => {
     navigate(`/${coupleName}/board-details/${id}`);
   };
-  return (
-    <BookTheme>
-      <BookSign>
-        <CoupleDiv>
-          <PaletteBanner />
-        </CoupleDiv>
-        <CoupleDiv>
-          <CoupleImg isMyHome={isMyHome} />
-        </CoupleDiv>
-        <CoupleDiv>
-          <CoupleDday isMyHome={isMyHome} />
-          <VisitContainer>
-            <VisitDiv>
-              <div className="visitDiv">
-                <input
-                  type="text"
-                  placeholder="다른 미니홈피 검색"
-                  value={searchTerm}
-                  onChange={visitSearchOnChange}
-                  onKeyDown={handleKeyPress}
-                />
-                <VisitSearchBtn />
-              </div>
-              {/* 여기 검색단어 맵으로 뿌려줄 예정 */}
-              {searchCoupleList.map((couple, index) => (
-                <VisitList key={index} onClick={() => handleSearch(index)}>
-                  {couple}
-                </VisitList>
-              ))}
-            </VisitDiv>
-          </VisitContainer>
-        </CoupleDiv>
-      </BookSign>
-      <BookSign>
-        <SettingDiv>
-          <BackMyHome onClick={goHomeOnClickHandler}>
-            내 홈으로 돌아가기
-          </BackMyHome>
-          <div className="space" />
-          {!settingForm && (
-            <Setting onClick={settingFromStatus} openform={settingForm} />
-          )}
-          {settingForm && (
-            <SettingForm>
-              <XbtnDiv>
-                <CloseBtn onClick={closeFromStatus} />
-              </XbtnDiv>
-              <BtnDiv>
-                <Btn
-                  onClick={() => {
-                    navigate("/modify");
-                  }}
-                >
-                  수정하기
-                </Btn>
-                <Btn
-                  onClick={() => {
-                    sessionStorage.setItem("email", "");
-                    navigate("/");
-                  }}
-                >
-                  로그아웃
-                </Btn>
-                <Btn
-                  onClick={() => {
-                    navigate("/withdrawal");
-                  }}
-                >
-                  회원탈퇴
-                </Btn>
-              </BtnDiv>
-            </SettingForm>
-          )}
-        </SettingDiv>
-        <DdayDiv>
-          <RecentPostDiv>
-            <RecentPosts>
-              <RecentTitle>&nbsp;최근 게시물</RecentTitle>
-              {boardSaveData.slice(0, 4).map((item, index) => (
-                <Recents
-                  key={index}
-                  onClick={() => {
-                    boardOnClickHandler(item.id);
-                  }}
-                >
-                  &nbsp;{item.title}
-                </Recents>
-              ))}
-            </RecentPosts>
-          </RecentPostDiv>
-          <DdayFormDiv>
-            <Dday>
-              <Ddays>&nbsp;TODAY : 8 </Ddays>
-              {isDday ? (
-                <>
-                  <Ddays>&nbsp;TOTAL : {saveDday} day</Ddays>
-                  <Ddays>&nbsp;100일 : {hundredCalculate()} day</Ddays>
-                  <Ddays>&nbsp;500일 : {fiveHundredCalculate()} day</Ddays>
-                </>
-              ) : (
-                <>
-                  <Ddays>&nbsp;TOTAL : 입력해주세요. </Ddays>
-                  <Ddays>&nbsp;100일 : 입력해주세요. </Ddays>
-                  <Ddays>&nbsp;500일 : 입력해주세요.</Ddays>
-                </>
-              )}
 
-              <Ddays>&nbsp;알콩이 생일 : D - 70 </Ddays>
-            </Dday>
-          </DdayFormDiv>
-        </DdayDiv>
-        <GalleryDiv>
-          <PictureDiv>
-            <Picture imageurl={gallaryImg[0] ? gallaryImg[0] : couple1} />
-            <Picture imageurl={gallaryImg[1] ? gallaryImg[1] : couple2} />
-          </PictureDiv>
-          <PictureDiv>
-            <Picture imageurl={gallaryImg[2] ? gallaryImg[2] : couple3} />
-            <Picture imageurl={gallaryImg[3] ? gallaryImg[3] : couple4} />
-          </PictureDiv>
-        </GalleryDiv>
-      </BookSign>
-    </BookTheme>
+  // 방문자 검색 글자수
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
+  return (
+    <>
+      <BookTheme>
+        <BookSign>
+          <CoupleDiv>
+            <PaletteBanner />
+          </CoupleDiv>
+          <CoupleDiv>
+            <CoupleImg isMyHome={isMyHome} />
+          </CoupleDiv>
+          <CoupleDiv>
+            <CoupleDday isMyHome={isMyHome} />
+            <VisitContainer>
+              <VisitDiv>
+                <div className="visitDiv">
+                  <input
+                    type="text"
+                    placeholder="다른 미니홈피 검색"
+                    value={searchTerm}
+                    onChange={visitSearchOnChange}
+                    onKeyDown={handleKeyPress}
+                  />
+                  <VisitSearchBtn />
+                </div>
+                {/* 여기 검색단어 맵으로 뿌려줄 예정 */}
+                {searchCoupleList.map((couple, index) => (
+                  <VisitList key={index} onClick={() => handleSearch(index)}>
+                    {truncateText(couple, 15)}
+                  </VisitList>
+                ))}
+              </VisitDiv>
+            </VisitContainer>
+          </CoupleDiv>
+        </BookSign>
+      </BookTheme>
+      <BookTheme2>
+        <BookSign2>
+          <SettingDiv>
+            <BackMyHome onClick={goHomeOnClickHandler}>
+              내 홈으로 돌아가기
+            </BackMyHome>
+            <div className="space" />
+            {!settingForm && (
+              <Setting onClick={settingFromStatus} openform={settingForm} />
+            )}
+            {settingForm && (
+              <SettingFormat>
+                <SettingForm>
+                  <div className="settingDiv">
+                    <XbtnDiv>
+                      <CloseBtn onClick={closeFromStatus} />
+                    </XbtnDiv>
+                    <BtnDiv>
+                      <Btn
+                        onClick={() => {
+                          navigate("/modify");
+                        }}
+                      >
+                        수정하기
+                      </Btn>
+                      <Btn
+                        onClick={() => {
+                          sessionStorage.setItem("email", "");
+                          navigate("/");
+                        }}
+                      >
+                        로그아웃
+                      </Btn>
+                      <Btn
+                        onClick={() => {
+                          navigate("/withdrawal");
+                        }}
+                      >
+                        회원탈퇴
+                      </Btn>
+                    </BtnDiv>
+                  </div>
+                </SettingForm>
+              </SettingFormat>
+            )}
+          </SettingDiv>
+          <DdayDiv>
+            <RecentPostDiv>
+              <RecentPosts>
+                <RecentTitle>&nbsp;최근 게시물</RecentTitle>
+                {boardSaveData.slice(0, 4).map((item, index) => (
+                  <Recents
+                    key={index}
+                    onClick={() => {
+                      boardOnClickHandler(item.id);
+                    }}
+                  >
+                    &nbsp;{item.title}
+                  </Recents>
+                ))}
+              </RecentPosts>
+            </RecentPostDiv>
+            <DdayFormDiv>
+              <Dday>
+                <Ddays>&nbsp;TODAY : 8 </Ddays>
+                {isDday ? (
+                  <>
+                    <Ddays>&nbsp;TOTAL : {saveDday} day</Ddays>
+                    <Ddays>&nbsp;100일 : {hundredCalculate()} day</Ddays>
+                    <Ddays>&nbsp;500일 : {fiveHundredCalculate()} day</Ddays>
+                  </>
+                ) : (
+                  <>
+                    <Ddays>&nbsp;TOTAL : 입력해주세요. </Ddays>
+                    <Ddays>&nbsp;100일 : 입력해주세요. </Ddays>
+                    <Ddays>&nbsp;500일 : 입력해주세요.</Ddays>
+                  </>
+                )}
+
+                <Ddays>&nbsp;알콩이 생일 : D - 70 </Ddays>
+              </Dday>
+            </DdayFormDiv>
+          </DdayDiv>
+          <GalleryDiv>
+            <PictureDiv>
+              <Picture imageurl={gallaryImg[0] ? gallaryImg[0] : couple1} />
+              <Picture imageurl={gallaryImg[1] ? gallaryImg[1] : couple2} />
+            </PictureDiv>
+            <PictureDiv>
+              <Picture imageurl={gallaryImg[2] ? gallaryImg[2] : couple3} />
+              <Picture imageurl={gallaryImg[3] ? gallaryImg[3] : couple4} />
+            </PictureDiv>
+          </GalleryDiv>
+        </BookSign2>
+      </BookTheme2>
+    </>
   );
 };
 

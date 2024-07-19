@@ -35,18 +35,29 @@ const turnPageLeft = keyframes`
 `;
 
 const BookTheme = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
   background-image: url(${theme8});
   background-size: cover;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
 `;
 
 const BookTheme2 = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
@@ -54,18 +65,36 @@ const BookTheme2 = styled.div`
   background-size: cover;
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+    margin-top: 4.2vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+    margin-top: 2.8vh;
+  }
 `;
 
 const BookSign = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+  }
 `;
 
 const BookSign2 = styled.div`
-  width: 26vw;
+  width: 497px;
   height: 67vh;
   background-image: url(${theme8_1});
   background-size: cover;
@@ -78,6 +107,14 @@ const BookSign2 = styled.div`
     css`
       animation: ${turnPageLeft} 1.8s forwards;
     `}
+  @media screen and (max-width: 1200px) {
+    width: 420px;
+    height: 56vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 280px;
+    height: 35vh;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -98,9 +135,9 @@ const NextButton = styled.div`
   width: 20px;
   height: 20px;
   font-weight: 600;
-  font-size: 1.1vw;
+  font-size: 22px;
   margin-left: 20px;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
   &:hover {
     color: #ff6750;
@@ -118,7 +155,7 @@ const InputDetailDiv = styled.div`
 
 const ImgWrapper = styled.div`
   width: 90%;
-  height: 33vh;
+  height: 50%;
   background-color: ${(props) => props.bgColor};
   align-items: center;
   justify-content: center;
@@ -130,7 +167,7 @@ const ImgWrapper = styled.div`
 
 const ImgWrapper2 = styled.div`
   width: 90%;
-  height: 81%;
+  height: 82%;
   background-color: ${(props) => props.bgColor};
   padding-left: 0.4%;
   margin-top: 6%;
@@ -144,8 +181,8 @@ const Img = styled.img`
 `;
 
 const ImgBox = styled.div`
-  width: 7.4vw;
-  height: 15vh;
+  width: 141px;
+  height: 15.4vh;
   background-color: gray;
   display: flex;
   align-items: center;
@@ -175,16 +212,30 @@ const ImgBox = styled.div`
       }
     `}
   }
+  @media screen and (max-width: 1200px) {
+    width: 120px;
+    height: 13vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 8vh;
+  }
 `;
 
 const Dday = styled.div`
   width: 90%;
   height: 11%;
-  font-size: 1.4vw;
+  font-size: 22px;
   margin-left: 5%;
   display: flex;
   justify-content: left;
   align-items: center;
+  @media screen and (max-width: 1200px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 13px;
+  }
 `;
 
 const AlbumTitle = styled.div`
@@ -192,9 +243,13 @@ const AlbumTitle = styled.div`
   height: 4%;
   display: flex;
   align-items: center;
-  font-size: 1.1vw;
+  padding-left: 2%;
+  font-size: 20px;
   color: #000;
   font-weight: 800;
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const AddButton = styled.div`
@@ -206,23 +261,39 @@ const AddButton = styled.div`
   flex-direction: row;
   border-bottom: 1px solid #c8c8c8;
 `;
+
 const AddTema = styled.div`
-  font-size: 0.78vw;
+  font-size: 12px;
   color: black;
   font-weight: bolder;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    font-size: 13px;
+    color: rgb(42, 65, 167);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
+
 const AddAlbum = styled.div`
-  font-size: 0.78vw;
+  font-size: 12px;
   color: black;
   font-weight: bolder;
   margin-left: 3%;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    font-size: 13px;
+    color: rgb(42, 65, 167);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
 
@@ -233,32 +304,50 @@ const TitleLine = styled.div`
   justify-content: flex-end;
   padding-right: 1%;
   border-bottom: 1px solid #c8c8c8;
-  font-size: 0.78vw;
+  font-size: 13px;
   color: black;
   font-weight: bolder;
   cursor: pointer;
   &:hover {
-    font-size: 0.81vw;
+    color: rgb(108, 101, 212);
+    font-size: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
 
 const CoupleDiv = styled.div`
   width: 90%;
   height: 22%;
-  margin-left: 100%;
+  padding-right: 12%;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 `;
 const PlusButton = styled.button`
-  width: 2.5vw;
+  width: 50px;
   height: 5vh;
-  font-size: 1.4vw;
+  font-size: 30px;
   border-radius: 50px;
   background-color: #ccc;
   border: none;
   cursor: pointer;
   &:hover {
     background-color: #aaa;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 40px;
+    height: 4vh;
+    font-size: 25px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 25px;
+    height: 2.5vh;
+    font-size: 15px;
   }
 `;
 
@@ -314,17 +403,21 @@ const DateAlbum = () => {
 
   const handleNext = async () => {
     try {
-      const amount = await isAmountAxios(); // async 호출의 결과를 변수에 저장
-      if (amount !== null && amount % 1000 === 0) {
-        setAnimate(true);
-        setTimeout(() => {
-          navigate("/date-album2");
-        }, 1800);
-      } else {
-        // 모달
-        nextModal();
-        console.log(amount);
-      }
+      setAnimate(true);
+      setTimeout(() => {
+        navigate("/date-album2");
+      }, 1800);
+      // const amount = await isAmountAxios(); // async 호출의 결과를 변수에 저장
+      // if (amount !== null && amount % 1000 === 0) {
+      //   setAnimate(true);
+      //   setTimeout(() => {
+      //     navigate("/date-album2");
+      //   }, 1800);
+      // } else {
+      //   // 모달
+      //   nextModal();
+      //   console.log(amount);
+      // }
     } catch (error) {
       console.error("Error in handleNext:", error);
       setModalContent("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -556,7 +649,7 @@ const DateAlbum = () => {
           <CoupleDiv>
             <CoupleImg />
           </CoupleDiv>
-          <AlbumTitle>알콩 달콩이의 앨범</AlbumTitle>
+          <AlbumTitle>♥ {coupleName} 의 앨범 ♥</AlbumTitle>
           <TitleLine onClick={handleTemaChange}>테마 변경</TitleLine>
           <ImgWrapper bgColor={bgColor}>{renderImageBoxes(0, 6)}</ImgWrapper>
         </BookSign>

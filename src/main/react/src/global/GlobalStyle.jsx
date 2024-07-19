@@ -22,6 +22,10 @@ export const GlobalStyle = createGlobalStyle`
       opacity: 1;
     }
   }
+  @font-face {
+  font-family: 'HancomSans-Light_0';
+  src: url('./font/HancomSans-Light_0.ttf') format('truetype');
+}
 `;
 
 export default GlobalStyle;

@@ -1,171 +1,180 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import LoginAxios from "../../axiosapi/LoginAxios";
 import emailjs from "emailjs-com";
 import Modal from "../../common/utils/Modal";
 import Common from "../../common/Common";
-
+import termNote from "../../img/loginImg/note.png";
+import coupleMatching from "../../img/loginImg/coupleMatching.png";
 const Contain = styled.div`
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
+
 const TitleDiv = styled.div`
-  width: 24.6vw;
-  height: 6.296vh;
+  width: 100%;
+  height: 13%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.198vw;
+  font-size: 18px;
   font-weight: 900;
   color: #b44a4a;
+  @media screen and (max-width: 654px) {
+    font-size: 3vw;
+  }
 `;
 const InputDiv = styled.div`
-  width: 24.6vw;
-  height: 39.874vh;
+  width: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 `;
+const JuminDiv = styled.div`
+  width: 100%;
+`;
 const InputDetailDiv = styled.div`
-  width: 17.708vw;
-  height: 3.358vh;
-
+  width: 100%;
+  height: 32px;
   display: flex;
-  justify-content: end;
+  gap: 2px;
+  @media screen and (max-width: 654px) {
+    height: 5vw;
+  }
+
   & > label {
-    width: 5.729vw;
-    height: auto;
-    font-size: 0.8vw;
-    color: #b44a4a;
     display: flex;
-    font-weight: bolder;
     justify-content: center;
     align-items: center;
+    width: 29%;
+    height: auto;
+    font-size: 14px;
+    color: #b44a4a;
+    text-align: center;
+    font-weight: bolder;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
   }
-  & > .InputClass {
-    width: 11.458vw;
-    border-radius: 0.521vw;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.3);
-    outline: none;
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
-    padding-left: 0.521vw;
-    font-size: 0.8vw;
-    font-weight: 600;
-  }
-  & > .InputEmail {
-    width: 8.333vw;
-    border-radius: 0.521vw;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.3);
-    outline: none;
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
-    padding-left: 0.521vw;
-    font-size: 0.8vw;
-    font-weight: 600;
-  }
-  & > .InputCoupleName {
-    width: 8.333vw;
-    border-radius: 0.521vw;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.3);
-    outline: none;
-    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
-    padding-left: 0.521vw;
-    font-size: 0.8vw;
-    font-weight: 600;
-  }
+  & > .InputClass,
+  & > .InputEmail,
+  & > .InputCoupleName,
   & > .InputCode {
-    width: 8.333vw;
+    width: 53%;
+    height: 100%;
     border-radius: 0.521vw;
     border: none;
     background-color: rgba(0, 0, 0, 0.3);
     outline: none;
     box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
     padding-left: 0.521vw;
-    font-size: 0.8vw;
+    font-size: 14px;
     font-weight: 600;
+    @media screen and (max-width: 654px) {
+      font-size: 2vw;
+    }
   }
 `;
 const Empty = styled.div`
-  width: 0.521vw;
+  width: 2%;
 `;
 const EmailAthouized = styled.div`
-  width: 2.604vw;
-  border-radius: 0.521vw;
+  width: 12%;
+  border-radius: 10px;
   border: none;
   background-color: ${({ isActive }) =>
     isActive ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.2)"};
   outline: none;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
-  padding-left: 0.208vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.729vw;
+  font-size: 14px;
   color: ${({ isActive }) => (isActive ? "#b44a4a" : "#ccc")};
-  font-weight: 700;
+  font-weight: 600;
   cursor: ${({ isActive }) => (isActive ? "pointer" : "not-allowed")};
   &:hover {
     background-color: ${({ isActive }) =>
       isActive ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.2)"};
   }
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const RegisterationInput1 = styled.input`
-  width: 6.771vw;
+  width: 22%;
+  height: 100%;
   border-radius: 0.521vw;
   border: none;
   background-color: rgba(0, 0, 0, 0.3);
   outline: none;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
   padding-left: 0.521vw;
-  font-size: 0.833vw;
+  font-size: 14px;
   font-weight: 600;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const Text = styled.div`
-  width: 0.521vw;
-  height: 3.358vh;
+  width: 3%;
+  height: 100%;
   font-weight: bolder;
-  font-size: 0.833vw;
+  font-size: 15px;
   color: #b44a4a;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const RegisterationInput2 = styled.input`
-  width: 1.042vw;
+  width: 7%;
+  height: 100%;
   border-radius: 0.521vw;
   border: none;
   background-color: rgba(0, 0, 0, 0.3);
   outline: none;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
   padding-left: 0.208vw;
-  font-size: 0.833vw;
+  font-size: 14px;
   font-weight: 600;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const CoupleText = styled.div`
-  font-size: 0.729vw;
+  font-size: 15px;
+  font-weight: 600;
   color: #b44a4a;
   display: flex;
   align-items: center;
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const ButtonDiv = styled.div`
-  width: 23.438vw;
-  height: 11.962vh;
+  width: 100%;
+  height: 14%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const SignupButton = styled.div`
-  width: 9.375vw;
-  height: 5.247vh;
+  width: 30%;
+  height: 80%;
   background-color: ${({ isActive }) =>
     isActive ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
   border-radius: 1.042vw;
   font-weight: 600;
-  font-size: 1.094vw;
+  font-size: 15px;
   color: ${({ isActive }) => (isActive ? "#b44a4a" : "#ccc")};
   display: flex;
   justify-content: center;
@@ -176,40 +185,79 @@ const SignupButton = styled.div`
     background-color: ${({ isActive }) =>
       isActive ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
   }
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const InputDetailDiv2 = styled.div`
-  width: 17.708vw;
-  height: 3.358vh;
+  width: 100%;
+  height: 10%;
   display: flex;
   justify-content: center;
 `;
 const Message = styled.div`
   width: 100%;
-  font-size: 0.6vw;
+  font-size: 12px;
   display: flex;
   justify-content: center;
   color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
+  @media screen and (max-width: 654px) {
+    font-size: 2vw;
+  }
 `;
 const TermsForm = styled.div`
-  width: 30vw;
-  height: 60vh;
-  background-color: #fff;
-  border: 5px solid #cefdce;
+  width: 400px;
+  height: 56%;
   border-radius: 10px;
   padding: 20px;
   position: absolute;
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
   overflow-y: auto;
-`;
 
+  @media screen and (max-width: 715px) {
+    width: 42%;
+    height: auto;
+    aspect-ratio: 358 / 482; /* 너비와 높이 비율 설정 */
+    min-width: 267;
+  }
+`;
+// focus-in-expand 애니메이션 정의
+const focusInExpand = keyframes`
+0% {
+  transform: scale(0.5);
+  opacity: 0;
+}
+100% {
+  transform: scale(1);
+  opacity: 1;
+}
+`;
+const TermImgDiv = styled.div`
+  width: 1200px;
+  height: 100%;
+  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-image: url(${termNote});
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: ${focusInExpand} 0.5s ease-in-out; /* 애니메이션 적용 */
+  @media screen and (max-width: 715px) {
+    width: 135%;
+    min-width: 687px;
+  }
+`;
 const TermsTitle = styled.div`
-  font-size: 1.2vw; /* Adjust size as needed */
+  font-size: 24px; /* Adjust size as needed */
   font-weight: bold;
+  text-align: center;
   margin-bottom: 10px;
 `;
 
 const TermsContent = styled.p`
-  font-size: 0.8vw; /* Adjust size as needed */
+  font-size: 15px; /* Adjust size as needed */
+  font-weight: 500;
   line-height: 1.4; /* Adjust line height for better readability */
   color: #333; /* Darker text color */
 `;
@@ -220,7 +268,8 @@ const TermsActions = styled.div`
   justify-content: center;
   align-items: center;
   & > .termAgree {
-    width: 10vw;
+    height: auto;
+    display: flex;
     height: auto;
   }
 `;
@@ -230,7 +279,10 @@ const TermsCheckbox = styled.input`
 `;
 
 const TermsLabel = styled.label`
-  font-size: 0.8vw; /* Adjust size as needed */
+  display: block;
+  width: 150px;
+  height: auto;
+  font-size: 15px; /* Adjust size as needed */
 `;
 
 const TermsButton = styled.button`
@@ -239,7 +291,7 @@ const TermsButton = styled.button`
   border: none;
   border-radius: 5px;
   padding: 8px 16px;
-  font-size: 0.9vw; /* Adjust size as needed */
+  font-size: 17px; /* Adjust size as needed */
   cursor: ${({ isActive }) => (isActive ? "pointer" : "not-allowed")};
   &:hover {
     background-color: ${({ isActive }) =>
@@ -251,27 +303,49 @@ const TermsScrollableContent = styled.div`
   max-height: calc(100% - 100px);
   overflow-y: auto;
 `;
+const IsMyCoupleEmailImg = styled.div`
+  width: 350px;
+  height: 350px;
+  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-image: url(${coupleMatching});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: ${focusInExpand} 0.5s ease-in-out; /* 애니메이션 적용 */
+`;
 const IsMyCoupleEmailForm = styled.div`
-  width: 13vw;
-  height: 12vh;
-  background-color: #fff;
-  border: 5px solid #cefdce;
+  width: 260px;
+  height: 300px;
+  padding-right: 20px;
   border-radius: 10px;
   position: absolute;
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: "block";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow-y: auto;
+  & > div {
+  }
   & > div > p {
-    font-size: 15px;
+    font-size: 16px;
     text-align: center;
+    font-weight: 500;
+    line-height: 1.5;
   }
   & > .YesOrNo {
-    width: auto;
+    margin-top: 20px;
+    width: 80%;
     height: auto;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
   }
 `;
+
 const SignupPage = () => {
   const navigate = useNavigate();
   // 키보드 입력
@@ -709,7 +783,7 @@ const SignupPage = () => {
       </Modal>
       <InputDiv>
         {!kakaoProp && (
-          <div>
+          <>
             <InputDetailDiv>
               <label>이메일</label>
               <input
@@ -726,7 +800,7 @@ const SignupPage = () => {
               </EmailAthouized>
             </InputDetailDiv>
             {inputEmail && <Message isCorrect={isId}>{idMessage}</Message>}
-          </div>
+          </>
         )}
         {isEmailSent && (
           <InputDetailDiv>
@@ -748,7 +822,7 @@ const SignupPage = () => {
           </InputDetailDiv>
         )}
         {!kakaoProp && (
-          <div>
+          <>
             <InputDetailDiv>
               <label>비밀번호</label>
               <input
@@ -759,10 +833,10 @@ const SignupPage = () => {
               />
             </InputDetailDiv>
             {inputPwd && <Message isCorrect={isPwd}>{pwdMessage}</Message>}
-          </div>
+          </>
         )}
         {!kakaoProp && (
-          <div>
+          <>
             <InputDetailDiv>
               <label>비밀번호 확인</label>
               <input
@@ -775,7 +849,7 @@ const SignupPage = () => {
             {inputPwdCheck && (
               <Message isCorrect={isPwdCheack}>{pwdCheckMessage}</Message>
             )}
-          </div>
+          </>
         )}
         {!kakaoProp && (
           <InputDetailDiv>
@@ -787,7 +861,7 @@ const SignupPage = () => {
             />
           </InputDetailDiv>
         )}
-        <div>
+        <JuminDiv>
           <InputDetailDiv>
             <label>주민등록번호</label>
             <RegisterationInput1
@@ -809,7 +883,7 @@ const SignupPage = () => {
             <Text>*</Text>
           </InputDetailDiv>
           <Message isCorrect={isRrnValid}>{isRrnValidMessage}</Message>
-        </div>
+        </JuminDiv>
         <InputDetailDiv>
           <label>닉네임</label>
           <input
@@ -818,50 +892,53 @@ const SignupPage = () => {
             onChange={handleInputNickName}
           />
         </InputDetailDiv>
-        <div>
-          <InputDetailDiv>
-            <label>커플이름</label>
-            <input
-              className="InputCoupleName"
-              value={inputCoupleName}
-              onChange={handleInputCoupleName}
-            />
-            <Empty />
-            {!kakaoProp ? (
-              coupleNameDuplication ? (
-                <EmailAthouized
-                  isActive={true}
-                  onClick={coupleNameBtnOnClickHandler}
-                >
-                  등록
-                </EmailAthouized>
-              ) : (
-                <EmailAthouized
-                  isActive={true}
-                  onClick={coupleNameBtnOnClickHandler}
-                >
-                  연결
-                </EmailAthouized>
-              )
-            ) : coupleNameDuplication ? (
+
+        <InputDetailDiv>
+          <label>커플이름</label>
+          <input
+            className="InputCoupleName"
+            value={inputCoupleName}
+            onChange={handleInputCoupleName}
+          />
+          <Empty />
+          {!kakaoProp ? (
+            coupleNameDuplication ? (
               <EmailAthouized
                 isActive={true}
-                onClick={kakaoCoupleNameBtnOnClickHandler}
+                onClick={coupleNameBtnOnClickHandler}
               >
                 등록
               </EmailAthouized>
             ) : (
               <EmailAthouized
                 isActive={true}
-                onClick={kakaoCoupleNameBtnOnClickHandler}
+                onClick={coupleNameBtnOnClickHandler}
               >
                 연결
               </EmailAthouized>
-            )}
-          </InputDetailDiv>
-          <IsMyCoupleEmailForm isOpen={isMyCoupleEmailForm}>
+            )
+          ) : coupleNameDuplication ? (
+            <EmailAthouized
+              isActive={true}
+              onClick={kakaoCoupleNameBtnOnClickHandler}
+            >
+              등록
+            </EmailAthouized>
+          ) : (
+            <EmailAthouized
+              isActive={true}
+              onClick={kakaoCoupleNameBtnOnClickHandler}
+            >
+              연결
+            </EmailAthouized>
+          )}
+        </InputDetailDiv>
+        <IsMyCoupleEmailImg isOpen={isMyCoupleEmailForm}>
+          <IsMyCoupleEmailForm>
             <div>
-              <p>"{myCoupleEmail}"님이 내 짝의 계정이 맞나요?</p>
+              <p>
+                "{myCoupleEmail}"님이 <br /> 내 짝의 계정이 맞나요?
+              </p>
             </div>
             <div className="YesOrNo">
               <EmailAthouized
@@ -878,79 +955,81 @@ const SignupPage = () => {
               </EmailAthouized>
             </div>
           </IsMyCoupleEmailForm>
-          <Message isCorrect={coupleNameDuplication}>{coupleMessage}</Message>
-        </div>
+        </IsMyCoupleEmailImg>
+        <Message isCorrect={coupleNameDuplication}>{coupleMessage}</Message>
+
         <InputDetailDiv2>
-          <CoupleText style={{ fontSize: "0.833vw", fontWeight: "600" }}>
-            약관 보기
-          </CoupleText>
+          <CoupleText>약관 보기</CoupleText>
           <Empty />
           <EmailAthouized isActive={true} onClick={handleTermLookBtnClick}>
             보기
           </EmailAthouized>
         </InputDetailDiv2>
-        <TermsForm isOpen={isTermClickBtn}>
-          <TermsScrollableContent>
+        <TermImgDiv isOpen={isTermClickBtn}>
+          <TermsForm>
             <TermsTitle>계정 사용에 관한 약관</TermsTitle>
-            <TermsContent>
-              1. **계정 생성 및 관리** <br />
-              &nbsp;1.1. 회원은 본 약관에 동의하고, 본 서비스에서 제공하는
-              절차에 따라 회원가입을 완료해야 합니다. <br />
-              &nbsp;1.2. 회원은 본인의 이메일 주소를 사용하여 하나의 계정만을
-              생성할 수 있습니다. <br />
-              &nbsp;1.3. 회원은 본인의 계정 정보를 타인과 공유하거나 양도할 수
-              없습니다. <br /> <br />
-              2. **회원 정보의 정확성** <br />
-              &nbsp;2.1. 회원은 회원가입 시 제공한 정보가 정확하고 최신 정보임을
-              보장해야 합니다. <br />
-              &nbsp;2.2. 회원정보가 변경된 경우, 회원은 즉시 본 서비스에 이를
-              업데이트해야 합니다. <br /> <br />
-              3. **계정 보안** <br />
-              &nbsp;3.1. 회원은 본인의 계정 비밀번호를 안전하게 관리해야 하며,
-              비밀번호 유출로 인한 모든 책임은 회원에게 있습니다. <br />
-              &nbsp;3.2. 회원은 계정의 무단 사용을 인지한 경우 즉시 본 서비스에
-              이를 통보해야 합니다. <br /> <br />
-              4. **서비스 이용** <br />
-              &nbsp;4.1. 회원은 본 서비스를 법령 및 본 약관에 따라 이용해야
-              합니다.
-              <br />
-              &nbsp;4.2. 회원은 본 서비스를 이용하여 불법 행위, 타인의 권리를
-              침해하는 행위를 해서는 안 됩니다. <br /> <br />
-              5. **계정 정지 및 해지** <br />
-              &nbsp;5.1. 회원이 본 약관을 위반한 경우, 본 서비스는 사전 통지
-              없이 회원의 계정을 일시 정지하거나 해지할 수 있습니다. <br />
-              &nbsp;5.2. 회원은 언제든지 본 서비스에 요청하여 계정을 해지할 수
-              있습니다. <br /> <br />
-              6. **책임 제한** <br />
-              &nbsp;6.1. 본 서비스는 회원의 귀책사유로 인한 계정 사용 상의
-              문제에 대해 책임을 지지 않습니다. <br />
-              &nbsp;6.2. 본 서비스는 회원 간 또는 회원과 제 3자 간의 분쟁에 대해
-              관여하지 않으며, 이에 대한 책임을 지지 않습니다. <br /> <br />
-              7. **약관의 변경** <br />
-              &nbsp;7.1. 본 서비스는 필요 시 본 약관을 변경할 수 있으며, 변경된
-              약관은 회원에게 공지한 후 효력이 발생합니다. <br />
-              &nbsp;7.2. 회원이 변경된 약관에 동의하지 않을 경우, 회원은 계정
-              해지를 통해 이용 계약을 종료할 수 있습니다.
-            </TermsContent>
-          </TermsScrollableContent>
-          <TermsActions>
-            <div className="termAgree">
-              <TermsCheckbox
-                type="checkbox"
-                checked={isTermAccepted}
-                onChange={handleCheckboxChange}
-              />
-              <TermsLabel>약관에 동의합니다.</TermsLabel>
-            </div>
-            <TermsButton
-              onClick={handleAgreeButtonClick}
-              disabled={!isTermAccepted}
-              isActive={isTermAccepted}
-            >
-              동의
-            </TermsButton>
-          </TermsActions>
-        </TermsForm>
+            <TermsScrollableContent>
+              <TermsContent>
+                1. **계정 생성 및 관리** <br />
+                &nbsp;1.1. 회원은 본 약관에 동의하고, 본 서비스에서 제공하는
+                절차에 따라 회원가입을 완료해야 합니다. <br />
+                &nbsp;1.2. 회원은 본인의 이메일 주소를 사용하여 하나의 계정만을
+                생성할 수 있습니다. <br />
+                &nbsp;1.3. 회원은 본인의 계정 정보를 타인과 공유하거나 양도할 수
+                없습니다. <br /> <br />
+                2. **회원 정보의 정확성** <br />
+                &nbsp;2.1. 회원은 회원가입 시 제공한 정보가 정확하고 최신
+                정보임을 보장해야 합니다. <br />
+                &nbsp;2.2. 회원정보가 변경된 경우, 회원은 즉시 본 서비스에 이를
+                업데이트해야 합니다. <br /> <br />
+                3. **계정 보안** <br />
+                &nbsp;3.1. 회원은 본인의 계정 비밀번호를 안전하게 관리해야 하며,
+                비밀번호 유출로 인한 모든 책임은 회원에게 있습니다. <br />
+                &nbsp;3.2. 회원은 계정의 무단 사용을 인지한 경우 즉시 본
+                서비스에 이를 통보해야 합니다. <br /> <br />
+                4. **서비스 이용** <br />
+                &nbsp;4.1. 회원은 본 서비스를 법령 및 본 약관에 따라 이용해야
+                합니다.
+                <br />
+                &nbsp;4.2. 회원은 본 서비스를 이용하여 불법 행위, 타인의 권리를
+                침해하는 행위를 해서는 안 됩니다. <br /> <br />
+                5. **계정 정지 및 해지** <br />
+                &nbsp;5.1. 회원이 본 약관을 위반한 경우, 본 서비스는 사전 통지
+                없이 회원의 계정을 일시 정지하거나 해지할 수 있습니다. <br />
+                &nbsp;5.2. 회원은 언제든지 본 서비스에 요청하여 계정을 해지할 수
+                있습니다. <br /> <br />
+                6. **책임 제한** <br />
+                &nbsp;6.1. 본 서비스는 회원의 귀책사유로 인한 계정 사용 상의
+                문제에 대해 책임을 지지 않습니다. <br />
+                &nbsp;6.2. 본 서비스는 회원 간 또는 회원과 제 3자 간의 분쟁에
+                대해 관여하지 않으며, 이에 대한 책임을 지지 않습니다. <br />{" "}
+                <br />
+                7. **약관의 변경** <br />
+                &nbsp;7.1. 본 서비스는 필요 시 본 약관을 변경할 수 있으며,
+                변경된 약관은 회원에게 공지한 후 효력이 발생합니다. <br />
+                &nbsp;7.2. 회원이 변경된 약관에 동의하지 않을 경우, 회원은 계정
+                해지를 통해 이용 계약을 종료할 수 있습니다.
+              </TermsContent>
+            </TermsScrollableContent>
+            <TermsActions>
+              <div className="termAgree">
+                <TermsCheckbox
+                  type="checkbox"
+                  checked={isTermAccepted}
+                  onChange={handleCheckboxChange}
+                />
+                <TermsLabel>약관에 동의합니다.</TermsLabel>
+              </div>
+              <TermsButton
+                onClick={handleAgreeButtonClick}
+                disabled={!isTermAccepted}
+                isActive={isTermAccepted}
+              >
+                동의
+              </TermsButton>
+            </TermsActions>
+          </TermsForm>
+        </TermImgDiv>
       </InputDiv>
       {kakaoProp ? (
         <ButtonDiv>

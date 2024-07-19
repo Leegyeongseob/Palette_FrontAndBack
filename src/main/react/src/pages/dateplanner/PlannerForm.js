@@ -1,11 +1,9 @@
-// PlannerForm 컴포넌트
-
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const PlannerContainer = styled.div`
   padding: 10px;
-  max-width: 600px;
+  height: 56%;
   background-color: ${({ isEditing }) =>
     isEditing ? "rgba(236, 205, 175, 1)" : "rgba(135, 163, 159, 1)"};
   border: 1px solid #e6e6fa;
@@ -24,6 +22,8 @@ const CourseTitleInput = styled.input`
 const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
 `;
 
 const SaveButton = styled.button`
@@ -35,6 +35,7 @@ const SaveButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+
   &:hover {
     background-color: #444;
   }
@@ -48,6 +49,7 @@ const ClearButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+
   &:hover {
     background-color: #ff3333;
   }
@@ -67,7 +69,6 @@ const RemoveButton = styled.button`
     background-color: #ff3333;
   }
 `;
-
 
 const PlaceList = styled.ul`
   overflow-x: hidden;
@@ -102,7 +103,6 @@ const PlaceItem = styled.li`
   align-items: center;
 `;
 
-
 const PlannerForm = ({
   title,
   selectedPlaces,
@@ -110,11 +110,11 @@ const PlannerForm = ({
   setSelectedPlaces,
   isEditing,
   handleDeletePlace,
-  handleClearPlaces
+  handleClearPlaces,
 }) => {
   const [courseTitle, setCourseTitle] = useState("");
   const [storedPlaces, setStoredPlaces] = useState(selectedPlaces);
-  
+
   useEffect(() => {
     setStoredPlaces(selectedPlaces);
   }, [selectedPlaces]);
@@ -136,7 +136,6 @@ const PlannerForm = ({
     handleSaveCourse(newCourse);
     setCourseTitle("");
     setSelectedPlaces([]);
-    
   };
 
   const handleRemoveClick = (placeId) => {
@@ -149,24 +148,21 @@ const PlannerForm = ({
     setStoredPlaces([]);
     handleClearPlaces();
   };
- 
 
   return (
     <PlannerContainer isEditing={isEditing}>
-      
       <h2>{isEditing ? "코스 수정" : "코스 플래너"}</h2>
       <CourseTitleInput
         type="text"
         value={courseTitle}
         onChange={handleTitleChange}
-        placeholder={isEditing ? (title) : "코스 제목을 입력하세요"}
-        
+        placeholder={isEditing ? title : "코스 제목을 입력하세요"}
       />
       <BtnContainer>
-      <ClearButton onClick={handleClearClick}>리스트 초기화</ClearButton>
-      <SaveButton onClick={handleSaveClick}>
-        {isEditing ? "코스 수정" : "코스 저장"}
-      </SaveButton>
+        <ClearButton onClick={handleClearClick}>리스트 초기화</ClearButton>
+        <SaveButton onClick={handleSaveClick}>
+          {isEditing ? "코스 수정" : "코스 저장"}
+        </SaveButton>
       </BtnContainer>
       <PlaceList>
         {storedPlaces.map((place) => (

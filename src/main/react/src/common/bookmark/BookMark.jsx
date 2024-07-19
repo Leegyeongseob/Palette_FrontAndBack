@@ -3,7 +3,7 @@ import theme6 from "../../img/background/theme/6.jpg";
 import theme12 from "../../img/background/theme/12.jpg";
 import theme8 from "../../img/background/theme/8.jpg";
 import theme3 from "../../img/background/theme/3.jpg";
-import clothesBg from "../../img/background/theme/clothes_background.jpg";
+import clothesBg from "../../img/background/theme/4.jpg";
 import boardBg from "../../img/background/theme/board_background.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -14,18 +14,25 @@ import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 import visitLcck from "../../img/mainImg/방문자 잠금.gif";
 import ChatAxiosApi from "../../axiosapi/ChatAxiosApi";
 const BookMarkDiv = styled.div`
-  width: 18.75vw;
+  width: 358px;
   height: 10.493vh;
-
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 1200px) {
+    width: 300px;
+    height: 9vh;
+  }
+  @media screen and (max-width: 768px) {
+    width: 180px;
+    height: 4vh;
+  }
 `;
 const BookMarks = styled.div`
-  width: 2.604vw;
-  height: 10.493vh;
+  width: 50px;
+  height: 100px;
   border: 1px solid #000;
   border-radius: 10px 10px 0 0;
-  font-size: 0.665vw;
+  font-size: 12.5px;
   font-weight: 600;
   writing-mode: vertical-lr;
   display: flex;
@@ -36,6 +43,17 @@ const BookMarks = styled.div`
   background-size: cover;
   cursor: pointer;
   border-bottom: none;
+  @media screen and (max-width: 1200px) {
+    width: 40px;
+    height: 80px;
+    font-size: 10px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 25px;
+    height: 50px;
+    font-size: 7px;
+    border-radius: 5px 5px 0 0;
+  }
 `;
 
 const BookMark = () => {

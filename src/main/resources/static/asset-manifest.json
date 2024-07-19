@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4c0c0026.css",
-    "main.js": "/static/js/main.13cabc5f.js",
+    "main.js": "/static/js/main.0c36789e.js",
     "static/js/453.c48d6cd1.chunk.js": "/static/js/453.c48d6cd1.chunk.js",
     "static/media/HancomSans-Light_0.ttf": "/static/media/HancomSans-Light_0.623aad688fe7d6722571.ttf",
     "static/media/구글,네이버 간편 로그인.gif": "/static/media/구글,네이버 간편 로그인.8f80e64361d8d0cb5f0b.gif",
@@ -69,11 +69,11 @@
     "static/media/Ads9.png": "/static/media/Ads9.60322fea65c854525ff4.png",
     "index.html": "/index.html",
     "main.4c0c0026.css.map": "/static/css/main.4c0c0026.css.map",
-    "main.13cabc5f.js.map": "/static/js/main.13cabc5f.js.map",
+    "main.0c36789e.js.map": "/static/js/main.0c36789e.js.map",
     "453.c48d6cd1.chunk.js.map": "/static/js/453.c48d6cd1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4c0c0026.css",
-    "static/js/main.13cabc5f.js"
+    "static/js/main.0c36789e.js"
   ]
 }

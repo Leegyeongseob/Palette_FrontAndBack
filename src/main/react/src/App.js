@@ -38,8 +38,21 @@ import ChatList from "./pages/chat/ChatList";
 import ChatRoomCreate from "./pages/chat/ChatRoomCreate";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import MainPage from "./pages/main/BeforeMainPage";
+import { useState, useCallback } from "react";
 
 function App() {
+  const [url, setUrl] = useState("");
+
+  // useCallback을 사용하여 함수 메모이제이션
+  const handleNavigate = useCallback((path) => {
+    setUrl(path);
+    console.log("Navigating to:", path);
+  }, []);
+
+  const clearUrl = useCallback(() => {
+    setUrl("");
+  }, []);
+
   return (
     <>
       {/* 전역스타일적용 */}
@@ -59,30 +72,69 @@ function App() {
             path="/customer/notice/:id"
             element={<PaletteNoticeDetails />}
           />
-          <Route element={<OpenBook />}>
+          <Route element={<OpenBook onNavigate={handleNavigate} />}>
             <Route path="/main-page" element={<MainPage />} />
-            <Route path="/:coupleName/main-page" element={<AfterMain />} />
-            <Route path="/date-clothes" element={<DateClothes />} />
-            <Route path="/date-album" element={<DateAlbum />} />
-            <Route path="/date-album2" element={<DateAlbum2 />} />
-            <Route path="/date-album3" element={<DateAlbum3 />} />
-            <Route path="/date-album4" element={<DateAlbum4 />} />
-            <Route path="/date-album5" element={<DateAlbum5 />} />
-            <Route path="/date-diary" element={<DateDiary />} />
-            <Route path="/Chat" element={<ChatList />} />
+            <Route
+              path="/:coupleName/main-page"
+              element={<AfterMain url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-clothes"
+              element={<DateClothes url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-album"
+              element={<DateAlbum url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-album2"
+              element={<DateAlbum2 url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-album3"
+              element={<DateAlbum3 url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-album4"
+              element={<DateAlbum4 url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-album5"
+              element={<DateAlbum5 url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/date-diary"
+              element={<DateDiary url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/Chat"
+              element={<ChatList url={url} clearUrl={clearUrl} />}
+            />
             <Route path="/Chatcreate" element={<ChatRoomCreate />} />
-            <Route path="/Chat/:roomId" element={<ChatMain />} />
-            <Route path="/:coupleName/dateplanner" element={<DatePlanner />} />
+            <Route
+              path="/Chat/:roomId"
+              element={<ChatMain url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/:coupleName/dateplanner"
+              element={<DatePlanner url={url} clearUrl={clearUrl} />}
+            />
             <Route
               path="/:coupleName/board-guestbook"
-              element={<GuestBoardGuestbook />}
+              element={<GuestBoardGuestbook url={url} clearUrl={clearUrl} />}
             />
             <Route
               path="/:coupleName/board-details/:id"
-              element={<BoardDetails />}
+              element={<BoardDetails url={url} clearUrl={clearUrl} />}
             />
-            <Route path="/:coupleName/board-write" element={<BoardWrite />} />
-            <Route path="/:coupleName/board-update" element={<BoardUpdate />} />
+            <Route
+              path="/:coupleName/board-write"
+              element={<BoardWrite url={url} clearUrl={clearUrl} />}
+            />
+            <Route
+              path="/:coupleName/board-update"
+              element={<BoardUpdate url={url} clearUrl={clearUrl} />}
+            />
             <Route
               path="/guest-board-guestbook"
               element={<GuestBoardGuestbook />}

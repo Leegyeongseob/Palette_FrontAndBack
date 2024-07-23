@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HelpQ = styled(Link)`
-  width: 18%;
+  width: 174px;
   height: 70%;
   display: flex;
   align-items: center;
   border: 1px solid gray;
   justify-content: center;
-  margin-left: 2%;
+  margin-left: 1.5%;
+  margin-top: 1%;
   text-decoration: none;
   color: #000;
   &:hover {
     font-weight: bolder;
+  }
+  @media screen and (max-width: 1100px) {
+    height: 55%;
   }
 `;
 
@@ -21,9 +25,12 @@ const HelpQText = styled.div`
   width: 90%;
   height: 100%;
   display: flex;
-  font-size: 0.75vw;
+  font-size: 15px;
   align-items: center;
   border: none;
+  @media screen and (max-width: 1100px) {
+    font-size: 12px;
+  }
 `;
 
 const QnAItem = ({ q }) => {

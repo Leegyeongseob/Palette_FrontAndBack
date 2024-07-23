@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import ChatAxiosApi from "../../axiosapi/ChatAxiosApi";
 import ChatModal from "./ChatModal";
@@ -7,11 +7,27 @@ import chat from "../../img/background/theme/chat.jpg";
 import chat_1 from "../../img/background/theme/chat-1.jpg";
 import MainAxios from "../../axiosapi/MainAxios";
 
+const turnPageLeft = keyframes`
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    transform-origin: left;
+  }
+  30% {
+    transform: perspective(1600px) rotateY(-25deg);
+    transform-origin: left;
+  } 
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    transform-origin: left;
+  }
+`;
+
 const BookTheme = styled.div`
   width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${chat});
   /* background-color: #d0d7e9; */
   background-size: cover;
@@ -35,13 +51,10 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
+  border: 1px solid #696969;
   background-image: url(${chat_1});
   /* background-color: #d0d7e9; */
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 56vh;
@@ -52,6 +65,24 @@ const BookTheme2 = styled.div`
     height: 35vh;
     margin-top: 2.8vh;
   }
+`;
+
+const BookSign2 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${chat_1});
+  background-size: cover;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${turnPageLeft} 1.8s forwards;
+    `}
 `;
 
 const ChatListContainer = styled.div`
@@ -191,6 +222,12 @@ const PreviewContainer = styled.div`
   border-radius: 10px;
   padding: 22px;
   overflow-y: hidden;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
 `;
 
 const PreviewMessage = styled.div`
@@ -217,6 +254,12 @@ const BtnBox = styled.div`
   border-bottom-right-radius: 10px;
   align-items: center;
   background-color: rgb(255, 255, 255, 0.8);
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
 `;
 
 const EnterBtn = styled.div`
@@ -242,7 +285,7 @@ const EnterBtn = styled.div`
   }
 `;
 
-function ChatList() {
+function ChatList({url, clearUrl}) {
   const [chatRooms, setChatRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [previewMessages, setPreviewMessages] = useState([]);
@@ -250,6 +293,27 @@ function ChatList() {
   const email = sessionStorage.getItem("email");
   const [createModal, setCreateModal] = useState(false);
   const [coupleNickName, setCoupleNickName] = useState(["", ""]);
+
+  const [animate, setAnimate] = useState(false);
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      const encodedUrl = encodeURI(url);
+      if (window.location.pathname !== encodedUrl) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
 
   const closeModal = () => {
     setCreateModal(false);
@@ -276,7 +340,7 @@ function ChatList() {
     fetchChatRooms(); // 최초 한 번 호출
 
     // 1초마다 채팅방 목록 업데이트
-    const intervalId = setInterval(fetchChatRooms, 1000);
+    const intervalId = setInterval(fetchChatRooms, 0);
 
     // 컴포넌트 언마운트 시 인터벌 해제
     return () => clearInterval(intervalId);
@@ -337,13 +401,13 @@ function ChatList() {
             ))}
           </ChatUl>
           <CircleFixedButton onClick={createChatRoom}></CircleFixedButton>
-          <ChatModal isOpen={createModal} onClose={closeModal}></ChatModal>
         </ChatListContainer>
       </BookTheme>
       <BookTheme2>
+        <BookSign2 animate={animate}>
         {selectedRoom && (
           <>
-            <PreviewContainer>
+            <PreviewContainer animate={animate}>
               <HeaderDiv>
                 <HeaderView>미리보기</HeaderView>
                 <HeaderName>
@@ -365,14 +429,16 @@ function ChatList() {
                 </PreviewMessage>
               ))}
             </PreviewContainer>
-            <BtnBox>
+            <BtnBox animate={animate}>
               <EnterBtn onClick={() => enterChatRoom(selectedRoom)}>
                 입장하기
               </EnterBtn>
             </BtnBox>
           </>
         )}
+        </BookSign2>
       </BookTheme2>
+      <ChatModal isOpen={createModal} onClose={closeModal}></ChatModal>
     </>
   );
 }

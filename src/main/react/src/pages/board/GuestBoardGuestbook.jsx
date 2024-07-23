@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import boardBg from "../../img/background/theme/9.jpg";
 import boardBg_1 from "../../img/background/theme/9-1.jpg";
 import CoupleImg from "../../common/couple/CoupleImgMini";
@@ -8,11 +8,27 @@ import Guestbook from "./Guestbook";
 import BoardAxios from "../../axiosapi/BoardAxios";
 import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
 
+const turnPageLeft = keyframes`
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    transform-origin: left;
+  }
+  30% {
+    transform: perspective(1600px) rotateY(-25deg);
+    transform-origin: left;
+  } 
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    transform-origin: left;
+  }
+`;
+
 const BookTheme = styled.div`
   width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${boardBg});
   background-size: cover;
   display: flex;
@@ -35,6 +51,7 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
+  border: 1px solid #696969;
   background-image: url(${boardBg_1});
   background-size: cover;
   display: flex;
@@ -50,6 +67,24 @@ const BookTheme2 = styled.div`
     margin-top: 2.8vh;
   }
 `;
+
+const BookSign2 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${boardBg_1});
+  background-size: cover;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${turnPageLeft} 1.8s forwards;
+    `}
+`;
+
 const BoardSide = styled.div`
   width: 100%;
   height: 100%;
@@ -212,12 +247,18 @@ const BoardPaginationButton = styled.button`
 const GuestbookSide = styled.div`
   width: 100%;
   height: 100%;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
 `;
 
 const itemsPerPage = 10;
 const maxPageButtons = 5;
 
-const GuestBoardGuestbook = () => {
+const GuestBoardGuestbook = ({url, clearUrl}) => {
   const coupleName = sessionStorage.getItem("coupleName");
   const email = sessionStorage.getItem("email");
   const [currentPage, setCurrentPage] = useState(1);
@@ -225,6 +266,26 @@ const GuestBoardGuestbook = () => {
   // 내 방이면 true 아니면 false
   const [isMyHome, setIsMyHome] = useState(true);
   const navigate = useNavigate();
+  const [animate, setAnimate] = useState(false);
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      const encodedUrl = encodeURI(url); //공백을 문자로 인코딩
+      if (window.location.pathname !== encodedUrl) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
 
   useEffect(() => {
     fetchBoardDataCN();
@@ -345,9 +406,11 @@ const GuestBoardGuestbook = () => {
         </BoardSide>
       </BookTheme>
       <BookTheme2>
-        <GuestbookSide>
+        <BookSign2 animate={animate}>
+        <GuestbookSide animate={animate}>
           <Guestbook />
         </GuestbookSide>
+        </BookSign2>
       </BookTheme2>
     </>
   );

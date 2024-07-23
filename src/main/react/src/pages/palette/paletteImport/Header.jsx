@@ -12,8 +12,8 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media screen and (max-width: 768px) {
-    min-width: 768px;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
   }
 `;
 
@@ -66,8 +66,8 @@ const MenuBar = styled.div`
   &:hover {
     opacity: 90%;
   }
-  @media screen and (max-width: 768px) {
-    min-width: 768px;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
   }
 `;
 
@@ -92,7 +92,7 @@ const Menu = styled(Link)`
   &:hover {
     font-weight: bolder;
   }
-  @media screen and (max-width: 1333px) {
+  @media screen and (max-width: 1210px) {
     font-size: 13px;
   }
 `;

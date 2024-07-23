@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.kh.Palette_BackEnd.constant.Sex;
 
 import java.util.List;
 
@@ -36,5 +37,9 @@ public class MainController {
     public ResponseEntity<List<String>>visitCoupleNameSearchList(@RequestParam String coupleName){
         return ResponseEntity.ok(mainService.visitCoupleNameSearchList(coupleName));
     }
-
+       //본인 성별 가져오는 비동기 함수
+    @GetMapping("/mySexSearch")
+    public ResponseEntity<Sex>mySexSearch(@RequestParam String email){
+        return ResponseEntity.ok(mainService.mySexSearch(email));
+    }
 }

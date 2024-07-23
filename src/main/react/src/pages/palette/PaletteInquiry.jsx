@@ -8,13 +8,20 @@ import emailjs from '@emailjs/browser';
 import { useRef, useState } from "react";
 import Modal from "../datediary/Modal";
 import modalImg from "../../img/commonImg/전구 아이콘.gif";
+import ScrollToTop from "./paletteImport/ScrollToTop";
 
 const Background = styled.div`
   width: 100%;
   height: 200vh;
   display: flex;
   flex-direction: column;
-  font-size: 1.8rem;
+  @media (max-width: 1100px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 const Container = styled.div`
   width: 100%;
@@ -24,15 +31,23 @@ const Container = styled.div`
   align-items: center;
   background-color: #fff9f2;
   position: sticky;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
+  }
 `;
 
 const BoardWrapper = styled.div`
-  width: 70%;
+  width: 1380px;
   height: 90%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    margin-left: 10%;
+    min-width: 755px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 const Board = styled.div`
@@ -43,20 +58,20 @@ const Board = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: #fff9f0;
+  @media screen and (max-width: 1100px) {
+    min-width: 755px;
+  }
 `;
 
 const HelpRoot = styled.div`
   width: 90%;
-  height: 4%;
+  height: 5%;
   display: flex;
-  flex-direction: row;
-  font-size: 0.8vw;
-  justify-content: flex-start;
-  align-items: center;
+  font-size: 14px; 
 `;
 
 const Root = styled(Link)`
-  width: 6%;
+  width: 7%;
   height: 100%;
   display: flex;
   text-decoration: none;
@@ -69,14 +84,14 @@ const Root2 = styled(Root)`
   width: 2%;
 `;
 const Root3 = styled(Root)`
-  width: 6.5%;
+  width: 8%;
 `;
 const Root4 = styled(Root)`
-  width: 10%;
+  width: 11%;
 `;
 
 const HelpBoard = styled.form`
-  width: 95%;
+  width: 100%;
   height: 80%;
   display: flex;
   flex-direction: column;
@@ -88,7 +103,7 @@ const InquiryTitle = styled.div`
   width: 90%;
   height: 7%;
   border-bottom: 2px solid gray;
-  font-size: 1.3vw;
+  font-size: 25px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -106,7 +121,7 @@ const InfoBox = styled.div`
 const InfoTitle = styled.div`
   width: 90%;
   height: 6vh;
-  font-size: 1vw;
+  font-size: 18px;
   display: flex;
   align-items: center;
 `;
@@ -114,7 +129,7 @@ const InfoInput = styled.input`
   width: 30%;
   height: 15%;
   padding: 10px;
-  font-size: 0.8vw;
+  font-size: 16px;
   display: flex;
   align-items: center;
 `;
@@ -124,7 +139,7 @@ const CheckBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 0.7vw;
+  font-size: 14px;
 `;
 const ContentBox = styled.div`
   width: 90%;
@@ -168,7 +183,7 @@ const ContentInput = styled.textarea`
   width: 90%;
   height: 70%;
   padding: 20px;
-  font-size: 0.8vw;
+  font-size: 16px;
   display: flex;
   justify-content: flex-start;
 `;
@@ -280,7 +295,7 @@ const InquiryPage = () => {
                 <InquiryTitle>❯❯ 1:1 문의하기</InquiryTitle>
                 <InfoBox>
                   <InfoTitle>연락처</InfoTitle>
-                  <InfoInput type="text" name="user_number" placeholder="ex)010-1234-5678" required />
+                  <InfoInput type="text" name="user_number" placeholder="ex) 010-1234-5678" required />
                   <CheckBox>
                     <CustomCheckbox type="checkbox" name="number_check" checked={numberCheck} onChange={handleNumberCheckChange} />
                     답변 등록 시 카카오톡 또는 문자 알림 수신 (미동의 할 경우 이메일만 답변)
@@ -322,6 +337,7 @@ const InquiryPage = () => {
           </Modal>
         </Container>
         <Footer />
+        <ScrollToTop/>
       </Background>
     </>
   );

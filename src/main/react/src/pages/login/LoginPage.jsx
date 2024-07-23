@@ -376,25 +376,19 @@ const LoginPage = () => {
   };
   //카카오 간편 로그인 이벤트 함수
   const kakaoLoginOnClick = () => {
-    // 직접 구현
-    // const kakaoAuthorizeAxios = async () => {
-    //   const REST_API_KEY = process.env.REACT_APP_KAKAO_API_KEY;
-    //   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-    //   const KAKAO_PATH = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
-
-    //   window.location.href = KAKAO_PATH;
-    //   console.log("KAKAO_PATH:" + KAKAO_PATH);
-    // };
-    // kakaoAuthorizeAxios();
-    window.Kakao.Auth.login({
-      success: function (obj) {
-        console.log(obj);
-        getInfo(obj.access_token);
-      },
-      fail: function (err) {
-        console.error(err);
-      },
-    });
+    if (window.Kakao && window.Kakao.Auth) {
+      window.Kakao.Auth.login({
+        success: function (obj) {
+          console.log(obj);
+          getInfo(obj.access_token);
+        },
+        fail: function (err) {
+          console.error(err);
+        },
+      });
+    } else {
+      console.log("Kakao SDK is not loaded!");
+    }
     const getInfo = async (token) => {
       try {
         //토큰으로 정보 받아오는 부분
@@ -426,6 +420,7 @@ const LoginPage = () => {
           sessionStorage.setItem("kakaoImgUrl", ImgUrl);
           //이메일로 커플이름 찾는 비동기 함수
           const coupleNameSearchAxios = async (email) => {
+            console.log(email);
             const resCoupleName = await LoginAxios.emailToCoupleNameSearch(
               email
             );

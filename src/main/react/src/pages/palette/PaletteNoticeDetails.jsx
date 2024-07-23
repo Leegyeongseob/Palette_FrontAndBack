@@ -6,6 +6,7 @@ import Header from './paletteImport/Header';
 import Footer from './paletteImport/Footer';
 import Category from "./paletteImport/Category";
 import { exText } from './PaletteNotice'; // 예시 데이터 사용
+import ScrollToTop from './paletteImport/ScrollToTop';
 
 const Background = styled.div`
   width: 100%;
@@ -22,46 +23,52 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fff9f2;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
+  }
 `;
 
 const BoardWrapper = styled.div`
-  width: 70%;
+  width: 1380px;
   height: 90%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    margin-left: 10%;
+    min-width: 755px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 const HelpRoot = styled.div`
-width: 90%;
-height: 5%;
-display: flex;
-flex-direction: row;
-font-size: 0.8vw;
-justify-content: flex-start;
-align-items: center;
+  width: 90%;
+  height: 5%;
+  display: flex;
+  font-size: 14px; 
 `;
 
 const Root = styled(Link)`
-width: 6%;
-height: 100%;
-display: flex;
-text-decoration: none;
-color: #000;
-&:hover {
-  font-weight: bolder;
-}
+  width: 7%;
+  height: 100%;
+  display: flex;
+  text-decoration: none;
+  color: #000;
+  &:hover {
+    font-weight: bolder;
+  }
 `;
 const Root2 = styled(Root)`
-width: 2%;
+  width: 2%;
 `;
 const Root3 = styled(Root)`
-width: 6.5%;
+  width: 9%;
 `;
 const Root4 = styled(Root)`
-width: 10%;
+  width: 10%;
 `;
+
 
 const HelpBoard = styled.div`
   width: 90%;
@@ -73,41 +80,47 @@ const HelpBoard = styled.div`
 `;
 
 const HelpBoardText = styled.div`
-    width: 96%;
-    height: 90%;
-    font-size: 1vw;
-    padding: 3%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  width: 96%;
+  height: 90%;
+  font-size: 22px;
+  padding: 3%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const TitleBox = styled.div`
-width: 90%;
-height: 6%;
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-border-top: 2px solid darkgray;
+  width: 90%;
+  height: 6%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid darkgray;
 `;
 
 const TitleLeft = styled.div`
-  width: 48%;
+  width: 64%;
   height: 90%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  font-size: 1.1vw;
+  font-size: 24px;
+  @media screen and (max-width: 1100px) {
+    font-size: 19px;
+  }
 `;
 
 const TitleRight = styled.div`
-  width: 48%;
+  width: 32%;
   height: 90%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
- font-size: 0.9vw;
+  font-size: 20px;
+  @media screen and (max-width: 1100px) {
+    font-size: 17px;
+  }
 `;
 
 const Board = styled.div`
@@ -118,6 +131,9 @@ const Board = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: #fff9f0;
+  @media screen and (max-width: 1100px) {
+    min-width: 755px;
+  }
 `;
 
 const BtnBox = styled.div`
@@ -129,9 +145,9 @@ const BtnBox = styled.div`
 `;
 
 const BackBtn = styled.button`
-  width: 10%;
+  width: 100px;
   height: 20%;
-  font-size: 0.9rem;
+  font-size: 16px;
   border-radius: 0.5rem;
   background-color: #fff9f0;
   cursor: pointer;
@@ -191,6 +207,7 @@ const NoticeDetailPage = () => {
           </BoardWrapper>
         </Container>
         <Footer />
+        <ScrollToTop/>
       </Background>
     </>
   );

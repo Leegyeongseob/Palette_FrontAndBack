@@ -26,15 +26,15 @@ const HelpQText = styled.div`
   width: 95%;
   height: 90%;
   display: flex;
-  font-size: 0.9vw;
+  font-size: 20px;
   align-items: center;
 `;
 
 const HelpAText = styled.div`
-  width: 40vw;
+  width: 95%;
   padding: 8px;
   display: flex;
-  font-size: 0.8vw;
+  font-size: 18px;
   justify-content: flex-start;
   align-items: center;
   letter-spacing: 0.1em;

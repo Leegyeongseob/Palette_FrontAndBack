@@ -1,137 +1,147 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
+import one from "../../../img/loginImg/naver.png";
+import two from "../../../img/loginImg/kakako.png";
+import thr from "../../../img/commonImg/instagram.png";
+import useKakao from "./KakaoChat";
 
 const Footer = styled.div`
   width: 100%;
-  height: auto;
+  height: 285px;
   background-color: #f1f1f1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-
-  @media (max-width: 1200px) {
-    padding: 30px;
-  }
-
-  @media (max-width: 768px) {
-    padding: 20px;
+  padding: 40px 4.166vw;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
   }
 `;
 
 const FooterLeft = styled.div`
   width: 100%;
+  height: 256px;
   display: flex;
-  flex-direction: column;
-
-  @media (max-width: 1200px) {
-    width: 100%;
-  }
-`;
-
-const FooterRight = styled.div`
-  width: 100%;
-  display: flex;
-
-  @media (max-width: 1200px) {
-    width: 100%;
-  }
-`;
-
-const LinkTitle = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  padding: 10px 0;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
 
-  @media (max-width: 768px) {
-    padding-right: 0;
-  }
+const TitleBox = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  border-bottom: 1px solid darkgray;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  @media (max-width: 1200px) {
-    flex-direction: row;
-    padding-right: 20px;
-  }
+const TitleLeft = styled.div`
+  width: 80%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 18px;
+`;
+
+const TitleRight = styled.div`
+  width: 20%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 18px;
 `;
 
 const TextTitle = styled(Link)`
-  font-size: calc(1rem + 0.5vw);
+  width: 120px;
+  height: 90%;
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  justify-content: flex-start;
   text-decoration: none;
   color: #000;
-  padding: 5px 10px;
-  margin: 5px;
-
   &:hover {
     font-weight: bolder;
   }
-  @media (max-width: 1200px) {
-    font-size: calc(0.9rem + 0.3vw);
-  }
+`;
 
-  @media (max-width: 768px) {
-    font-size: 14px;
+const Img = styled.div`
+  width: 45px;
+  height: 90%;
+  background-image: url(${props => props.url});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  &:hover {
+    transform: scale(0.9);
   }
 `;
 
 const IntroBox = styled.div`
   width: 100%;
+  height: 146px;
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
   flex-direction: column;
-  padding: 10px 0;
-
-  @media (max-width: 1200px) {
-    width: 90%;
-  }
 `;
 
 const IntroText = styled.div`
   width: 100%;
-  font-size: calc(0.9rem + 0.5vw);
-  text-align: left; // 왼쪽 정렬
-  padding: 5px 0;
-
-  @media (max-width: 1200px) {
-    font-size: calc(0.8rem + 0.5vw);
-  }
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+  height: 30%;
+  display: flex;
+  font-size: 15px;
+  align-items: center;
 `;
 
 const CopyrightBox = styled.div`
   width: 100%;
+  height: 60px;
   display: flex;
-  padding: 10px 0;
-
-  @media (max-width: 1200px) {
-    width: 90%;
-  }
+  align-items: flex-start;
+  justify-content: center;
 `;
 
 const Copyright = styled.div`
   width: 100%;
-  font-size: calc(0.9rem + 0.5vw);
-  text-align: center;
-
-  @media (max-width: 1300px) {
-    font-size: calc(0.8rem + 0.5vw);
-  }
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+  height: 90%;
+  display: flex;
+  font-size: 13px;
+  align-items: center;
 `;
 
-const Foot = () => (
+const Foot = () => {
+  useKakao("3e926147c6cccdc2e4dec8ce33bb6985"); // 여기에 본인의 카카오 앱 키를 입력하세요"3e926147c6cccdc2e4dec8ce33bb6985"
+
+  const handleChat = () => {
+    if (window.Kakao) {
+      window.Kakao.Channel.chat({
+        channelPublicId: "_raJpG", // 여기에 본인의 카카오톡 채널 ID를 입력하세요 "_raJpG"
+      });
+    }
+  };
+
+  return (
+    <>
   <Footer>
     <FooterLeft>
-      <LinkTitle>
-        <TextTitle to="">개인정보처리방침</TextTitle>
-        <TextTitle to="">이용약관</TextTitle>
-      </LinkTitle>
+      <TitleBox>
+        <TitleLeft>
+          <TextTitle to="">개인정보처리방침</TextTitle>
+          <TextTitle to="">이용약관</TextTitle>
+        </TitleLeft>
+        <TitleRight>
+          <Img url={one} />
+          <Img url={two} as="button" onClick={handleChat} />
+          <Img url={thr} />
+        </TitleRight>
+      </TitleBox>
       <IntroBox>
         <IntroText>
           Palette | 대표 : 곰돌이사육사 | 사업자등록번호 : 000-00-00000 |
@@ -150,8 +160,9 @@ const Foot = () => (
         <Copyright>Copyright 2024. Palette inc. all rights reserved.</Copyright>
       </CopyrightBox>
     </FooterLeft>
-    <FooterRight></FooterRight>
   </Footer>
-);
+  </>
+)
+};
 
 export default Foot;

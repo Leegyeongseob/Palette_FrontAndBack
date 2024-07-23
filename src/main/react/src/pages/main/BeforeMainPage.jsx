@@ -23,11 +23,13 @@ const BookTheme = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${theme3});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   @media screen and (max-width: 1200px) {
     width: 420px;
@@ -46,6 +48,7 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.1vw;
+  border: 1px solid #696969;
   background-image: url(${theme3_1});
   background-size: cover;
   background-position: center;
@@ -65,9 +68,14 @@ const BookTheme2 = styled.div`
   }
 `;
 
+const PaletteText = styled.div`
+  position: absolute;
+  font-size: 60px;
+`
+
 const BookSign = styled.div`
   width: 497px;
-  height: 66vh;
+  height: 67vh;
 
   @media screen and (max-width: 1200px) {
     width: 420px;
@@ -80,13 +88,15 @@ const BookSign = styled.div`
 `;
 const BookSign2 = styled.div`
   width: 497px;
-  height: 66vh;
+  height: 67vh;
+  border: 1px solid #696969;
   background-image: url(${theme3_1});
   background-size: cover;
   transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
   transform-origin: left;
   border-left: 0.5px solid black;
   overflow: hidden;
+  z-index: 999;
   ${({ animate }) =>
     animate &&
     css`
@@ -101,24 +111,29 @@ const BookSign2 = styled.div`
     height: 35vh;
   }
 `;
+
 const ContentsDiv = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
   & > p {
     font-size: 60px;
-    font-weight: 600;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
   @media screen and (max-width: 1200px) {
-    font-size: 40px;
+    font-size: 45px;
     font-weight: 500;
   }
   @media screen and (max-width: 768px) {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 400;
+  }
   }
 `;
 const BeforeMainPage = () => {
@@ -139,16 +154,17 @@ const BeforeMainPage = () => {
       <BookTheme>
         <BookSign>
           <ContentsDiv>
-            <p>우리들의 이야기,</p>
+            <p>둘만의 공간,</p>
           </ContentsDiv>
         </BookSign>
       </BookTheme>
       <BookTheme2>
         <BookSign2 animate={animate}>
-          <ContentsDiv>
-            <p>지금 시작합니다!</p>
+          <ContentsDiv animate={animate}>
+            {/* <p>Palette</p> */}
           </ContentsDiv>
         </BookSign2>
+        <PaletteText>Palette</PaletteText>
       </BookTheme2>
     </>
   );

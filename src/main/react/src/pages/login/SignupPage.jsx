@@ -107,6 +107,30 @@ const EmailAthouized = styled.div`
     font-size: 2vw;
   }
 `;
+const CoupleEmailAthouized = styled.div`
+  width: 20%;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: ${({ isActive }) =>
+    isActive ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.2)"};
+  outline: none;
+  box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: ${({ isActive }) => (isActive ? "#b44a4a" : "#ccc")};
+  font-weight: 600;
+  cursor: ${({ isActive }) => (isActive ? "pointer" : "not-allowed")};
+  &:hover {
+    background-color: ${({ isActive }) =>
+      isActive ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.2)"};
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
 const RegisterationInput1 = styled.input`
   width: 22%;
   height: 100%;
@@ -941,18 +965,18 @@ const SignupPage = () => {
               </p>
             </div>
             <div className="YesOrNo">
-              <EmailAthouized
+              <CoupleEmailAthouized
                 isActive={true}
                 onClick={isMyCoupleEmailYesHandler}
               >
                 Yes
-              </EmailAthouized>
-              <EmailAthouized
+              </CoupleEmailAthouized>
+              <CoupleEmailAthouized
                 isActive={true}
                 onClick={isMyCoupleEmailNoHandler}
               >
                 No
-              </EmailAthouized>
+              </CoupleEmailAthouized>
             </div>
           </IsMyCoupleEmailForm>
         </IsMyCoupleEmailImg>

@@ -6,7 +6,7 @@ import AlbumAxiosApi from "../../axiosapi/AlbumAxiosApi";
 import PagePop from "./import/PagePop";
 import TemaPop from "./import/TemaPop";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import deleteImageFromFirebase from "../../firebase/firebaseAlbumDel";
 import Modal from "../../pages/datediary/Modal";
 import modalImg from "../../img/commonImg/전구 아이콘.gif";
@@ -39,6 +39,7 @@ const BookTheme = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${theme8});
   background-size: cover;
   display: flex;
@@ -61,10 +62,12 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
+  border: 1px solid #696969;
   background-image: url(${theme8_1});
   background-size: cover;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 56vh;
@@ -98,10 +101,10 @@ const BookSign2 = styled.div`
   height: 67vh;
   background-image: url(${theme8_1});
   background-size: cover;
+  border: 1px solid #696969;
   transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
   transform-origin: left;
-  border-left: 0.5px solid black;
-  overflow: hidden;
+  position: absolute;
   ${({ animate }) =>
     animate &&
     css`
@@ -351,7 +354,7 @@ const PlusButton = styled.button`
   }
 `;
 
-const DateAlbum = () => {
+const DateAlbum = ({ url, clearUrl }) => {
   const [animate, setAnimate] = useState(false);
   const [imgBoxes, setImgBoxes] = useState(
     Array(15)
@@ -373,6 +376,25 @@ const DateAlbum = () => {
   //디데이 값 저장
   const [saveDday, setSaveDday] = useState("");
   //코드 모달 확인
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      if (window.location.pathname !== url) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
+
   const codeModalOkBtnHandler = () => {
     closeNextModal();
     navigate("/date-album");

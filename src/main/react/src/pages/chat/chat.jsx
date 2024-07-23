@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { FaHeart } from "react-icons/fa6";
 import { TbWallpaper } from "react-icons/tb";
@@ -50,6 +50,7 @@ const Chatpage = styled.div`
   height: 67vh;
   margin-top: 4.5%;
   margin-left: 0.7vw;
+  border: 1px solid #696969;  
   background: url(${(props) => props.backgroundImage}) no-repeat center center;
   /* background-color: #9b9b9b; */
   background-size: cover;
@@ -310,7 +311,7 @@ const InputText = styled.div`
   }
 `;
 
-const ChatMain = () => {
+const ChatMain = ({url, clearUrl}) => {
   const [isPlusMenuVisible, setPlusMenuVisible] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState(chatBack7);
   const [isTemaMenuVisible, setTemaMenuVisible] = useState(false);
@@ -331,6 +332,22 @@ const ChatMain = () => {
   const [modalContent, setModalContent] = useState("");
   //팝업 처리
   const [modalOpen, setModalOpen] = useState(false);
+
+  const pageMove = useCallback(() => {
+    navigate(url);
+    clearUrl();
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      const encodedUrl = encodeURI(url);
+      if (window.location.pathname !== encodedUrl) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
 
   const onChangMsg = (e) => {
     setInputMsg(e.target.value);
@@ -459,7 +476,15 @@ const ChatMain = () => {
       console.log("테스트" + data.message);
       setChatList((prevItems) => [...prevItems, data]);
     };
-  }, [socketConnected]);
+    // 컴포넌트 언마운트 시 웹소켓 연결 닫기
+    // return () => {
+    //   if (ws.current) {
+    //     ws.current.close();
+    //     ws.current = null;
+    //     setSocketConnected(false);
+    //   }
+    // };
+  }, [socketConnected, roomId, sender, receiver]);
 
   // 화면 하단으로 자동 스크롤
   useEffect(() => {
@@ -509,9 +534,6 @@ const ChatMain = () => {
   const deleteOkHandler = () => {
     onClickMsgClose();
     setModalOpen(false);
-    navigate("/chat");
-  };
-  const clickTopBtn = () => {
     navigate("/chat");
   };
 
@@ -574,7 +596,7 @@ const ChatMain = () => {
         <TopDiv>
           <TopText>{coupleNickName[1]} 의 채팅</TopText>
           <TopName>채팅방 : {roomName}</TopName>
-          <TopBtn onClick={clickTopBtn}>나가기</TopBtn>
+          {/* <TopBtn onClick={clickTopBtn}>나가기</TopBtn> */}
         </TopDiv>
         <Textarea
           ref={chatContainerRef}

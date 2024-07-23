@@ -14,42 +14,47 @@ import {
 } from "firebase/storage";
 
 const Contain = styled.div`
-  width: ${({ clothes }) => (clothes ? "70vw" : "495px")};
+  width: ${({ clothes }) => (clothes ? "100%" : "495px")};
   height: 100%;
   margin-right: 1.5%;
   display: flex;
   justify-content: ${({ clothes }) => (clothes ? "space-between" : "center")};
   align-items: center;
   @media screen and (max-width: 1200px) {
-    width: ${({ clothes }) => (clothes ? "70vw" : "420px")};
+    width: ${({ clothes }) => (clothes ? "100%" : "420px")};
   }
   @media screen and (max-width: 768px) {
-    width: ${({ clothes }) => (clothes ? "70vw" : "280px")};
+    width: ${({ clothes }) => (clothes ? "100%" : "280px")};
   }
 `;
 const ProfileDiv = styled.div`
   width: ${({ clothes }) => (clothes ? "100%" : "211px")};
-  height: ${({ clothes }) => (clothes ? "12vh" : "23vh")};
+  height: ${({ clothes }) => (clothes ? "100%" : "23vh")};
   display: ${({ clothes }) => (clothes ? "flex" : "block")};
   flex-direction: ${({ direction }) => (direction ? "row-reverse" : "row")};
   justify-content: space-evenly;
-  background-color: ${({ clothes }) => (clothes ? "aliceblue" : "none")};
   @media screen and (max-width: 1200px) {
-    width: ${({ clothes }) => (clothes ? "70vw" : "190px")};
-    height: ${({ clothes }) => (clothes ? "12vh" : "19vh")};
+    width: ${({ clothes }) => (clothes ? "100%" : "190px")};
+    height: ${({ clothes }) => (clothes ? "100%" : "19vh")};
   }
   @media screen and (max-width: 768px) {
-    width: ${({ clothes }) => (clothes ? "70vw" : "100px")};
-    height: ${({ clothes }) => (clothes ? "12vh" : "10vh")};
+    width: ${({ clothes }) => (clothes ? "100%" : "100px")};
+    height: ${({ clothes }) => (clothes ? "100%" : "10vh")};
   }
 `;
 const ProfileImgDiv = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: ${({ clothes }) => (clothes ? "first baseline" : "center")};
   align-items: center;
-  background-color: ${({ clothes }) => (clothes ? "lightblue" : "none")};
+`;
+const ProfileImgDiv2 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: ${({ clothes }) => (clothes ? "end" : "center")};
+  align-items: center;
 `;
 const HeartDiv = styled.div`
   width: 4vw;
@@ -84,16 +89,29 @@ const Profile = styled.div`
     height: ${({ clothes }) => (clothes ? "50px" : "60px")};
   }
 `;
+
 const Text = styled.div`
   width: ${({ clothes }) => (clothes ? "30%" : "8vw")};
-  height: 7.345vh;
+  height: ${({ clothes }) => (clothes ? "3vh" : "7.345vh")};
+  background-color: ${({ clothes }) => (clothes ? "white" : "none")};
+  border-radius: ${({ clothes }) => (clothes ? "8px" : "none")};
+  border: ${({ clothes }) => (clothes ? "1px solid gray" : "none")};
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
   font-weight: 600;
   color: ${({ clothes }) => (clothes ? "#000" : "#fff")};
+  @media screen and (max-width: 1200px) {
+    height: ${({ clothes }) => (clothes ? "2.5vh" : "7.345vh")};
+    font-size: 14px;
+  }
+  @media screen and (max-width: 768px) {
+    height: ${({ clothes }) => (clothes ? "2vh" : "7.345vh")};
+    font-size: 10px;
+  }
 `;
+
 const ProfileCover = styled.div`
   width: 6.771vw;
   height: 13.641vh;
@@ -137,6 +155,8 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
   const coupleName = sessionStorage.getItem("coupleName");
   const [IsExistImg, setIsExistImg] = useState([false, false]);
   const [saveFirstEmail, setSaveFirstEmail] = useState("");
+  // 성별을 저장하는 변수
+  const [firstProfileUrl, setFirstProfileUrl] = useState([]);
 
   //카카오 로그인시 프로필 자동 변경
   const kakaoProfileUrl = sessionStorage.getItem("kakaoImgUrl");
@@ -151,6 +171,9 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
     if (kakaoProfileUrl !== null) {
       kakaoProfileImgAxios(email, kakaoProfileUrl);
     }
+    mySexSearchAxios(email);
+    sessionStorage.setItem("imgUrl", firstProfileUrl[0]);
+    sessionStorage.setItem("myDarling", firstProfileUrl[1]);
   }, []);
   const coupleNickNameAxios = async (emailData) => {
     console.log("emailData : " + emailData);
@@ -234,8 +257,6 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
       coupleNameData,
       emailData
     );
-    sessionStorage.setItem("imgUrl", manprofile);
-    sessionStorage.setItem("myDarling", womanprofile);
 
     console.log(res.data);
 
@@ -250,13 +271,22 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
       sessionStorage.setItem("myDarling", res.data[1]);
     }
   };
-
+  //본인 성별 가져오는 비동기 함수
+  const mySexSearchAxios = async (emailValue) => {
+    const resSex = await MainAxios.mySexSearch(emailValue);
+    console.log("resSex :" + resSex.data);
+    if (resSex.data === "Man") {
+      setFirstProfileUrl([manprofile, womanprofile]);
+    } else {
+      setFirstProfileUrl([womanprofile, manprofile]);
+    }
+  };
   return (
     <Contain clothes={clothes}>
       <ProfileDiv clothes={clothes}>
         <ProfileImgDiv clothes={clothes}>
           <Profile
-            imageurl={IsExistImg[0] ? imgUrl : manprofile}
+            imageurl={IsExistImg[0] ? imgUrl : firstProfileUrl[0]}
             clothes={clothes}
           >
             {isMyHome && (
@@ -278,12 +308,12 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
         <Heart clothes={clothes} />
       </HeartDiv>
       <ProfileDiv clothes={clothes} direction={true}>
-        <ProfileImgDiv clothes={clothes}>
+        <ProfileImgDiv2 clothes={clothes}>
           <Profile
-            imageurl={IsExistImg[1] ? myDarling : womanprofile}
+            imageurl={IsExistImg[1] ? myDarling : firstProfileUrl[1]}
             clothes={clothes}
           />
-        </ProfileImgDiv>
+        </ProfileImgDiv2>
         <Text clothes={clothes}>{coupleNickName[1] || "달콩"}</Text>
       </ProfileDiv>
     </Contain>

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { styled, css } from "styled-components";
 
 const Category = styled.div`
-  width: 20%;
+  width: 269px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,14 @@ const Category = styled.div`
   align-items: center;
   background-color: #fff9f0;
   border-right: 1px solid darkgray;
+  @media screen and (max-width: 1100px) {
+    width: 755px;
+    height: 5%;
+    flex-direction: row;
+    margin-bottom: 3%;
+    border-right: none;
+    border-bottom: 1px solid darkgray;
+  }
 `;
 
 const activeTitleStyle = css`
@@ -24,7 +32,7 @@ const activeStyle = css`
 `;
 
 const CateTitle = styled(Link)`
-  width: 50%;
+  width: 55%;
   height: 5%;
   display: flex;
   justify-content: flex-start;
@@ -37,10 +45,18 @@ const CateTitle = styled(Link)`
     font-weight: bolder;
   }
   ${(props) => props.isActive && activeTitleStyle}
+  @media screen and (max-width: 1100px) {
+    width: 20%;
+    height: 55%;
+    justify-content: center;
+    margin-bottom: 0%;
+    border-right: 1px solid gray;
+    font-size: 26px;
+  }
 `;
 
 const CateContent = styled(Link)`
-  width: 50%; 
+  width: 55%; 
   height: 3%;
   margin-bottom: 3%;
   display: flex;
@@ -53,6 +69,12 @@ const CateContent = styled(Link)`
     font-weight: bolder;
   }
   ${(props) => props.isActive && activeStyle}
+  @media screen and (max-width: 1100px) {
+    width: 16%;
+    height: 50%;
+    margin-bottom: 0%;
+    justify-content: center;
+  }
 `;
 
 const Cate = () => {

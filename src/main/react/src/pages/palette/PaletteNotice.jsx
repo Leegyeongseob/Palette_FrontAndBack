@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logosearch from "../../img/loginImg/findglass.png";
 import Pagination from "react-js-pagination";
 import { useEffect, useState } from "react";
-// import AxiosApi from "../../axiosapi/PaletteAxios";
+import ScrollToTop from "./paletteImport/ScrollToTop";
 
 const Background = styled.div`
   width: 100%;
@@ -25,15 +25,23 @@ const Container = styled.div`
   align-items: center;
   background-color: #fff9f2;
   position: sticky;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
+  }
 `;
 
 const BoardWrapper = styled.div`
-  width: 70%;
+  width: 1380px;
   height: 90%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    margin-left: 10%;
+    min-width: 755px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 const Board = styled.div`
@@ -44,20 +52,20 @@ const Board = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: #fff9f0;
+  @media screen and (max-width: 1100px) {
+    min-width: 755px;
+  }
 `;
 
 const HelpRoot = styled.div`
   width: 90%;
   height: 5%;
   display: flex;
-  flex-direction: row;
-  font-size: 0.8vw;
-  justify-content: flex-start;
-  align-items: center;
+  font-size: 14px; 
 `;
 
 const Root = styled(Link)`
-  width: 6%;
+  width: 7%;
   height: 100%;
   display: flex;
   text-decoration: none;
@@ -70,7 +78,7 @@ const Root2 = styled(Root)`
   width: 2%;
 `;
 const Root3 = styled(Root)`
-  width: 6.5%;
+  width: 8%;
 `;
 const Root4 = styled(Root)`
   width: 10%;
@@ -91,7 +99,7 @@ const SearchInput = styled.input.attrs({ type: "text" })`
   height: 50%;
   padding: 2%;
   border: 3px solid gray;
-  font-size: 0.9vw;
+  font-size: 16px;
   border-radius: 5px;
 `;
 
@@ -152,7 +160,7 @@ const Tdfont = styled.div`
   td {
     padding: 20px;
     border-bottom: 1px solid gray;
-    font-size: 0.9vw;
+    font-size: 17px;
     min-width: 220px;
   }
 
@@ -173,7 +181,7 @@ const Tdfont = styled.div`
   th {
     height: 40px;
     border-bottom: 2px solid gray;
-    font-size: 1.1vw;
+    font-size: 20px;
     color: black;
   }
 `;
@@ -194,7 +202,7 @@ const PageStyle = styled.div`
   .pagination li {
     margin: 0 15px;
     cursor: pointer;
-    font-size: 1vw;
+    font-size: 16px;
   }
 
   .pagination li a {
@@ -211,6 +219,11 @@ const PageStyle = styled.div`
 `;
 
 const exText = [
+  {
+    classNo: 13,
+    title: "사자와 나룻배의 공통점이 뭔지 아시나요",
+    join: "2024-01-19",
+  },
   {
     classNo: 12,
     title: "비가 너무 많이 와서 오기가 싫어",
@@ -306,7 +319,7 @@ const NoticePage = () => {
   const handlePageChange = (page) => {
     setPage(page);
   };
-  
+
   const handleRowClick = (classNo) => {
     navigate(`/customer/notice/${classNo}`);
   };
@@ -357,7 +370,10 @@ const NoticePage = () => {
                     <tbody>
                       {notices &&
                         notices.map((notice) => (
-                          <tr key={notice.classNo} onClick={() => handleRowClick(notice.classNo)}>
+                          <tr
+                            key={notice.classNo}
+                            onClick={() => handleRowClick(notice.classNo)}
+                          >
                             <td className="number">{notice.classNo}</td>
                             <td>{notice.title}</td>
                             <td className="date">{notice.join}</td>
@@ -382,6 +398,7 @@ const NoticePage = () => {
           </BoardWrapper>
         </Container>
         <Footer />
+        <ScrollToTop/>
       </Background>
     </>
   );

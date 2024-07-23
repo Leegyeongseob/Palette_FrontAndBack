@@ -2,7 +2,7 @@ import styled, { keyframes, css } from "styled-components";
 import theme8 from "../../img/background/theme/8.jpg";
 import theme8_1 from "../../img/background/theme/8-1.jpg";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import PagePop from "./import/PagePop";
 import TemaPop from "./import/TemaPop";
@@ -33,11 +33,12 @@ const BookTheme = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${theme8});
   background-size: cover;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 56vh;
@@ -58,6 +59,7 @@ const BookTheme2 = styled.div`
   background-image: url(${theme8_1});
   background-size: cover;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   @media screen and (max-width: 1200px) {
     width: 420px;
@@ -74,6 +76,7 @@ const BookTheme2 = styled.div`
 const BookSign = styled.div`
   width: 497px;
   height: 67vh;
+  border: 1px solid #696969;
   background-image: url(${theme8});
   background-size: cover;
   transform: perspective(1000px) rotateY(0deg);
@@ -98,6 +101,7 @@ const BookSign = styled.div`
 const BookSign2 = styled.div`
   width: 497px;
   height: 67vh;
+  border: 1px solid #696969;
   background-image: url(${theme8_1});
   background-size: cover;
   transform: perspective(1000px) rotateY(0deg);
@@ -251,6 +255,7 @@ const AddButton = styled.div`
   flex-direction: row;
   border-bottom: 1px solid #c8c8c8;
 `;
+
 const TitleLine = styled.div`
   width: 90%;
   height: 4%;
@@ -263,8 +268,16 @@ const TitleLine = styled.div`
   cursor: pointer;
   &:hover {
     font-size: 14px;
+    color: rgb(42, 65, 167);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 9px;
+    &:hover {
+      font-size: 10px;
+    }
   }
 `;
+
 const AddTema = styled.div`
   font-size: 13px;
   color: black;
@@ -325,7 +338,7 @@ const PlusButton = styled.button`
   }
 `;
 
-const DateAlbum5 = () => {
+const DateAlbum5 = ({ url, clearUrl }) => {
   const [animate, setAnimate] = useState(false);
 
   const [images, setImages] = useState(Array(18).fill(null));
@@ -346,6 +359,24 @@ const DateAlbum5 = () => {
   const [isDday, setIsDday] = useState();
   //디데이 값 저장
   const [saveDday, setSaveDday] = useState("");
+      
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      if (window.location.pathname !== url) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
 
   const closeModal = () => {
     setPageOpen(false);

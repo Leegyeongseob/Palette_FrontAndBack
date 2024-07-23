@@ -17,6 +17,7 @@ import Ads6 from "../../img/palettePg/Ads6.png";
 import Ads7 from "../../img/palettePg/Ads7.png";
 import Ads8 from "../../img/palettePg/Ads8.png";
 import Ads9 from "../../img/palettePg/Ads9.png";
+import ScrollToTop from "./paletteImport/ScrollToTop";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -42,7 +43,7 @@ const AnimatedDiv = styled.div`
 `;
 
 const Body = styled.div`
-  .no-scroll {
+  &.no-scroll {
     overflow: hidden;
   }
 `;
@@ -50,7 +51,7 @@ const Body = styled.div`
 const Background = styled.div`
   width: 100%;
   height: auto;
-  background-color: #feeee8;
+  background-color: #ececec;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,7 +101,7 @@ const AdLineTitle = styled.div`
 const AdLineTop = styled.div`
   width: 100%;
   height: 1vh;
-  background-color: #d0d7e9;
+  background-color: #fff9f2;
 `;
 
 const AdWrapper = styled.div`
@@ -167,10 +168,10 @@ const VelocityLetter = ({ letter, delay }) => (
 );
 
 const StyledSwiper = styled(Swiper)`
-  width: 85%;
+  width: 80%;
   height: 50%; // 원하는 높이로 설정
   .swiper-pagination {
-    padding: 10px;
+    padding: 20px;
   }
   .swiper-pagination-bullet {
     background: #393939; // 페이지네이션 점 색상 변경
@@ -187,6 +188,9 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiper2 = styled(Swiper)`
   width: 80%;
   height: 80%; // 원하는 높이로 설정
+  .swiper-pagination {
+    padding: 25px;
+  }
   .swiper-pagination-bullet {
     background: #393939; // 페이지네이션 점 색상 변경
     width: 0.7vw;
@@ -214,18 +218,20 @@ const AdPage = () => {
   const [letters, setLetters] = useState([]);
   const [bgColor, setBgColor] = useState("#feeee8");
 
-  // 각각의 스와이퍼를 제어하기 위한 ref 선언
+  const bodyRef = useRef(null);
   const swiper1Ref = useRef(null);
   const swiper2Ref = useRef(null);
   const adLineTitleRefs = useRef([]);
   adLineTitleRefs.current = [];
 
   useEffect(() => {
+    const bodyElement = bodyRef.current;
+
     const disableScroll = () => {
-      document.body.style.overflow = "hidden";
+      bodyElement.classList.add("no-scroll");
     };
     const enableScroll = () => {
-      document.body.style.overflow = "";
+      bodyElement.classList.remove("no-scroll");
     };
     disableScroll();
     const text = "팔레트에 광고를 하고 싶으신가요?";
@@ -245,12 +251,12 @@ const AdPage = () => {
     }, 1400); //배경색 변경
 
     setTimeout(() => {
-      setBgColor("#fff9f2");
+      setBgColor("#D0D7E9");
     }, 2500);
 
     setTimeout(() => {
       enableScroll();
-    }, 3800);
+    }, 3000);
 
     return () => {
       enableScroll();
@@ -290,7 +296,7 @@ const AdPage = () => {
   };
 
   return (
-    <Body>
+    <Body ref={bodyRef}>
       <Background>
         <Header bgColor={bgColor} />
         <AdLineTop />
@@ -298,6 +304,7 @@ const AdPage = () => {
           <PaletteImg data-animate />
           <AdTitleWrapper>{letters}</AdTitleWrapper>
         </AdTitle>
+        <AdLineTop />
         <AdLine ref={addToRefs} data-animate>
           <AdLineTitle ref={addToRefs} data-animate>
             왜 Palette 인가 ?
@@ -310,7 +317,7 @@ const AdPage = () => {
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            autoplay={{ delay: 9000 }}
+            autoplay={{ delay: 5000 }}
             modules={[Navigation, Pagination, Autoplay]}
             onSwiper={(swiper) => (swiper2Ref.current = swiper)}
           >
@@ -348,6 +355,7 @@ const AdPage = () => {
         </AdWrapper>
       </Background>
       <Footer />
+      <ScrollToTop img={true} />
     </Body>
   );
 };

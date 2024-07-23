@@ -8,7 +8,7 @@ const PlaceCardContainer = styled.div`
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 44%;
+  height: 43%;
   
 `;
 

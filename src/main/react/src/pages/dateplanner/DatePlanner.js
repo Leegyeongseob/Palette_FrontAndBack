@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import styled, { css, keyframes } from "styled-components";
 import MapContainer from "./MapContainer";
 import PlannerForm from "./PlannerForm";
 import SavedCoursesList from "./SavedCourseList";
@@ -9,36 +9,91 @@ import DisplaceInfo from "./DisplaceInfo";
 import MapModal from "./MapModal";
 import DatePlannerAxios from "../../axiosapi/DatePlannerAxios";
 import useAddress from "../../hooks/useLocation";
-import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
-import { useParams } from "react-router-dom";
+// import MemberAxiosApi from "../../axiosapi/MemberAxiosApi";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactDOMServer from "react-dom/server";
+
+const turnPageLeft = keyframes`
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    transform-origin: left;
+  }
+  30% {
+    transform: perspective(1600px) rotateY(-25deg);
+    transform-origin: left;
+  } 
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    transform-origin: left;
+  }
+`;
+
 const BookWrapper = styled.div`
-border: 1px solid green;
+  border: 1px solid green;
   width: 85%;
-  height: 83%;
-  margin-top: 3%;
+  height: 82.5%;
+  margin-top: 3.5%;
   margin-left: 14px;
- 
   background-size: cover;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   display: flex;
   justify-content: space-between;
 `;
 
 const LBookContainer = styled.div`
-border: 1px solid red;
-background-image: url(${theme6});
-  width: 50%;
-  height: 100%;
-`;
-const RBookContainer = styled.div`
-border: 1px solid blue;
- background-image: url(${theme6});
+  border: 1px solid red;
+  background-image: url(${theme6});
+  background-size: cover;
+  background-position: left;
   width: 50%;
   height: 100%;
 `;
 
-const DatePlanner = () => {
+const BookTheme2 = styled.div`
+  width: 50%;
+  height: 100%;
+  background-image: url(${theme6});
+  background-size: cover;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  background-position: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BookSign2 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${theme6});
+  background-size: cover;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  background-position: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${turnPageLeft} 1.8s forwards;
+    `}
+`;
+
+const RBookContainer = styled.div`
+  border: 1px solid blue;
+  width: 100%;
+  height: 100%;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
+`;
+
+
+const DatePlanner = ({url, clearUrl}) => {
   const { location } = useAddress();
   const [currCategory, setCurrCategory] = useState("");
   const [places, setPlaces] = useState([]);
@@ -54,13 +109,35 @@ const DatePlanner = () => {
   const mapContainer = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalSelectedPlaces, setModalSelectedPlaces] = useState([]);
-  const modalMapContainerRef = useRef(null);
+  // const modalMapContainerRef = useRef(null);
   const [numMarker, setNumMarker] = useState([]);
   const [title, setTitle] = useState("");
-  const email = sessionStorage.getItem("email");
+  // const email = sessionStorage.getItem("email");
   const { coupleName } = useParams(); // useParams를 통해 coupleName 파라미터 추출
   const currentOverlayRef = useRef(null); // CustomOverlay 상태를 useRef로 관리
   console.log("coupleName : ", coupleName);
+
+  const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate();
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      const encodedUrl = encodeURI(url); //공백을 문자로 인코딩
+      if (window.location.pathname !== encodedUrl) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
 
   // 모든 코스 조회 및 저장된 코스 목록 업데이트
   useEffect(() => {
@@ -328,29 +405,32 @@ const DatePlanner = () => {
           openModal={(index) => openModal(index)}
         />
       </LBookContainer>
-      <RBookContainer>
-        <MapContainer
-          clearOverlay={clearOverlay}
-          mapContainer={mapContainer}
-          displayPlaceInfo={displayPlaceInfo}
-          placeOverlay={placeOverlay}
-          map={map}
-          setMap={setMap}
-          currCategory={currCategory}
-          setCurrCategory={setCurrCategory}
-          places={places}
-          setPlaces={setPlaces}
-          location={location}
-        />
-        <PlaceCardList
-          places={places}
-          onClickPlaceBtn={handlePlaceCardClick}
-          onClickPlaceCard={onClickPlaceCard}
-          selectedPlaces={selectedPlaces}
-          currCategory={currCategory}
-        />
-      </RBookContainer>
-
+      <BookTheme2>
+      <BookSign2 animate={animate}>
+        <RBookContainer animate={animate}>
+          <MapContainer
+            clearOverlay={clearOverlay}
+            mapContainer={mapContainer}
+            displayPlaceInfo={displayPlaceInfo}
+            placeOverlay={placeOverlay}
+            map={map}
+            setMap={setMap}
+            currCategory={currCategory}
+            setCurrCategory={setCurrCategory}
+            places={places}
+            setPlaces={setPlaces}
+            location={location}
+          />
+          <PlaceCardList
+            places={places}
+            onClickPlaceBtn={handlePlaceCardClick}
+            onClickPlaceCard={onClickPlaceCard}
+            selectedPlaces={selectedPlaces}
+            currCategory={currCategory}
+          />
+        </RBookContainer>
+      </BookSign2>
+      </BookTheme2>
       <MapModal
         isOpen={isModalOpen}
         onClose={closeModal}

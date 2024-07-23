@@ -11,12 +11,12 @@ import useKakao from "./paletteImport/KakaoChat";
 import { exText as notices } from "./PaletteNotice";
 import { questions } from "./PaletteHelp";
 import QnAItem from "./paletteImport/CustomerQnA";
+import ScrollToTop from "./paletteImport/ScrollToTop";
 
 const Tdfont = styled(Link)`
   display: flex;
   text-decoration: none;
   color: #000;
-
   table {
     border-collapse: collapse;
     width: 100%;
@@ -30,7 +30,7 @@ const Tdfont = styled(Link)`
   td {
     padding: 15px;
     border-bottom: 1px solid gray;
-    font-size: 0.9vw;
+    font-size: 16px; /* 기본 폰트 크기 설정 */
     min-width: 220px;
   }
 
@@ -52,8 +52,15 @@ const Background = styled.div`
   height: 200vh;
   display: flex;
   flex-direction: column;
-  font-size: 1.8rem;
+  @media (max-width: 1100px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
+
 const Container = styled.div`
   width: 100%;
   height: 90%;
@@ -62,12 +69,23 @@ const Container = styled.div`
   align-items: center;
   background-color: #fff9f2;
   position: sticky;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
+  }
 `;
 
 const BoardWrapper = styled.div`
-  width: 70%;
+  width: 1380px;
   height: 90%;
   display: flex;
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    margin-left: 10%;
+    min-width: 755px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 const Board = styled.div`
@@ -78,6 +96,9 @@ const Board = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: #fff9f0;
+  @media screen and (max-width: 1100px) {
+    min-width: 755px;
+  }
 `;
 
 const HelpRoot = styled.div`
@@ -85,26 +106,27 @@ const HelpRoot = styled.div`
   height: 3%;
   display: flex;
   flex-direction: row;
-  font-size: 0.8vw;
-  justify-content: flex-start;
-  align-items: center;
+  font-size: 14px; 
 `;
 
 const Root = styled(Link)`
-  width: 6%;
+  width: 7%;
   height: 100%;
   display: flex;
   text-decoration: none;
   color: #000;
+
   &:hover {
     font-weight: bolder;
   }
 `;
+
 const Root2 = styled(Root)`
   width: 2%;
 `;
+
 const Root3 = styled(Root)`
-  width: 6.5%;
+  width: 8%;
 `;
 
 const CustomerBox = styled.div`
@@ -116,6 +138,14 @@ const CustomerBox = styled.div`
   align-items: center;
   background-color: #dddddd;
   color: #303030;
+  font-size: 1rem;
+  @media (max-width: 1100px) {
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const BoxLeft = styled.div`
@@ -131,16 +161,17 @@ const BoxLeft = styled.div`
 const BoxLeftUp = styled.div`
   width: 90%;
   height: 60%;
-  font-size: 1.6vw;
+  font-size: 1.6rem;
   font-weight: 600;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
+
 const BoxLeftDown = styled.div`
   width: 90%;
   height: 30%;
-  font-size: 0.8vw;
+  font-size: 16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -163,6 +194,10 @@ const BoxRightWrap = styled(Link)`
   color: #000;
   border: none;
   background-color: #dddddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   &:hover {
     font-weight: bolder;
   }
@@ -175,6 +210,10 @@ const BoxRightWrap2 = styled.div`
   color: #000;
   border: none;
   background-color: #dddddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   &:hover {
     font-weight: bolder;
   }
@@ -201,7 +240,7 @@ const BoxRightUp2 = styled.div`
 const BoxRightDown = styled.div`
   width: 90%;
   height: 50%;
-  font-size: 0.8vw;
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -213,12 +252,14 @@ const HelpBoard = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const HelpBoardDown = styled.div`
   width: 90%;
   height: 10%;
   display: flex;
   flex-direction: column;
 `;
+
 const HelpTitleDown = styled.div`
   width: 100%;
   height: 50%;
@@ -246,16 +287,17 @@ const HelpTitle = styled.div`
 const HelpTitleLeft = styled.div`
   width: 50%;
   height: 90%;
-  font-size: 1.1vw;
+  font-size: 1.1rem;
   font-weight: bolder;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 `;
+
 const HelpTitleRight = styled(Link)`
   width: 50%;
   height: 90%;
-  font-size: 0.8vw;
+  font-size: 0.8rem;
   text-decoration: none;
   color: #000;
   border: none;
@@ -272,11 +314,10 @@ const QuestionBox = styled.div`
   height: 80%;
   display: flex;
   flex-direction: row;
-  align-items: center;
 `;
 
 const CustomerPage = () => {
-  useKakao("8f6501dd89f4d2c62daa077aaddd8ece"); // 여기에 본인의 카카오 앱 키를 입력하세요
+  useKakao("3e926147c6cccdc2e4dec8ce33bb6985"); // 여기에 본인의 카카오 앱 키를 입력하세요
   const recentNotices = notices.slice(0, 4);
   const recentQuestions = questions.slice(0, 5);
 
@@ -304,7 +345,7 @@ const CustomerPage = () => {
               </HelpRoot>
               <CustomerBox>
                 <BoxLeft>
-                  <BoxLeftUp>무엇을 도와드릴까요 ?</BoxLeftUp>
+                  <BoxLeftUp>무엇을 도와드릴까요?</BoxLeftUp>
                   <BoxLeftDown>
                     고객센터 01025546626 | 평일 09:00 ~ 18:00 | 주말 및 공휴일
                     휴무
@@ -383,6 +424,7 @@ const CustomerPage = () => {
           </BoardWrapper>
         </Container>
         <Footer />
+        <ScrollToTop/>
       </Background>
     </>
   );

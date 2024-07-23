@@ -12,9 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.socket.WebSocketHandler;
+
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 @RequiredArgsConstructor
 @Configuration
@@ -45,15 +48,27 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/auth/**", "/ws/**","/chat/**","/static/**","/font/HancomSans-Light_0.ttf").permitAll()
+                .antMatchers("/","/auth/**","/main/**","/wss/**","/chat/**","/static/**","/date-clothes/**","/clothes/**","https://developers.kakao.com/","/font/**,*/member/**").permitAll()
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception","/mapmarker/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/HancomSans-Light_0.ttf","/kakaoLogin","HancomSans-Light_0.ttf").permitAll()
+                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/kakaoLogin","/HancomSans-Light_0.ttf").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
-
+                .apply(new JwtSecurityConfig(tokenProvider))
+                .and()
+                .cors();
         return http.build();
+    }
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("https://www.palette-couple.store");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
 }

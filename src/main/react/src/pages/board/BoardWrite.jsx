@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import BoardAxios from "../../axiosapi/BoardAxios";
 import boardBg from "../../img/background/theme/9.jpg";
@@ -13,11 +13,27 @@ import {
   getDownloadURL,
 } from "../../firebase/firebaseBoard";
 
+const turnPageLeft = keyframes`
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    transform-origin: left;
+  }
+  30% {
+    transform: perspective(1600px) rotateY(-25deg);
+    transform-origin: left;
+  } 
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    transform-origin: left;
+  }
+`;
+
 const BookTheme = styled.div`
   width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${boardBg});
   background-size: cover;
   display: flex;
@@ -40,6 +56,7 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.05vw;
+  border: 1px solid #696969;
   background-image: url(${boardBg_1});
   background-size: cover;
   display: flex;
@@ -54,6 +71,23 @@ const BookTheme2 = styled.div`
     height: 35vh;
     margin-top: 2.8vh;
   }
+`;
+
+const BookSign2 = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(${boardBg_1});
+  background-size: cover;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${turnPageLeft} 1.8s forwards;
+    `}
 `;
 
 const BoardSide = styled.div`
@@ -194,7 +228,13 @@ const BoardPaginationButton = styled.button`
 
 const WriteSide = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100%;  
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
 `;
 
 const BackToGuestbook = styled.div`
@@ -327,12 +367,12 @@ const WritePost = styled.div`
 const itemsPerPage = 10;
 const maxPageButtons = 5;
 
-const BoardWrite = () => {
+const BoardWrite = ({url, clearUrl}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
+  const [urls, setUrls] = useState("");
   const [boardData, setBoardData] = useState([]);
   const fileInputRef = useRef(null);
 
@@ -340,6 +380,28 @@ const BoardWrite = () => {
   // 세션 추가
   const email = sessionStorage.getItem("email");
   const coupleName = sessionStorage.getItem("coupleName");
+  const [animate, setAnimate] = useState(false);
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl();
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      const encodedUrl = encodeURI(url); //공백을 문자로 인코딩
+      if (window.location.pathname !== encodedUrl) {
+        pageMove();
+      } else {
+        clearUrl();
+      }
+    }
+  }, [url, pageMove, clearUrl]);
+  
+
   // useEffect(() => {
   //   fetchBoardData();
   // }, []);
@@ -420,7 +482,7 @@ const BoardWrite = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
+          setUrls(downloadURL);
         });
       }
     );
@@ -554,7 +616,8 @@ const BoardWrite = () => {
         </BoardSide>
       </BookTheme>
       <BookTheme2>
-        <WriteSide>
+        <BookSign2 animate={animate}>
+        <WriteSide animate={animate}>
           <Link
             to={`/${coupleName}/board-guestbook`}
             style={{ textDecoration: "none" }}
@@ -586,6 +649,7 @@ const BoardWrite = () => {
           </WriteMain>
           <WritePost onClick={handleSubmit}>게시하기</WritePost>
         </WriteSide>
+        </BookSign2>
       </BookTheme2>
     </>
   );

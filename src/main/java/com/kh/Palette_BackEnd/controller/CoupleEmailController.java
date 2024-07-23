@@ -14,7 +14,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/chat2")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CoupleEmailController {
     private final ChatService chatService;
     //커플이름 뽑아오기

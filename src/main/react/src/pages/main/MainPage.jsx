@@ -6,7 +6,7 @@ import couple1 from "../../img/mainImg/커플1.jpg";
 import couple2 from "../../img/mainImg/커플2.jpg";
 import couple3 from "../../img/mainImg/커플3.jpg";
 import couple4 from "../../img/mainImg/커플4.jpg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoSettingsSharp } from "react-icons/io5";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +18,28 @@ import BoardAxios from "../../axiosapi/BoardAxios";
 import theme3 from "../../img/background/theme/new.jpg";
 import theme3_1 from "../../img/background/theme/new-1.jpg";
 import postIt from "../../img/mainImg/postIt.png";
+
+const turnPageLeft = keyframes`
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+    transform-origin: left;
+  }
+  30% {
+    transform: perspective(1600px) rotateY(-25deg);
+    transform-origin: left;
+  } 
+  100% {
+    transform: perspective(1000px) rotateY(-180deg);
+    transform-origin: left;
+  }
+`;
+
 const BookTheme = styled.div`
   width: 497px;
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.7vw;
+  border: 1px solid #696969;
   background-image: url(${theme3});
   background-size: cover;
   background-position: center;
@@ -46,6 +63,7 @@ const BookTheme2 = styled.div`
   height: 67vh;
   margin-top: 5vh;
   margin-left: 0.1vw;
+  border: 1px solid #696969;
   background-image: url(${theme3_1});
   background-size: cover;
   background-position: center;
@@ -67,7 +85,7 @@ const BookTheme2 = styled.div`
 
 const BookSign = styled.div`
   width: 497px;
-  height: 66vh;
+  height: 100%;
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 56vh;
@@ -81,16 +99,26 @@ const BookSign = styled.div`
 `;
 const BookSign2 = styled.div`
   width: 497px;
-  height: 66vh;
+  height: 67vh;
+  background-image: url(${theme3_1});
+  background-size: cover;
+  border: 1px solid #696969;
+  transform: perspective(1000px) rotateY(0deg); /* 애니메이션 초기 위치 */
+  transform-origin: left;
+  position: absolute;
+  ${({ animate }) =>
+    animate &&
+    css`
+      animation: ${turnPageLeft} 1.8s forwards;
+    `}
+
   @media screen and (max-width: 1200px) {
-    width: 420px;
+    width: 430px;
     height: 56vh;
-    margin-top: 4.2vh;
   }
   @media screen and (max-width: 768px) {
     width: 280px;
     height: 35vh;
-    margin-top: 1vh;
   }
 `;
 
@@ -133,6 +161,12 @@ const DdayDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 18vh;
@@ -145,6 +179,12 @@ const DdayDiv = styled.div`
 const GalleryDiv = styled.div`
   width: 497px;
   height: 38vh;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
   @media screen and (max-width: 1200px) {
     width: 420px;
     height: 32vh;
@@ -391,6 +431,12 @@ const SettingDiv = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
+  ${({ animate }) =>
+    animate &&
+    css`
+      opacity: 0;
+      transition: opacity 1.4s;
+    `}
   & > .space {
     width: 1vw;
   }
@@ -563,7 +609,8 @@ const BackMyHome = styled.div`
     height: 1.5vh;
   }
 `;
-const MainPage = () => {
+
+const MainPage = ({ url, clearUrl }) => {
   const coupleName = sessionStorage.getItem("coupleName");
   const navigate = useNavigate();
   // 커플 이름 검색 후 추가
@@ -594,6 +641,21 @@ const MainPage = () => {
     const updatedImages = galleries.slice(0, 4).map((image) => image.urls[0]);
     setGallaryImg(updatedImages);
   };
+  const [animate, setAnimate] = useState(false);
+
+  const pageMove = useCallback(() => {
+    setAnimate(true);
+    setTimeout(() => {
+      navigate(url);
+      clearUrl(); // URL 초기화
+    }, 1800);
+  }, [navigate, url, clearUrl]);
+
+  useEffect(() => {
+    if (url) {
+      pageMove();
+    }
+  }, [url, pageMove]);
 
   useEffect(() => {
     listGallaryImg(coupleName);
@@ -750,8 +812,8 @@ const MainPage = () => {
         </BookSign>
       </BookTheme>
       <BookTheme2>
-        <BookSign2>
-          <SettingDiv>
+        <BookSign2 animate={animate}>
+          <SettingDiv animate={animate}>
             <BackMyHome onClick={goHomeOnClickHandler}>
               내 홈으로 돌아가기
             </BackMyHome>
@@ -795,7 +857,7 @@ const MainPage = () => {
               </SettingFormat>
             )}
           </SettingDiv>
-          <DdayDiv>
+          <DdayDiv animate={animate}>
             <RecentPostDiv>
               <RecentPosts>
                 <RecentTitle>&nbsp;최근 게시물</RecentTitle>
@@ -832,7 +894,7 @@ const MainPage = () => {
               </Dday>
             </DdayFormDiv>
           </DdayDiv>
-          <GalleryDiv>
+          <GalleryDiv animate={animate}>
             <PictureDiv>
               <Picture imageurl={gallaryImg[0] ? gallaryImg[0] : couple1} />
               <Picture imageurl={gallaryImg[1] ? gallaryImg[1] : couple2} />

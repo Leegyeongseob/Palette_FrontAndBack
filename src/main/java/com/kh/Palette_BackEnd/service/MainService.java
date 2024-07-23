@@ -6,6 +6,7 @@ import com.kh.Palette_BackEnd.entity.CoupleEntity;
 import com.kh.Palette_BackEnd.entity.MemberEntity;
 import com.kh.Palette_BackEnd.repository.CoupleRepository;
 import com.kh.Palette_BackEnd.repository.MemberRepository;
+import com.kh.Palette_BackEnd.constant.Sex;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -128,5 +129,16 @@ public class MainService {
         }
 
         return resultList;
+    }
+    //본인 성별 가져오는 비동기 함수
+    public Sex mySexSearch(String email){
+        Optional<MemberEntity> memberEntityOpt = memberRepository.findByEmail(email);
+        if(memberEntityOpt.isPresent()){
+            MemberEntity memberEntity = memberEntityOpt.get();
+            return memberEntity.getSex();
+        }
+        else{
+            throw new RuntimeException("Member not found");
+        }
     }
 }

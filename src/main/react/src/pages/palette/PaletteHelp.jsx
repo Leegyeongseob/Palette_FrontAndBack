@@ -7,13 +7,13 @@ import Footer from "./paletteImport/Footer";
 import logosearch from "../../img/loginImg/findglass.png";
 import { Link } from "react-router-dom";
 import QnAItem from "./paletteImport/QnAItem";
+import ScrollToTop from "./paletteImport/ScrollToTop";
 
 const Background = styled.div`
   width: 100%;
   height: 200vh;
   display: flex;
   flex-direction: column;
-  font-size: 1.8rem;
 `;
 const Container = styled.div`
   width: 100%;
@@ -23,15 +23,23 @@ const Container = styled.div`
   align-items: center;
   background-color: #fff9f2;
   position: sticky;
+  @media screen and (max-width: 1100px) {
+    min-width: 840px;
+  }
 `;
 
 const BoardWrapper = styled.div`
-  width: 70%;
+  width: 1380px;
   height: 90%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+    margin-left: 10%;
+    min-width: 755px;
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 5%;
+  }
 `;
 
 const Board = styled.div`
@@ -42,20 +50,20 @@ const Board = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: #fff9f0;
+  @media screen and (max-width: 1100px) {
+    min-width: 755px;
+  }
 `;
 
 const HelpRoot = styled.div`
   width: 90%;
   height: 5%;
   display: flex;
-  flex-direction: row;
-  font-size: 0.8vw;
-  justify-content: flex-start;
-  align-items: center;
+  font-size: 14px; 
 `;
 
 const Root = styled(Link)`
-  width: 6%;
+  width: 7%;
   height: 100%;
   display: flex;
   text-decoration: none;
@@ -68,10 +76,10 @@ const Root2 = styled(Root)`
   width: 2%;
 `;
 const Root3 = styled(Root)`
-  width: 6.5%;
+  width: 8%;
 `;
 const Root4 = styled(Root)`
-  width: 10%;
+  width: 12%;
 `;
 
 const SearchBox = styled.div`
@@ -89,7 +97,7 @@ const SearchInput = styled.input.attrs({ type: "text" })`
   height: 50%;
   padding: 2%;
   border: 3px solid gray;
-  font-size: 0.9vw;
+  font-size: 16px;
   border-radius: 5px;
 `;
 
@@ -107,6 +115,9 @@ const HelpBoard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+  }
 `;
 
 const HelpTitle = styled.div`
@@ -117,6 +128,9 @@ const HelpTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+  }
 `;
 
 const questions = [
@@ -129,7 +143,7 @@ const questions = [
   {
     q: "Q. 비밀번호를 모르겠어요.",
     a:
-      "A. 비트윈 아이디가 메일을 받을 수 있는 주소라면, 비밀번호 찾기 후 직접 비밀번호를 재설정해 주세요.\n" +
+      "A. 비트윈 아이디가 메일을 받을 수 있는 주소라면, 비밀번호 찾기 후 직접 비밀번호를 재설정 해주세요." +
       "만약 메일을 받을 수 없는 주소라면 고객센터로 문의 바랍니다.",
   },
   {
@@ -200,6 +214,7 @@ const HelpPage = () => {
     <>
       <Globalstyle />
       <Header />
+      <ScrollToTop/>
       <Background>
         <Container>
           <BoardWrapper>

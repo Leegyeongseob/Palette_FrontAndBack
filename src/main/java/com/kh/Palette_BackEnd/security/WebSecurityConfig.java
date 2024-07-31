@@ -11,64 +11,60 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@Component
-public class WebSecurityConfig implements WebMvcConfigurer {
+public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint; // 인증 실패 시 처리할 클래스
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler; // 인가 실패 시 처리할 클래스
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // BCrypt 암호화 객체를 Bean으로 등록
+        return new BCryptPasswordEncoder();
     }
 
-    @Bean // SecurityFilterChain 객체를 Bean으로 등록
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .httpBasic()
+            .and()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .accessDeniedHandler(jwtAccessDeniedHandler)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/","/auth/**","/main/**","/wss/**","/chat/**","/static/**","/date-clothes/**","/clothes/**","https://developers.kakao.com/","/font/**,*/member/**").permitAll()
+            .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception","/mapmarker/**").permitAll()
+            .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/kakaoLogin","/HancomSans-Light_0.ttf").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .cors(cors -> cors
+                .configurationSource(corsConfigurationSource())
+            )
+            .apply(new JwtSecurityConfig(tokenProvider));
 
-                .httpBasic()
-                .and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/","/auth/**","/main/**","/wss/**","/chat/**","/static/**","/date-clothes/**","/clothes/**","https://developers.kakao.com/","/font/**,*/member/**").permitAll()
-                .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception","/mapmarker/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/kakaoLogin","/HancomSans-Light_0.ttf").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
-                .and()
-                .cors();
         return http.build();
     }
+
     @Bean
-    public CorsFilter corsFilter() {
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("https://www.palette-couple.store");
+        config.addAllowedOrigin("http//localhost:8111");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+        return source;
     }
-
 }

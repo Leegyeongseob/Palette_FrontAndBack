@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.97b88aca.css",
-    "main.js": "/static/js/main.92437d3e.js",
+    "main.js": "/static/js/main.ca863f98.js",
     "static/js/453.c48d6cd1.chunk.js": "/static/js/453.c48d6cd1.chunk.js",
     "static/media/구글,네이버 간편 로그인.gif": "/static/media/구글,네이버 간편 로그인.8f80e64361d8d0cb5f0b.gif",
     "static/media/5.jpg": "/static/media/5.fde6f559cd0d17931150.jpg",
@@ -26,7 +26,6 @@
     "static/media/chat.jpg": "/static/media/chat.a2171e7d2b66778dec35.jpg",
     "static/media/9-1.jpg": "/static/media/9-1.78c06fa822742a2484a4.jpg",
     "static/media/chat-1.jpg": "/static/media/chat-1.17b0aeb336936677be4a.jpg",
-    "static/media/coupleMatching.png": "/static/media/coupleMatching.3055ac7033ac2079329f.png",
     "static/media/background4.jpg": "/static/media/background4.8cf47e489c36eeab4c69.jpg",
     "static/media/background3.jpg": "/static/media/background3.06443956f3cdd41455a4.jpg",
     "static/media/clothes_background.jpg": "/static/media/clothes_background.5ba14d47d95fcde4e0a0.jpg",
@@ -50,7 +49,6 @@
     "static/media/up5.png": "/static/media/up5.51a9e214b917051df407.png",
     "static/media/Ads7.png": "/static/media/Ads7.3c4d7571f9fca91df60c.png",
     "static/media/남자프사.jpg": "/static/media/남자프사.5df6ca60eeb999816805.jpg",
-    "static/media/note.png": "/static/media/note.9edf9f410605a8c7b114.png",
     "static/media/여자프사.jpg": "/static/media/여자프사.a2f2a4e091038945e2ba.jpg",
     "static/media/kakako.png": "/static/media/kakako.ac73cc8155c85b8642de.png",
     "static/media/커플3.jpg": "/static/media/커플3.5c9a5642565727a90571.jpg",
@@ -70,11 +68,11 @@
     "static/media/Ads9.png": "/static/media/Ads9.60322fea65c854525ff4.png",
     "index.html": "/index.html",
     "main.97b88aca.css.map": "/static/css/main.97b88aca.css.map",
-    "main.92437d3e.js.map": "/static/js/main.92437d3e.js.map",
+    "main.ca863f98.js.map": "/static/js/main.ca863f98.js.map",
     "453.c48d6cd1.chunk.js.map": "/static/js/453.c48d6cd1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.97b88aca.css",
-    "static/js/main.92437d3e.js"
+    "static/js/main.ca863f98.js"
   ]
 }

@@ -425,21 +425,21 @@ const DateAlbum = ({ url, clearUrl }) => {
 
   const handleNext = async () => {
     try {
-      setAnimate(true);
-      setTimeout(() => {
-        navigate("/date-album2");
-      }, 1800);
-      // const amount = await isAmountAxios(); // async 호출의 결과를 변수에 저장
-      // if (amount !== null && amount % 1000 === 0) {
-      //   setAnimate(true);
-      //   setTimeout(() => {
-      //     navigate("/date-album2");
-      //   }, 1800);
-      // } else {
-      //   // 모달
-      //   nextModal();
-      //   console.log(amount);
-      // }
+      // setAnimate(true);
+      // setTimeout(() => {
+      //   navigate("/date-album2");
+      // }, 1800);
+      const amount = await isAmountAxios(); // async 호출의 결과를 변수에 저장
+      if (amount !== null && amount % 1000 === 0) {
+        setAnimate(true);
+        setTimeout(() => {
+          navigate("/date-album2");
+        }, 1800);
+      } else {
+        // 모달
+        nextModal();
+        console.log(amount);
+      }
     } catch (error) {
       console.error("Error in handleNext:", error);
       setModalContent("서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");

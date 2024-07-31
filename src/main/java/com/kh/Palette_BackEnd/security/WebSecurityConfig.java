@@ -60,7 +60,7 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://www.palette-couple.store");
+        // config.addAllowedOrigin("https://www.palette-couple.store");
         config.addAllowedOrigin("http//localhost:8111");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");

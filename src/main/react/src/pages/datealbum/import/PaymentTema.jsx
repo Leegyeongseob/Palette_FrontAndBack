@@ -93,7 +93,7 @@ const PaymentTema = ({ onPaymentSuccess, amount, order }) => {
       } else {
         // 결제가 성공한 경우
         const notified = await fetch(
-          Common.PALLETE_DOMAIN + `/paymenttema/tema`,
+          Common.PYTHON_DOMAIN + `/paymenttema/tema`,
           {
             method: "POST",
             headers: {

@@ -67,6 +67,7 @@ const PaymentComponent = ({ onPaymentSuccess, amount, order }) => {
         currency,
         payMethod,
         customer,
+        token,
       });
 
       const response = await PortOne.requestPayment({
@@ -93,7 +94,7 @@ const PaymentComponent = ({ onPaymentSuccess, amount, order }) => {
       } else {
         // 결제가 성공한 경우
         const notified = await fetch(
-          Common.PALLETE_DOMAIN + `/payment/complete`,
+          Common.PYTHON_DOMAIN + `/payment/complete`,
           {
             method: "POST",
             headers: {
@@ -123,7 +124,7 @@ const PaymentComponent = ({ onPaymentSuccess, amount, order }) => {
       }
     } catch (error) {
       setModalOpen(true);
-      setModalText("결제 중 에러 발생");
+      setModalText(`결제 중 에러 발생 : ${error}`);
       console.error("결제 중 에러 발생:", error);
     }
   };

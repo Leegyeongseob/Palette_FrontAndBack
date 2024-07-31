@@ -8,6 +8,7 @@ const Common = {
   // PALETTE_SOCKET_URL: "wss://www.palete-couple.store/ws/chat",
   PALLETE_DOMAIN: "http://localhost:8111",
   PALETTE_SOCKET_URL: "ws://localhost:8111/ws/chat",
+  PYTHON_DOMAIN: "http://localhost:5000",
   timeFromNow: (timestamp) => {
     return moment(timestamp).fromNow();
   },

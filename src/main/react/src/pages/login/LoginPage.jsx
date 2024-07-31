@@ -446,6 +446,8 @@ const LoginPage = () => {
       }
       //아니면 여기로 이동
       else {
+        console.log("else문까지는 와요!");
+        
         navigate(`/signup-page`, { state: propsToPass });
       }
     } catch (error) {

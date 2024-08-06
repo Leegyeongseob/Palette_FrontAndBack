@@ -109,7 +109,8 @@ const DatePlanner = ({url, clearUrl}) => {
   const [numMarker, setNumMarker] = useState([]);
   const [title, setTitle] = useState("");
   // const email = sessionStorage.getItem("email");
-  const { coupleName } = useParams(); // useParams를 통해 coupleName 파라미터 추출
+  // const { coupleName } = useParams(); // useParams를 통해 coupleName 파라미터 추출
+  const coupleName = sessionStorage.getItem("coupleName");
   const currentOverlayRef = useRef(null); // CustomOverlay 상태를 useRef로 관리
   console.log("coupleName : ", coupleName);
 

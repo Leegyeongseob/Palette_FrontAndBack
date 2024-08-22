@@ -71,7 +71,6 @@ const ImageUploader = ({ setImageUrl, showControls = true }) => {
       fileRef.put(file).then(() => {
         console.log("File uploaded successfully!");
         fileRef.getDownloadURL().then((url) => {
-          console.log("저장경로 확인 : " + url);
           setImageUrl(url);
           //세션에 저장
           sessionStorage.setItem("profile_url", url);

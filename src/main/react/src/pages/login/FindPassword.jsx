@@ -216,7 +216,6 @@ const FindPassword = () => {
         setModalContent(`임시 비밀번호: ${showUserPwd.data} 입니다.`);
         setPwd(showUserPwd.data);
       }
-      // console.log(showEmail);
     } catch (error) {
       if (error.response) {
         // 서버가 응답했지만 상태 코드가 2xx 범위를 벗어나는 경우

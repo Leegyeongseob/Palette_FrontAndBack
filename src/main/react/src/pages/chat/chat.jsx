@@ -409,7 +409,6 @@ const ChatMain = ({url, clearUrl}) => {
     const coupleEmailAxios = async () => {
       try {
         const rsp = await ChatAxiosApi.coupleEmail(email);
-        console.log(rsp.data);
         setSender(rsp.data[0]);
         setReceiver(rsp.data[1]);
       } catch (error) {
@@ -426,14 +425,12 @@ const ChatMain = ({url, clearUrl}) => {
         const rsp = await ChatAxiosApi.chatDetail(roomId);
         // setChatList(rsp.chatData);
         setRoomName(rsp.data.name);
-        console.log(rsp.data.chatData);
       } catch (e) {
         if (e.rsp.status === 401) {
           await Common.handleUnauthorized();
           const newToken = Common.getAccessToken();
           if (newToken !== accessToken) {
             const rsp = await ChatAxiosApi.chatDetail(roomId);
-            console.log(rsp.data.name);
             setRoomName(rsp.data.name);
           }
         }
@@ -452,7 +449,6 @@ const ChatMain = ({url, clearUrl}) => {
   }, []);
 
   useEffect(() => {
-    // console.log("방번호 : " + roomId);
     if (!ws.current) {
       ws.current = new WebSocket(Common.PALETTE_SOCKET_URL);
       ws.current.onopen = () => {
@@ -473,7 +469,6 @@ const ChatMain = ({url, clearUrl}) => {
     }
     ws.current.onmessage = (evt) => {
       const data = JSON.parse(evt.data);
-      console.log("테스트" + data.message);
       setChatList((prevItems) => [...prevItems, data]);
     };
     // 컴포넌트 언마운트 시 웹소켓 연결 닫기
@@ -496,7 +491,6 @@ const ChatMain = ({url, clearUrl}) => {
 
   const chatContainerRef = useRef(null);
 
-  // console.log(chatList);
 
   const togglePlusMenu = () => {
     setPlusMenuVisible(!isPlusMenuVisible);

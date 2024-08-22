@@ -4,11 +4,12 @@ import "moment/locale/ko"; // 한글 로컬라이제이션
 moment.locale("ko"); // 한글 설정 적용
 
 const Common = {
-  // PALLETE_DOMAIN: "https://www.palette-couple.store",
-  // PALETTE_SOCKET_URL: "wss://www.palete-couple.store/ws/chat",
-  PALLETE_DOMAIN: "http://localhost:8111",
-  PALETTE_SOCKET_URL: "ws://localhost:8111/ws/chat",
-  PYTHON_DOMAIN: "http://localhost:5000",
+  PALLETE_DOMAIN: "https://www.palette-couple.store",
+  PALETTE_SOCKET_URL: "wss://www.palette-couple.store/ws/chat",
+  PYTHON_DOMAIN: "https://www.palette-couple.store",
+  // PALLETE_DOMAIN: "http://localhost:8111",
+  // PALETTE_SOCKET_URL: "ws://localhost:8111/ws/chat",
+  // PYTHON_DOMAIN: "http://localhost:5000",
   timeFromNow: (timestamp) => {
     return moment(timestamp).fromNow();
   },
@@ -51,7 +52,6 @@ const Common = {
         refreshToken,
         config
       );
-      console.log(res.data);
       Common.setAccessToken(res.data);
       return true;
     } catch (err) {

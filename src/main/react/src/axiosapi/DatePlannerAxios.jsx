@@ -68,7 +68,6 @@ const DatePlannerAxios = {
 
   //커플아이디로 코스 검색
   getCoursesByCoupleName: async (coupleName) => {
-    console.log("coupleName axios", coupleName);
     try {
       const response = await AxiosInstance.get(`/course/search/${coupleName}`);
       console.log('axios return')

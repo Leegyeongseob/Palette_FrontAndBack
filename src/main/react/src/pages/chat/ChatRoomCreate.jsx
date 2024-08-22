@@ -57,7 +57,6 @@ const ChatRoomCreate = ({ onClose }) => {
         sender,
         receiver
       );
-      console.log(response.data);
       navigate(`/chat/${response.data}`);
       onClose(); // 모달 닫기
     } catch (e) {
@@ -74,7 +73,6 @@ const ChatRoomCreate = ({ onClose }) => {
     const coupleEmailAxios = async () => {
       try {
         const rsp = await ChatAxiosApi.coupleEmail(email);
-        console.log(rsp.data);
         setSender(rsp.data[0]);
         setReceiver(rsp.data[1]);
       } catch (error) {

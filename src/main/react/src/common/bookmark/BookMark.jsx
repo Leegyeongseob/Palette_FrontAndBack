@@ -113,7 +113,6 @@ const BookMark = ({ onNavigate }) => {
           onNavigate("/date-diary");
         } else { // 모달
           soloModal();
-          console.log("솔로는 웁니다.");
         }
       } else { // 커플이 아닌 경우
       setModalOpen(true);
@@ -136,7 +135,6 @@ const BookMark = ({ onNavigate }) => {
           onNavigate("/date-album");
         } else { // 모달
           soloModal();
-          console.log("솔로는 웁니다.");
         }
       } else { // 커플이 아닌 경우
       setModalOpen(true);
@@ -159,7 +157,6 @@ const BookMark = ({ onNavigate }) => {
           onNavigate("/date-clothes");
         } else { // 모달
           soloModal();
-          console.log("솔로는 웁니다.");
         }
       } else { // 커플이 아닌 경우
       setModalOpen(true);
@@ -182,7 +179,6 @@ const BookMark = ({ onNavigate }) => {
           onNavigate(`/${coupleName}/dateplanner`);
         } else { // 모달
           soloModal();
-          console.log("솔로는 웁니다.");
         }
       } else { // 커플이 아닌 경우
       setModalOpen(true);
@@ -202,7 +198,6 @@ const BookMark = ({ onNavigate }) => {
     } else {
       // 모달
       soloModal();
-      console.log("솔로는 웁니다.");
     }
   };
 
@@ -215,7 +210,6 @@ const BookMark = ({ onNavigate }) => {
           onNavigate(`/Chat`);
         } else { // 모달
           soloModal();
-          console.log("솔로는 웁니다.");
         }
       } else { // 커플이 아닌 경우
       setModalOpen(true);

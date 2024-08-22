@@ -443,7 +443,6 @@ const DateAlbum4 = ({ url, clearUrl }) => {
   const isAmountAxios = async () => {
     try {
       const response = await AlbumAxiosApi.getAmount(userEmail);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching amount:", error);
@@ -503,10 +502,8 @@ const DateAlbum4 = ({ url, clearUrl }) => {
     if (resDday.data !== "") {
       setIsDday(true);
       setSaveDday(resDday.data);
-      console.log("if실행");
     } else {
       setIsDday(false);
-      console.log("else 실행");
     }
   };
 

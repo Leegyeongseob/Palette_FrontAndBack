@@ -248,7 +248,6 @@ const Guestbook = ({}) => {
   // 이메일로 프로필 이미지 가져오기
   const profileImgAxios = async () => {
     const res = await MemberAxiosApi.searchProfileUrl(email);
-    console.log("방명록 글쓴이 프로필 : " + res.data);
     if ((res.data !== "") | (res.data !== null)) {
       setImgUrl(res.data);
     }
@@ -258,13 +257,8 @@ const Guestbook = ({}) => {
     const fetchGuestbookEntries = async () => {
       try {
         const data = await GuestbookAxios.getGuestBookEntries(coupleName);
-        console.log("커푸루이름 방명록에서 확인", coupleName);
-        console.log("data", data);
-        console.log("설마 이메일도?:" + data.data);
-
         setGuestbookEntries(data);
       } catch (error) {
-        console.log("방명록 가져오기 실패", error);
       }
     };
     fetchGuestbookEntries();
@@ -306,8 +300,6 @@ const Guestbook = ({}) => {
   //방문자만 방명록 쓰는 부분이 보이도록 하는 함수
   const isMyHomeAxios = async () => {
     const myCoupleNameData = await MemberAxiosApi.renderCoupleNameSearch(email);
-    console.log("불러온 커플네임 : " + myCoupleNameData.data);
-    console.log("세션 커플네임 :" + coupleName);
     if (myCoupleNameData.data !== coupleName) {
       setIsMyHome(false);
     } else {

@@ -115,8 +115,6 @@ const DatePlanner = ({url, clearUrl}) => {
   // const email = sessionStorage.getItem("email");
   const { coupleName } = useParams(); // useParams를 통해 coupleName 파라미터 추출
   const currentOverlayRef = useRef(null); // CustomOverlay 상태를 useRef로 관리
-  console.log("coupleName : ", coupleName);
-
   const [animate, setAnimate] = useState(false);
   const navigate = useNavigate();
 
@@ -144,12 +142,10 @@ const DatePlanner = ({url, clearUrl}) => {
     const fetchCourses = async () => {
       try {
         // const resCoupleName = await MemberAxiosApi.coupleNameSearch(email);
-        console.log("데이트 플레너의 coupleName", coupleName);
         const courses = await DatePlannerAxios.getCoursesByCoupleName(
           // resCoupleName.data
           coupleName
         );
-        console.log("도메인커플들어오나??", coupleName);
         setSavedCourses(courses);
       } catch (error) {
         console.error("❌ Error fetching courses:", error);
@@ -180,7 +176,6 @@ const DatePlanner = ({url, clearUrl}) => {
           savedCourses[currentCourseIndex].id,
           newCourse
         );
-        console.log("✔️테스트 확인용", savedCourses[currentCourseIndex]);
         setSavedCourses((prevCourses) =>
           prevCourses.map((course, index) =>
             index === currentCourseIndex ? savedCourse : course
@@ -266,7 +261,6 @@ const DatePlanner = ({url, clearUrl}) => {
   // 장소 카드 클릭 시 지도 이동 및 장소 정보 표시
   const onClickPlaceCard = (place) => {
     const position = new window.kakao.maps.LatLng(place.y, place.x);
-    console.log("장소", position);
     map.panTo(position);
     // displayPlaceInfo(place);
   };
@@ -281,7 +275,6 @@ const DatePlanner = ({url, clearUrl}) => {
       const courseId = savedCourses[index].id;
       const course = await DatePlannerAxios.getCourseById(courseId);
       setModalSelectedPlaces(course.places);
-      console.log("모달확인", course.places);
       setIsModalOpen(true);
     } catch (error) {
       console.error("❌", error);
@@ -298,7 +291,6 @@ const DatePlanner = ({url, clearUrl}) => {
       // 각 장소에 대해 새 마커를 생성합니다.
       const imageIndex = index + 1; // 인덱스 + 1을 이미지 이름으로 사용
       const markerSrc = `${process.env.PUBLIC_URL}/mapmarker/nummarkers/0${imageIndex}.png`;
-      console.log(imageIndex);
       const markerSize = new window.kakao.maps.Size(40, 40);
       const markerImg = new window.kakao.maps.MarkerImage(
         markerSrc,
@@ -360,7 +352,6 @@ const DatePlanner = ({url, clearUrl}) => {
   };
   // 장소 정보 표시 함수
   const displayPlaceInfo = (place) => {
-    console.log("장소정보실행");
 
     // 이전 CustomOverlay 제거
     clearOverlay();

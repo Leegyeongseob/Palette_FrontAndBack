@@ -58,17 +58,6 @@ const PaymentTema = ({ onPaymentSuccess, amount, order }) => {
     try {
       const token = localStorage.getItem("accessToken");
 
-      console.log("결제 요청 데이터:", {
-        storeId,
-        channelKey,
-        paymentId,
-        orderName,
-        totalAmount,
-        currency,
-        payMethod,
-        customer,
-      });
-
       const response = await PortOne.requestPayment({
         storeId: storeId,
         channelKey: channelKey,

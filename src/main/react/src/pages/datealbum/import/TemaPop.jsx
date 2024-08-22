@@ -153,7 +153,6 @@ const TemaPop = (props) => {
   }, [open, fetchPurchasedOrders]);
 
   const handlePaymentSuccess = () => {
-    console.log("테마 구매 성공");
     fetchPurchasedOrders(); // 결제 성공 후 리스트 새로고침
   };
 

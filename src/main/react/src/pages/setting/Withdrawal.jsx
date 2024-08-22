@@ -250,7 +250,6 @@ const Withdrawal = () => {
   const signuOutBtnOnclickHandler = () => {
     const memberDeleteAxios = async () => {
       const rsp = await MemberAxiosApi.memberDelete(inputEmail);
-      console.log(rsp.data);
     };
     memberDeleteAxios();
     if (isEmail && isCode) {

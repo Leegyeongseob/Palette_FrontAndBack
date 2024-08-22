@@ -201,7 +201,6 @@ const FindEmail = () => {
         setModalContent(`아이디: ${showUserId.data} 입니다.`);
         setEmail(showUserId.data);
       }
-      // console.log(showEmail);
     } catch (error) {
       if (error.response) {
         // 서버가 응답했지만 상태 코드가 2xx 범위를 벗어나는 경우

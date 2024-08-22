@@ -176,23 +176,19 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
     sessionStorage.setItem("myDarling", firstProfileUrl[1]);
   }, []);
   const coupleNickNameAxios = async (emailData) => {
-    console.log("emailData : " + emailData);
     const resCouple = await MemberAxiosApi.renderCoupleNameSearch(emailData);
-    console.log("이거 :" + resCouple.data);
     const resNickName = await MainAxios.searchNickName(
       emailData,
       resCouple.data
     );
 
     setCoupleNickName(resNickName.data);
-    console.log("커플닉네임 확인:" + resNickName.data);
   };
 
   //세션 커플이름이 바뀌었을 경우
   useEffect(() => {
     const fetchData = async (coupleNameData) => {
       try {
-        console.log("커플이름 :" + coupleNameData);
         // 커플이름에 해당하는 첫 번째 이메일을 검색하고 저장합니다.
         const firstEmailResponse = await MemberAxiosApi.firstEmailGet(
           coupleNameData
@@ -213,7 +209,6 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
   //파일 업로드 이벤트 함수
   const AddImgBtnOnChangeHandler = (e) => {
     const selectedFile = e.target.files[0];
-    console.log("파일 경로 : ", selectedFile);
     // 선택된 파일을 즉시 업로드 후 DB에 다시 저장
     handleFileUpload(email, selectedFile);
   };
@@ -257,9 +252,6 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
       coupleNameData,
       emailData
     );
-
-    console.log(res.data);
-
     if (res.data[0]) {
       setImgUrl(res.data[0]);
       setIsExistImg((prevState) => [true, prevState[1]]); // 첫 번째 요소를 true로 업데이트
@@ -274,7 +266,6 @@ const CoupleImg = ({ clothes = false, isMyHome }) => {
   //본인 성별 가져오는 비동기 함수
   const mySexSearchAxios = async (emailValue) => {
     const resSex = await MainAxios.mySexSearch(emailValue);
-    console.log("resSex :" + resSex.data);
     if (resSex.data === "Man") {
       setFirstProfileUrl([manprofile, womanprofile]);
     } else {

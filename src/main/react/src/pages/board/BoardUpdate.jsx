@@ -444,10 +444,8 @@ const BoardUpdate = ({url, clearUrl}) => {
 
   const fetchBoardDataCN = async () => {
     const coupleName = sessionStorage.getItem("coupleName");
-    console.log(coupleName);
     try {
       const data = await BoardAxios.getCoupleName(coupleName);
-      console.log("axios 데이터", data.data);
       setBoardData(data.data.reverse());
     } catch (error) {
       console.error("Failed to fetch board data", error);
@@ -547,7 +545,6 @@ const BoardUpdate = ({url, clearUrl}) => {
         imgUrl: downloadURL,
         memberEmail: email || "",
       };
-      console.log("제출할 데이터:", boardData);
       await updateSubmitBoard(boardData);
     } catch (error) {
       console.error("게시글 생성 실패:", error);
@@ -557,10 +554,7 @@ const BoardUpdate = ({url, clearUrl}) => {
 
   const updateSubmitBoard = async (boardReqDto) => {
     try {
-      console.log("서버로 전송할 데이터:", boardReqDto);
       const response = await BoardAxios.updateBoard(idValue, boardReqDto);
-
-      console.log("서버 응답 데이터:", response);
       navigate(`/${coupleName}/board-guestbook`); // 리다이렉트
     } catch (error) {
       console.error(

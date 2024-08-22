@@ -118,7 +118,6 @@ const CoupleImg = () => {
   useEffect(() => {
     const fetchData = async (coupleNameData) => {
       try {
-        console.log("커플이름 :" + coupleNameData);
         // 커플이름에 해당하는 첫 번째 이메일을 검색하고 저장합니다.
         const firstEmailResponse = await MemberAxiosApi.firstEmailGet(
           coupleNameData
@@ -135,16 +134,13 @@ const CoupleImg = () => {
   }, [coupleName]);
   //
   const coupleNickNameAxios = async (emailData) => {
-    console.log("emailData : " + emailData);
     const resCouple = await MemberAxiosApi.renderCoupleNameSearch(emailData);
-    console.log("이거 :" + resCouple.data);
     const resNickName = await MainAxios.searchNickName(
       emailData,
       resCouple.data
     );
 
     setCoupleNickName(resNickName.data);
-    console.log("커플닉네임 확인:" + resNickName.data);
   };
   return (
     <Contain>

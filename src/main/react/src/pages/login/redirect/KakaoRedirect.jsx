@@ -34,8 +34,6 @@ const KakaoRedirect = () => {
           const pwd = tokendata.data.id;
           const ImgUrl = tokendata.data.properties.profile_image;
           const response = await LoginAxios.login(email, pwd);
-          console.log("accessToken : ", response.data.accessToken);
-          console.log("refreshToken : ", response.data.refreshToken);
           Common.setAccessToken(response.data.accessToken);
           Common.setRefreshToken(response.data.refreshToken);
           sessionStorage.setItem("email", email);
@@ -45,7 +43,6 @@ const KakaoRedirect = () => {
             const resCoupleName = await LoginAxios.emailToCoupleNameSearch(
               email
             );
-            console.log(resCoupleName.data);
             // `coupleName`을 `sessionStorage`에 저장합니다.
             sessionStorage.setItem("coupleName", resCoupleName.data);
             navigate(`/${resCoupleName.data}/main-page`);

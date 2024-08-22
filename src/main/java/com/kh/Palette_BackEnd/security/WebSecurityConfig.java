@@ -41,10 +41,10 @@ public class WebSecurityConfig {
             .accessDeniedHandler(jwtAccessDeniedHandler)
             .and()
             .authorizeRequests()
-            .antMatchers("/","/auth/**","/main/**","/wss/**","/chat/**","/static/**","/date-clothes/**","/clothes/**","https://developers.kakao.com/","/font/**,*/member/**").permitAll()
+            .antMatchers("/","/auth/**","/main/**","/wss/**","/chat/**","/static/**","/date-clothes/**","/clothes/**","https://developers.kakao.com/","/font/**","*/member/**","/ws/**").permitAll()
             .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**", "/sign-api/exception","/mapmarker/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/kakaoLogin","/HancomSans-Light_0.ttf").permitAll()
+            .antMatchers("/favicon.ico","/manifest.json","/logo192.png","/kakaoLogin","/static/font/HancomSans-Light_0.ttf").permitAll()
             .anyRequest().authenticated()
             .and()
             .cors(cors -> cors
@@ -60,8 +60,8 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        // config.addAllowedOrigin("https://www.palette-couple.store");
-        config.addAllowedOrigin("http//localhost:8111");
+        config.addAllowedOrigin("https://www.palette-couple.store");
+        // config.addAllowedOrigin("http//localhost:8111");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

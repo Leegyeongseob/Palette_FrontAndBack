@@ -165,7 +165,6 @@ const MapContainer = ({
     ps.categorySearch(currCategory, placesSearchCB, {
       useMapBounds: true,
     });
-    console.log("카테고리 검색을 요청합니다. 현재 카테고리: " + currCategory);
   };
 
   const placesSearchCB = (data, status) => {
@@ -232,8 +231,6 @@ const MapContainer = ({
   }, [currCategory]);
 
   const handleSubmit = (e) => {
-    console.log("테스트", handleSubmit);
-
     e.preventDefault();
     const keyword = e.target.elements.keyword.value.trim();
     if (!keyword) {

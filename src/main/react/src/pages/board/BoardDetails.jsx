@@ -429,7 +429,6 @@ const BoardDetails = ({url, clearUrl}) => {
 
   // Function to fetch board details based on ID
   const fetchBoardDetails = async (id) => {
-    console.log("id : " + id);
     try {
       // Example: Fetch board details from an API
       const response = await BoardAxios.fetchBoardById(id);
@@ -450,8 +449,6 @@ const BoardDetails = ({url, clearUrl}) => {
   //본인만 "새 게시물 작성"이 보이도록 하는 axios
   const isMyHomeAxios = async () => {
     const myCoupleNameData = await MemberAxiosApi.renderCoupleNameSearch(email);
-    console.log("불러온 커플네임 : " + myCoupleNameData.data);
-    console.log("세션 커플네임 :" + coupleName);
     if (myCoupleNameData.data !== coupleName) {
       setIsMyHome(false);
     } else {
@@ -459,10 +456,8 @@ const BoardDetails = ({url, clearUrl}) => {
     }
   };
   const fetchBoardDataCN = async () => {
-    console.log(coupleName);
     try {
       const data = await BoardAxios.getCoupleName(coupleName);
-      console.log("axios 데이터", data.data);
       setBoardData(data.data.reverse());
     } catch (error) {
       console.error("Failed to fetch board data", error);
@@ -517,8 +512,6 @@ const BoardDetails = ({url, clearUrl}) => {
   const deleteBoardContentsAxios = async (idValue) => {
     const res = await BoardAxios.deleteBoard(idValue);
     navigate(`/${coupleName}/board-guestbook`);
-
-    console.log(res);
   };
   //삭제 버튼 이벤트 함수
   const deleteOnClickHandler = () => {

@@ -697,10 +697,8 @@ const DateDiary = ({ url, clearUrl }) => {
       if (resDday.data !== "") {
         setIsDday(true);
         setSaveDday(resDday.data);
-        console.log("if 실행");
       } else {
         setIsDday(false);
-        console.log("else 실행");
       }
     } catch (error) {
       console.error("DDay 정보를 불러오는 중 에러 발생:", error);
@@ -808,9 +806,6 @@ const DateDiary = ({ url, clearUrl }) => {
         eventText: event.eventText,
       })),
     };
-
-    console.log("Save Data:", saveData);
-
     try {
       const response = await AxiosApi.diaryReg(saveData);
 

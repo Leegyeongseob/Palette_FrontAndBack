@@ -618,9 +618,7 @@ const SignupPage = () => {
   };
   //이메일로 커플이름 찾는 비동기 함수
   const coupleNameSearch = async (emailData) => {
-    console.log("카카오 이메일:" + emailData);
     const resCoupleName = await LoginAxios.emailToCoupleNameSearch(emailData);
-    console.log(resCoupleName.data);
     // `coupleName`을 `sessionStorage`에 저장합니다.
     sessionStorage.setItem("coupleName", resCoupleName.data);
     navigate(`/main-page`);
@@ -630,10 +628,6 @@ const SignupPage = () => {
     try {
       const response = await LoginAxios.login(kakoEmailvalue, kakaoPwdValue);
       if (response.data.grantType === "bearer") {
-        console.log("이거 : " + kakoEmailvalue);
-        console.log("제발 : " + kakaoPwdValue);
-        console.log("accessToken : ", response.data.accessToken);
-        console.log("refreshToken : ", response.data.refreshToken);
         Common.setAccessToken(response.data.accessToken);
         Common.setRefreshToken(response.data.refreshToken);
         sessionStorage.setItem("email", kakoEmailvalue);
@@ -719,12 +713,10 @@ const SignupPage = () => {
       FirstEmailValue,
       coupleName
     );
-    console.log(response.data);
   };
   //커플이름 존재시 두번째계정 Insert 비동기 함수
   const secondCoupleNameInsertAxois = async (email, coupleName) => {
     const response = await LoginAxios.secondCoupleNameInsert(email, coupleName);
-    console.log(response.data);
   };
   // 짝이 맞는 경우
   const isMyCoupleEmailYesHandler = () => {
@@ -768,7 +760,6 @@ const SignupPage = () => {
         templateParams,
         "VKzT47hXDU3sC3R13" // public-key
       );
-      console.log("이메일이 성공적으로 보내졌습니다:", response);
       setIdMessage("이메일이 성공적으로 보내졌습니다!");
       setIsId(true);
       setIsEmailSent(true);

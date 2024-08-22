@@ -26,7 +26,7 @@ const PaletteStyle = createGlobalStyle`
   @font-face {
     font-family: 'HancomSans-Light_0';
     font-weight: lighter;
-    src: url('./font/HancomSans-Light_0.ttf') format('truetype');
+    src: url('/static/font/HancomSans-Light_0.ttf') format('truetype');
   }
 
   /* 웹킷 기반 브라우저의 스크롤바 */

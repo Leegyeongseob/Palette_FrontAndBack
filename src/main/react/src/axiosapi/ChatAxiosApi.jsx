@@ -3,7 +3,6 @@ import Common from "../common/Common";
 
 const ChatAxiosApi = {
   chatMessagesSave: async (roomId, sender, receiver, message) => {
-    console.log("receiver" + receiver);
     const chat = {
       roomId: roomId,
       sender: sender,

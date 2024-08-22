@@ -93,7 +93,6 @@ const Swiper = ({ shoes, clothNum, OnePiece }) => {
   const fetchData = async () => {
     try {
       const responses = await axios.get("/date-clothes/total-clothes");
-      console.log(responses.data);
       setClothesData({
         manTopClothes: responses.data.manTopClothes.map((data) => data.img_src),
         manPantsClothes: responses.data.manPantsClothes.map(

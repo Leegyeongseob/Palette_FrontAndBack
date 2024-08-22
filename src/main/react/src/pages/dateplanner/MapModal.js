@@ -51,7 +51,6 @@ const MapModal = ({ isOpen, onClose, mapContainerRef, map, selectedPlaces, setNu
         });
         const imageIndex = index + 1; // 인덱스 + 1을 이미지 이름으로 사용
       const markerSrc = `${process.env.PUBLIC_URL}/mapmarker/nummarkers/0${imageIndex}.png`;
-      console.log(imageIndex);
       const markerSize = new window.kakao.maps.Size(40, 40);
       const markerImg = new window.kakao.maps.MarkerImage(
         markerSrc,

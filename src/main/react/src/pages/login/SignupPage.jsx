@@ -383,8 +383,10 @@ const SignupPage = () => {
   const [isCode, setIsCode] = useState(false);
   //이메일 보낸 후 상태 저장.
   const [isEmailSent, setIsEmailSent] = useState(false);
+  // 비교할 인증코드
+  const [certificationCode, setCertificationCode] = useState("");
   //인증코드 저장
-  const [saveCertificationCode, setSaveCertificationCode] = useState(null);
+  const [inputCertificationCode, setInputCertificationCode] = useState(null);
   //인증 확인 상태
   const [isEmail, setIsEmail] = useState(false);
   // 에러 메세지
@@ -547,12 +549,8 @@ const SignupPage = () => {
 
   //주민등록번호 따로 받은 자리 합치는 함수
   const combineRRN = (firstPart, secondPart) => {
-    // 문자열을 숫자로 변환
-    const firstNum = parseInt(firstPart, 10);
-    const secondNum = parseInt(secondPart, 10);
-
     // 계산 수행
-    return firstNum * 10 + secondNum;
+    return firstPart + secondPart;
   };
   //회원가입 비동기 함수
   const signUpAxios = async (
@@ -618,7 +616,9 @@ const SignupPage = () => {
   };
   //이메일로 커플이름 찾는 비동기 함수
   const coupleNameSearch = async (emailData) => {
+    console.log("카카오 이메일:" + emailData);
     const resCoupleName = await LoginAxios.emailToCoupleNameSearch(emailData);
+    console.log(resCoupleName.data);
     // `coupleName`을 `sessionStorage`에 저장합니다.
     sessionStorage.setItem("coupleName", resCoupleName.data);
     navigate(`/main-page`);
@@ -628,6 +628,10 @@ const SignupPage = () => {
     try {
       const response = await LoginAxios.login(kakoEmailvalue, kakaoPwdValue);
       if (response.data.grantType === "bearer") {
+        console.log("이거 : " + kakoEmailvalue);
+        console.log("제발 : " + kakaoPwdValue);
+        console.log("accessToken : ", response.data.accessToken);
+        console.log("refreshToken : ", response.data.refreshToken);
         Common.setAccessToken(response.data.accessToken);
         Common.setRefreshToken(response.data.refreshToken);
         sessionStorage.setItem("email", kakoEmailvalue);
@@ -656,19 +660,29 @@ const SignupPage = () => {
     );
   };
   // 카카오 커플이름 등록 버튼 함수
-  const kakaoCoupleNameBtnOnClickHandler = () => {
-    // 신규 커플 등록
-    if (coupleNameDuplication === true) {
-      coupleNameInsertAxois(kakaoEmail, inputCoupleName);
-      //등록 모달창
+  const kakaoCoupleNameBtnOnClickHandler = async () => {
+    //// 이미 커플이 완성되어 있지 확인하는 함수
+    const res = await LoginAxios.isExistCouple(inputCoupleName);
+    console.log("이미 커플 완성 여부:", res.data);
+    // 이미 커플이 완성되어 있는 경우
+    if (res.data) {
       setModalOpen(true);
-      SetHeaderContents("커플등록");
-      setModalContent("등록되었습니다.");
-    }
-    // 짝이 있는지 확인
-    else {
-      coupleEmailCheck(inputCoupleName);
-      setIsMyCoupleEmailForm(true);
+      SetHeaderContents("커플존재");
+      setModalContent("이미 커플이 존재합니다.");
+    } else {
+      // 신규 커플 등록
+      if (coupleNameDuplication === true) {
+        coupleNameInsertAxois(kakaoEmail, inputCoupleName);
+        //등록 모달창
+        setModalOpen(true);
+        SetHeaderContents("커플등록");
+        setModalContent("등록되었습니다.");
+      }
+      // 짝이 있는지 확인
+      else {
+        coupleEmailCheck(inputCoupleName);
+        setIsMyCoupleEmailForm(true);
+      }
     }
   };
   //커플이름 onChange 함수 (중복확인)
@@ -692,19 +706,30 @@ const SignupPage = () => {
     }
   };
   // 커플이름 등록 버튼 함수
-  const coupleNameBtnOnClickHandler = () => {
-    // 신규 커플 등록
-    if (coupleNameDuplication === true) {
-      coupleNameInsertAxois(inputEmail, inputCoupleName);
-      //등록 모달창
+  const coupleNameBtnOnClickHandler = async () => {
+    //// 이미 커플이 완성되어 있지 확인하는 함수
+    const res = await LoginAxios.isExistCouple(inputCoupleName);
+    console.log("이미 커플 완성 여부:", res.data);
+    // 이미 커플이 완성되어 있는 경우
+    if (res.data) {
+      //커플 모달창
       setModalOpen(true);
-      SetHeaderContents("커플등록");
-      setModalContent("등록되었습니다.");
-    }
-    // 짝이 있는지 확인
-    else {
-      coupleEmailCheck(inputCoupleName);
-      setIsMyCoupleEmailForm(true);
+      SetHeaderContents("커플존재");
+      setModalContent("이미 커플이 존재합니다.");
+    } else {
+      // 신규 커플 등록
+      if (coupleNameDuplication === true) {
+        coupleNameInsertAxois(inputEmail, inputCoupleName);
+        //등록 모달창
+        setModalOpen(true);
+        SetHeaderContents("커플등록");
+        setModalContent("등록되었습니다.");
+      }
+      // 짝이 있는지 확인
+      else {
+        coupleEmailCheck(inputCoupleName);
+        setIsMyCoupleEmailForm(true);
+      }
     }
   };
   //커플이름 Insert 비동기 함수
@@ -713,10 +738,12 @@ const SignupPage = () => {
       FirstEmailValue,
       coupleName
     );
+    console.log(response.data);
   };
   //커플이름 존재시 두번째계정 Insert 비동기 함수
   const secondCoupleNameInsertAxois = async (email, coupleName) => {
     const response = await LoginAxios.secondCoupleNameInsert(email, coupleName);
+    console.log(response.data);
   };
   // 짝이 맞는 경우
   const isMyCoupleEmailYesHandler = () => {
@@ -744,14 +771,16 @@ const SignupPage = () => {
   };
   // 이메일 전송시 파라미터 넘기는 함수
   const sendVerificationEmail = async (toEmail) => {
-    const certificationCode = Math.floor(Math.random() * 900000) + 100000; // 100000부터 999999까지의 난수 발생
-    setSaveCertificationCode(certificationCode);
+    const generatedCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    setCertificationCode(generatedCode);
     // 이메일 보내기
     // 여기서 정의해야 하는 것은 위에서 만든 메일 템플릿에 지정한 변수({{ }})에 대한 값을 담아줘야 한다.
     const templateParams = {
       toEmail: toEmail, // 수신 이메일
       toName: "고객님",
-      certificationCode: certificationCode,
+      certificationCode: generatedCode,
     };
     try {
       const response = await emailjs.send(
@@ -760,6 +789,7 @@ const SignupPage = () => {
         templateParams,
         "VKzT47hXDU3sC3R13" // public-key
       );
+      console.log("이메일이 성공적으로 보내졌습니다:", response);
       setIdMessage("이메일이 성공적으로 보내졌습니다!");
       setIsId(true);
       setIsEmailSent(true);
@@ -774,15 +804,29 @@ const SignupPage = () => {
   };
   // 코드 확인 버튼 이벤트
   const emailCertificationCodeOnClick = () => {
-    SetHeaderContents("인증코드확인");
-    setModalOpen(true);
-    setModalContent("확인되었습니다.");
-    setIsCode(true);
+    if (inputCertificationCode === certificationCode) {
+      SetHeaderContents("인증코드확인");
+      setModalOpen(true);
+      setModalContent("확인되었습니다.");
+      setIsCode(true);
+    } else {
+      SetHeaderContents("인증코드확인");
+      setModalOpen(true);
+      setModalContent("인증코드가 다릅니다.");
+      setIsCode(false);
+    }
   };
   //코드 모달 확인
   const codeModalOkBtnHandler = () => {
     closeModal();
     setIsEmail(true);
+  };
+  // 인증 코드 입력 처리 함수 수정
+  const handleCertificationCodeInput = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length <= 6) {
+      setInputCertificationCode(value);
+    }
   };
   return (
     <Contain>
@@ -821,10 +865,8 @@ const SignupPage = () => {
             <label>인증코드</label>
             <input
               className="InputCode"
-              value={saveCertificationCode}
-              onChange={(e) => {
-                setSaveCertificationCode(e.target.value);
-              }}
+              // value={certificationCode}
+              onChange={handleCertificationCodeInput}
             />
             <Empty></Empty>
             <EmailAthouized

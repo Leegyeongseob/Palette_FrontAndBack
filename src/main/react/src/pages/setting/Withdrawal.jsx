@@ -32,7 +32,6 @@ const InputDiv = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  
 `;
 const InputDetailDiv = styled.div`
   width: 100%;
@@ -57,7 +56,7 @@ const InputDetailDiv = styled.div`
     }
   }
   & > .InputCode,
-  & > .InputEmail {
+  .InputEmail {
     width: 53%;
     height: 100%;
     border-radius: 0.521vw;
@@ -78,7 +77,7 @@ const Empty = styled.div`
 `;
 const EmailAthouized = styled.div`
   width: 12%;
-  border-radius: 10px;;
+  border-radius: 10px;
   border: none;
   background-color: ${({ isActive }) =>
     isActive ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.2)"};
@@ -109,15 +108,15 @@ const ButtonDiv = styled.div`
   align-items: center;
   & > a {
     width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 const SignupButton = styled.div`
-    width: 30%;
-    height: 80%;
+  width: 30%;
+  height: 80%;
   background-color: ${({ isActive }) =>
     isActive ? "rgba(0, 0, 0, 0.4)" : "rgba(0, 0, 0, 0.2)"};
   border-radius: 1.042vw;
@@ -140,9 +139,11 @@ const SignupButton = styled.div`
 
 const Message = styled.div`
   width: 100%;
+  height: 25px;
   font-size: 12px;
   display: flex;
   justify-content: center;
+  align-items: center;
   color: ${({ isCorrect }) => (isCorrect ? "green" : "red")};
   @media screen and (max-width: 654px) {
     font-size: 2vw;
@@ -167,8 +168,10 @@ const Withdrawal = () => {
   const [isCode, setIsCode] = useState(false);
   //이메일 보낸 후 상태 저장.
   const [isEmailSent, setIsEmailSent] = useState(false);
+  // 비교할 인증코드
+  const [certificationCode, setCertificationCode] = useState("");
   //인증코드 저장
-  const [saveCertificationCode, setSaveCertificationCode] = useState(null);
+  const [inputCertificationCode, setInputCertificationCode] = useState(null);
   //인증 확인 상태
   const [isEmail, setIsEmail] = useState(false);
   // 에러 메세지
@@ -192,21 +195,28 @@ const Withdrawal = () => {
       setIdMessage("이메일 형식이 올바르지 않습니다.");
       setIsId(false);
     } else {
-      setIdMessage("올바른 형식입니다.");
-      setIsId(true);
+      if (e.target.value === emailplaceholder) {
+        setIdMessage("올바른 형식입니다.");
+        setIsId(true);
+      } else {
+        setIdMessage("계정이 일치하지 않습니다.");
+        setIsId(false);
+      }
     }
   };
 
   // 이메일 전송시 파라미터 넘기는 함수
   const sendVerificationEmail = async (toEmail) => {
-    const certificationCode = Math.floor(Math.random() * 900000) + 100000; // 100000부터 999999까지의 난수 발생
-    setSaveCertificationCode(certificationCode);
+    const generatedCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    setCertificationCode(generatedCode);
     // 이메일 보내기
     // 여기서 정의해야 하는 것은 위에서 만든 메일 템플릿에 지정한 변수({{ }})에 대한 값을 담아줘야 한다.
     const templateParams = {
       toEmail: toEmail, // 수신 이메일
       toName: "고객님",
-      certificationCode: certificationCode,
+      certificationCode: generatedCode,
     };
     try {
       const response = await emailjs.send(
@@ -236,10 +246,17 @@ const Withdrawal = () => {
   };
   // 코드 확인 버튼 이벤트
   const emailCertificationCodeOnClick = () => {
-    SetHeaderContents("인증코드확인");
-    setModalOpen(true);
-    setModalContent("확인되었습니다.");
-    setIsCode(true);
+    if (inputCertificationCode === certificationCode) {
+      SetHeaderContents("인증코드확인");
+      setModalOpen(true);
+      setModalContent("확인되었습니다.");
+      setIsCode(true);
+    } else {
+      SetHeaderContents("인증코드확인");
+      setModalOpen(true);
+      setModalContent("인증코드가 다릅니다.");
+      setIsCode(false);
+    }
   };
   //코드 모달 확인
   const codeModalOkBtnHandler = () => {
@@ -250,11 +267,19 @@ const Withdrawal = () => {
   const signuOutBtnOnclickHandler = () => {
     const memberDeleteAxios = async () => {
       const rsp = await MemberAxiosApi.memberDelete(inputEmail);
+      console.log(rsp.data);
     };
     memberDeleteAxios();
     if (isEmail && isCode) {
       sessionStorage.setItem("email", "");
       navigate("/");
+    }
+  };
+  // 인증 코드 입력 처리 함수 수정
+  const handleCertificationCodeInput = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length <= 6) {
+      setInputCertificationCode(value);
     }
   };
   return (
@@ -269,34 +294,30 @@ const Withdrawal = () => {
         {modalContent}
       </Modal>
       <InputDiv>
-        <div>
-          <InputDetailDiv>
-            <label>이메일</label>
-            <input
-              className="InputEmail"
-              value={inputEmail}
-              onChange={onChangeEmail}
-              placeholder={emailplaceholder}
-            />
-            <Empty></Empty>
-            <EmailAthouized
-              isActive={isId}
-              onClick={emailCertificationBtnHandler}
-            >
-              인증
-            </EmailAthouized>
-          </InputDetailDiv>
-          {inputEmail && <Message isCorrect={isId}>{idMessage}</Message>}
-        </div>
+        <InputDetailDiv>
+          <label>이메일</label>
+          <input
+            className="InputEmail"
+            value={inputEmail}
+            onChange={onChangeEmail}
+            placeholder={emailplaceholder}
+          />
+          <Empty></Empty>
+          <EmailAthouized
+            isActive={isId}
+            onClick={emailCertificationBtnHandler}
+          >
+            인증
+          </EmailAthouized>
+        </InputDetailDiv>
+        {inputEmail && <Message isCorrect={isId}>{idMessage}</Message>}
         {isEmailSent && (
           <InputDetailDiv>
             <label>인증코드</label>
             <input
               className="InputCode"
-              value={saveCertificationCode}
-              onChange={(e) => {
-                setSaveCertificationCode(e.target.value);
-              }}
+              // value={certificationCode}
+              onChange={handleCertificationCodeInput}
             />
             <Empty></Empty>
             <EmailAthouized
@@ -307,7 +328,10 @@ const Withdrawal = () => {
             </EmailAthouized>
           </InputDetailDiv>
         )}
-        <Contexts>정말 탈퇴하실 건가요?<br/> ㅠ.ㅠ</Contexts>
+        <Contexts>
+          정말 탈퇴하실 건가요?
+          <br /> ㅠ.ㅠ
+        </Contexts>
       </InputDiv>
       <ButtonDiv>
         <SignupButton

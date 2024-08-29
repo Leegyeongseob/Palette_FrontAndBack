@@ -367,7 +367,7 @@ const VisitDiv = styled.div`
     background-color: rgba(255, 255, 255, 0.507);
     border-radius: 10px;
     outline: none;
-    color: #fff;
+    color: #000;
     font-size: 0.8vw;
     font-weight: 500;
   }

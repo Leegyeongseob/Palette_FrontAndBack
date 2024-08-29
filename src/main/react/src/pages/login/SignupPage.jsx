@@ -616,9 +616,7 @@ const SignupPage = () => {
   };
   //이메일로 커플이름 찾는 비동기 함수
   const coupleNameSearch = async (emailData) => {
-    console.log("카카오 이메일:" + emailData);
     const resCoupleName = await LoginAxios.emailToCoupleNameSearch(emailData);
-    console.log(resCoupleName.data);
     // `coupleName`을 `sessionStorage`에 저장합니다.
     sessionStorage.setItem("coupleName", resCoupleName.data);
     navigate(`/main-page`);
@@ -628,10 +626,6 @@ const SignupPage = () => {
     try {
       const response = await LoginAxios.login(kakoEmailvalue, kakaoPwdValue);
       if (response.data.grantType === "bearer") {
-        console.log("이거 : " + kakoEmailvalue);
-        console.log("제발 : " + kakaoPwdValue);
-        console.log("accessToken : ", response.data.accessToken);
-        console.log("refreshToken : ", response.data.refreshToken);
         Common.setAccessToken(response.data.accessToken);
         Common.setRefreshToken(response.data.refreshToken);
         sessionStorage.setItem("email", kakoEmailvalue);
@@ -663,7 +657,6 @@ const SignupPage = () => {
   const kakaoCoupleNameBtnOnClickHandler = async () => {
     //// 이미 커플이 완성되어 있지 확인하는 함수
     const res = await LoginAxios.isExistCouple(inputCoupleName);
-    console.log("이미 커플 완성 여부:", res.data);
     // 이미 커플이 완성되어 있는 경우
     if (res.data) {
       setModalOpen(true);
@@ -709,7 +702,6 @@ const SignupPage = () => {
   const coupleNameBtnOnClickHandler = async () => {
     //// 이미 커플이 완성되어 있지 확인하는 함수
     const res = await LoginAxios.isExistCouple(inputCoupleName);
-    console.log("이미 커플 완성 여부:", res.data);
     // 이미 커플이 완성되어 있는 경우
     if (res.data) {
       //커플 모달창
@@ -738,12 +730,10 @@ const SignupPage = () => {
       FirstEmailValue,
       coupleName
     );
-    console.log(response.data);
   };
   //커플이름 존재시 두번째계정 Insert 비동기 함수
   const secondCoupleNameInsertAxois = async (email, coupleName) => {
     const response = await LoginAxios.secondCoupleNameInsert(email, coupleName);
-    console.log(response.data);
   };
   // 짝이 맞는 경우
   const isMyCoupleEmailYesHandler = () => {
@@ -760,7 +750,6 @@ const SignupPage = () => {
   // 짝 계정 불러오는 비동기 함수
   const coupleEmailCheck = async (coupleName) => {
     const response = await LoginAxios.coupleEmailCheck(coupleName);
-    console.log(response.data);
     setMyCoupleEmail(response.data);
   };
   // 이메일 인증 버튼 handler

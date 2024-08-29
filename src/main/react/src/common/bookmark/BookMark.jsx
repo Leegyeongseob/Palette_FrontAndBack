@@ -90,7 +90,9 @@ const BookMark = ({ onNavigate }) => {
   // 주인인지 방문객인지 확인
   const compareCoulpleNameFunction = async (emailData) => {
     try {
-      const coupleNameData = await MemberAxiosApi.renderCoupleNameSearch(emailData);
+      const coupleNameData = await MemberAxiosApi.renderCoupleNameSearch(
+        emailData
+      );
       if (coupleNameData.data !== coupleName) {
         // 본인이 아닌 경우
         return false; // 결과를 false로 반환
@@ -103,22 +105,27 @@ const BookMark = ({ onNavigate }) => {
       return false; // 오류 발생 시 false 반환
     }
   };
-  
+
   const OpenDiaryOnClickHandler = async () => {
     try {
       const isCouple = await compareCoulpleNameFunction(email);
-      
-      if (isCouple) { // 커플일 경우
+
+      if (isCouple) {
+        // 커플일 경우
         if (await isCoupleAxios(email)) {
           onNavigate("/date-diary");
-        } else { // 모달
+        } else {
+          // 모달
           soloModal();
+          setSession();
+          console.log("솔로는 웁니다.");
         }
-      } else { // 커플이 아닌 경우
-      setModalOpen(true);
-      setNotEqualCoupleName(true);
-      setModalContent("방문자는 해당 기능이 잠겨있습니다.");
-      navigator(`/${coupleName}/main-page`);
+      } else {
+        // 커플이 아닌 경우
+        setModalOpen(true);
+        setNotEqualCoupleName(true);
+        setModalContent("방문자는 해당 기능이 잠겨있습니다.");
+        navigator(`/${coupleName}/main-page`);
       }
     } catch (error) {
       // 에러 처리
@@ -129,18 +136,23 @@ const BookMark = ({ onNavigate }) => {
   const OpenAlbumOnClickHandler = async () => {
     try {
       const isCouple = await compareCoulpleNameFunction(email);
-      
-      if (isCouple) { // 커플일 경우
+
+      if (isCouple) {
+        // 커플일 경우
         if (await isCoupleAxios(email)) {
           onNavigate("/date-album");
-        } else { // 모달
+        } else {
+          // 모달
           soloModal();
+          setSession();
+          console.log("솔로는 웁니다.");
         }
-      } else { // 커플이 아닌 경우
-      setModalOpen(true);
-      setNotEqualCoupleName(true);
-      setModalContent("방문자는 해당 기능이 잠겨있습니다.");
-      navigator(`/${coupleName}/main-page`);
+      } else {
+        // 커플이 아닌 경우
+        setModalOpen(true);
+        setNotEqualCoupleName(true);
+        setModalContent("방문자는 해당 기능이 잠겨있습니다.");
+        navigator(`/${coupleName}/main-page`);
       }
     } catch (error) {
       // 에러 처리
@@ -151,18 +163,23 @@ const BookMark = ({ onNavigate }) => {
   const OpenClothesOnClickHandler = async () => {
     try {
       const isCouple = await compareCoulpleNameFunction(email);
-      
-      if (isCouple) { // 커플일 경우
+
+      if (isCouple) {
+        // 커플일 경우
         if (await isCoupleAxios(email)) {
           onNavigate("/date-clothes");
-        } else { // 모달
+        } else {
+          // 모달
           soloModal();
+          setSession();
+          console.log("솔로는 웁니다.");
         }
-      } else { // 커플이 아닌 경우
-      setModalOpen(true);
-      setNotEqualCoupleName(true);
-      setModalContent("방문자는 해당 기능이 잠겨있습니다.");
-      navigator(`/${coupleName}/main-page`);
+      } else {
+        // 커플이 아닌 경우
+        setModalOpen(true);
+        setNotEqualCoupleName(true);
+        setModalContent("방문자는 해당 기능이 잠겨있습니다.");
+        navigator(`/${coupleName}/main-page`);
       }
     } catch (error) {
       // 에러 처리
@@ -173,18 +190,23 @@ const BookMark = ({ onNavigate }) => {
   const OpenDateplannerOnClickHandler = async () => {
     try {
       const isCouple = await compareCoulpleNameFunction(email);
-      
-      if (isCouple) { // 커플일 경우
+
+      if (isCouple) {
+        // 커플일 경우
         if (await isCoupleAxios(email)) {
-          onNavigate(`/${coupleName}/dateplanner`);
-        } else { // 모달
+          onNavigate(`/dateplanner`);
+        } else {
+          // 모달
           soloModal();
+          setSession();
+          console.log("솔로는 웁니다.");
         }
-      } else { // 커플이 아닌 경우
-      setModalOpen(true);
-      setNotEqualCoupleName(true);
-      setModalContent("방문자는 해당 기능이 잠겨있습니다.");
-      navigator(`/${coupleName}/main-page`);
+      } else {
+        // 커플이 아닌 경우
+        setModalOpen(true);
+        setNotEqualCoupleName(true);
+        setModalContent("방문자는 해당 기능이 잠겨있습니다.");
+        navigator(`/${coupleName}/main-page`);
       }
     } catch (error) {
       // 에러 처리
@@ -194,28 +216,35 @@ const BookMark = ({ onNavigate }) => {
 
   const OpenBoardOnClickHandler = async () => {
     if ((await isCoupleAxios(email)) === true) {
-      onNavigate(`/${coupleName}/board-guestbook`);
+      onNavigate(`/board-guestbook`);
     } else {
       // 모달
       soloModal();
+      setSession();
+      console.log("솔로는 웁니다.");
     }
   };
 
   const OpenChatOnClickHandler = async () => {
     try {
       const isCouple = await compareCoulpleNameFunction(email);
-      
-      if (isCouple) { // 커플일 경우
+
+      if (isCouple) {
+        // 커플일 경우
         if (await isCoupleAxios(email)) {
-          onNavigate(`/Chat`);
-        } else { // 모달
+          onNavigate(`/chat`);
+        } else {
+          // 모달
           soloModal();
+          setSession();
+          console.log("솔로는 웁니다.");
         }
-      } else { // 커플이 아닌 경우
-      setModalOpen(true);
-      setNotEqualCoupleName(true);
-      setModalContent("방문자는 해당 기능이 잠겨있습니다.");
-      navigator(`/${coupleName}/main-page`);
+      } else {
+        // 커플이 아닌 경우
+        setModalOpen(true);
+        setNotEqualCoupleName(true);
+        setModalContent("방문자는 해당 기능이 잠겨있습니다.");
+        navigator(`/${coupleName}/main-page`);
       }
     } catch (error) {
       // 에러 처리
@@ -225,7 +254,15 @@ const BookMark = ({ onNavigate }) => {
   //방문객 모달 확인버튼 이벤트함수
   const visitCodeModalOkBtnHandler = () => {
     closeModal();
-    navigator(`/${coupleName}/main-page`);
+    navigator(`/main-page`);
+  };
+  // 세션 초기화 함수
+  const setSession = () => {
+    sessionStorage.setItem("email", "");
+    sessionStorage.setItem("coupleName", "");
+    sessionStorage.setItem("imgUrl", "");
+    sessionStorage.setItem("myDarling", "");
+    sessionStorage.setItem("kakaoImgUrl", "");
   };
   return (
     <BookMarkDiv>

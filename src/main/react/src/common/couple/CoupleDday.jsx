@@ -33,7 +33,7 @@ const DdayWhen = styled.div`
 const DdayInputForm = styled.input`
   width: 50%;
   height: 3vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.507);
   color: #fff;
   @media screen and (max-width: 1200px) {
     font-size: 15px;

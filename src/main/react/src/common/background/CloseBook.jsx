@@ -31,8 +31,9 @@ const Background = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   font-size: 16px;
+  min-height: 840px;
+
 `;
 
 const Book = styled.div`

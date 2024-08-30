@@ -16,7 +16,7 @@ const Background = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  min-height: 840px;
 `;
 const LogoDiv = styled.div`
   width: 192px;
@@ -120,7 +120,7 @@ const OpenBook = ({ onNavigate }) => {
           </Link>
         </LogoDiv>
         <BookMarkDiv>
-          <BookMark onNavigate={onNavigate}/>
+          <BookMark onNavigate={onNavigate} />
         </BookMarkDiv>
       </TopContain>
       <Book>

@@ -25,7 +25,6 @@ import Modify from "./pages/setting/Modify";
 import Withdrawal from "./pages/setting/Withdrawal";
 import PalettePage from "./pages/palette/PalettePage";
 import GuestBoardGuestbook from "./pages/board/GuestBoardGuestbook";
-import GuestBoardDetails from "./pages/board/GuestBoardDetails";
 import PaletteHelp from "./pages/palette/PaletteHelp";
 import PaletteNotice from "./pages/palette/PaletteNotice";
 import PaletteNoticeDetails from "./pages/palette/PaletteNoticeDetails";
@@ -38,20 +37,18 @@ import ChatList from "./pages/chat/ChatList";
 import ChatRoomCreate from "./pages/chat/ChatRoomCreate";
 import BoardUpdate from "./pages/board/BoardUpdate";
 import MainPage from "./pages/main/BeforeMainPage";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
 function App() {
   const [url, setUrl] = useState("");
 
-  // useCallback을 사용하여 함수 메모이제이션
-  const handleNavigate = useCallback((path) => {
+  const handleNavigate = (path) => {
     setUrl(path);
     console.log("Navigating to:", path);
-  }, []);
-
-  const clearUrl = useCallback(() => {
+  };
+  const clearUrl = () => {
     setUrl("");
-  }, []);
+  };
 
   return (
     <>
@@ -107,41 +104,37 @@ function App() {
               element={<DateDiary url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/Chat"
+              path="/chat"
               element={<ChatList url={url} clearUrl={clearUrl} />}
             />
-            <Route path="/Chatcreate" element={<ChatRoomCreate />} />
+            <Route path="/chatcreate" element={<ChatRoomCreate />} />
             <Route
-              path="/Chat/:roomId"
+              path="/chat/:roomId"
               element={<ChatMain url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/:coupleName/dateplanner"
+              path="/dateplanner"
               element={<DatePlanner url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/:coupleName/board-guestbook"
+              path="/board-guestbook"
               element={<GuestBoardGuestbook url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/:coupleName/board-details/:id"
+              path="/board-details/:id"
               element={<BoardDetails url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/:coupleName/board-write"
+              path="/board-write"
               element={<BoardWrite url={url} clearUrl={clearUrl} />}
             />
             <Route
-              path="/:coupleName/board-update"
+              path="/board-update"
               element={<BoardUpdate url={url} clearUrl={clearUrl} />}
             />
             <Route
               path="/guest-board-guestbook"
               element={<GuestBoardGuestbook />}
-            />
-            <Route
-              path="/guest-board-details"
-              element={<GuestBoardDetails />}
             />
           </Route>
           <Route element={<CloseBook />}>

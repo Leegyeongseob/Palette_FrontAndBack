@@ -59,18 +59,4 @@
 
 ### ○ Mobile App Image
 
-![1.webp](./App_Images/1.webp)
 
-![2.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/ec2556ce-b539-4902-b2d1-aed681469ef1/2.webp)
-
-![3.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/2ee98a0d-85d3-4bbc-a59e-850c4b992b85/3.webp)
-
-![5.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/8f20fa0f-c9d7-4c91-b3e1-22d6b722a231/5.webp)
-
-![4.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/aec277b2-5e86-4943-aa75-00631aa2e0be/4.webp)
-
-![6.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/e74fd384-8dd1-4416-94d1-b9857a25f271/6.webp)
-
-![7.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/c321361a-e099-4b06-a066-657c63dc79cd/7.webp)
-
-![8.webp](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2cb30ad-fb56-400e-b4a8-fbabaa7357c7/dc9c923e-719c-41db-8920-e9b2f34f3e1b/8.webp)
